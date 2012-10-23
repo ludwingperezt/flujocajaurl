@@ -66,21 +66,35 @@ public class Escenario {
     
     
     public Escenario(Escenario base){
-        this.listaAnios = base.listaAnios.clone();
-        this.tmar = new Inversionistas(base.tmar);        
-        this.modeloIngresos = new Ingresos(base.modeloIngresos);        
-        this.modeloCostos = new Costos(base.modeloCostos);        
-        this.utilidadBruta = base.utilidadBruta.clone();
-        this.utilidadNeta = base.utilidadNeta.clone();
-        this.escudosFiscales = base.escudosFiscales.clone();
-        this.FEN = base.FEN.clone();
-        this.VAN = base.VAN.clone();        
-        this.utilidadAntesImpuestos = base.utilidadAntesImpuestos.clone();
-        this.modeloIVA = new IVA(base.modeloIVA);       
-        this.modeloISR = new ISR(base.modeloISR);        
-        this.modeloISO = new ISO(base.modeloISO);
+        if (base.listaAnios!=null)
+            this.listaAnios = base.listaAnios.clone();
+        if (base.tmar!=null)
+            this.tmar = new Inversionistas(base.tmar);        
+        if (base.modeloIngresos!=null)
+            this.modeloIngresos = new Ingresos(base.modeloIngresos);        
+        if (base.modeloCostos!=null)
+            this.modeloCostos = new Costos(base.modeloCostos);        
+        if (base.utilidadBruta!=null)
+            this.utilidadBruta = base.utilidadBruta.clone();
+        if (base.utilidadNeta!=null)
+            this.utilidadNeta = base.utilidadNeta.clone();
+        if (base.escudosFiscales!=null)
+            this.escudosFiscales = base.escudosFiscales.clone();
+        if (base.FEN!=null)
+            this.FEN = base.FEN.clone();
+        if (base.VAN!=null)
+            this.VAN = base.VAN.clone();        
+        if (base.utilidadAntesImpuestos!=null)
+            this.utilidadAntesImpuestos = base.utilidadAntesImpuestos.clone();
+        if (base.modeloIVA!=null)
+            this.modeloIVA = new IVA(base.modeloIVA);       
+        if (base.modeloISR!=null)
+            this.modeloISR = new ISR(base.modeloISR);        
+        if (base.modeloISO!=null)
+            this.modeloISO = new ISO(base.modeloISO);
+        
         this.escala = base.escala;
-        this.activos = base.activos;
+        this.activos = base.activos;        
         this.activosAnteriores = base.activosAnteriores;
         this.datosNetos = base.datosNetos;
         this.empresaIndividual = base.empresaIndividual;
@@ -95,12 +109,18 @@ public class Escenario {
      * @param base 
      */
     public void crearGastosEInversiones(Escenario base){
-        this.tmar.setPadre(this);
-        this.modeloCostos.setPadre(this);
-        this.modeloIngresos.setPadre(this);
-        this.modeloIVA.setPadre(this);
-        this.modeloISR.setPadre(this);
-        this.modeloISO.setPadre(this);
+        if (this.tmar!=null)
+            this.tmar.setPadre(this);
+        if (this.modeloCostos!=null)
+            this.modeloCostos.setPadre(this);
+        if (this.modeloIngresos!=null)
+            this.modeloIngresos.setPadre(this);
+        if (this.modeloIVA!=null)
+            this.modeloIVA.setPadre(this);
+        if (this.modeloISR!=null)
+            this.modeloISR.setPadre(this);
+        if (this.modeloISO!=null)
+            this.modeloISO.setPadre(this);
         if (base.listaGastos!=null){
             this.listaGastos = new ArrayList<Gasto>();
             for (Gasto g:base.listaGastos){
@@ -118,28 +138,30 @@ public class Escenario {
             }
         }
         
-        for (Gasto g:this.listaGastos){
-            if (g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO){
-            //if (g.getGastoBase()!=null){
-                String nombre = g.getGastoBase().getNombre();
-                Gasto t = null;
-                for (Gasto k:this.listaGastos){
-                    if (k.getNombre().equals(nombre)){
-                        t = k;
-                        break;
+        if (this.listaGastos!=null){
+            for (Gasto g:this.listaGastos){
+                if (g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO){
+                //if (g.getGastoBase()!=null){
+                    String nombre = g.getGastoBase().getNombre();
+                    Gasto t = null;
+                    for (Gasto k:this.listaGastos){
+                        if (k.getNombre().equals(nombre)){
+                            t = k;
+                            break;
+                        }
                     }
-                }
-                g.setGastoBase(t);
-            }else if (g.getTipoGasto()==Gasto.GASTO_SEGUN_INVERSION){
-                String nombre = g.getInteresesBase().getNombre();
-                Intereses i = null;
-                for (Intereses n:this.listaIntereses){
-                    if (n.getNombre().equals(nombre)){
-                        i = n;
-                        break;
+                    g.setGastoBase(t);
+                }else if (g.getTipoGasto()==Gasto.GASTO_SEGUN_INVERSION){
+                    String nombre = g.getInteresesBase().getNombre();
+                    Intereses i = null;
+                    for (Intereses n:this.listaIntereses){
+                        if (n.getNombre().equals(nombre)){
+                            i = n;
+                            break;
+                        }
                     }
+                    g.setInteresesBase(i);
                 }
-                g.setInteresesBase(i);
             }
         }
         

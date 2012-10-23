@@ -8,7 +8,7 @@ package controlador;
  *
  * @author HP G42
  */
-public class EscenarioModificado extends Escenario {
+public class EscenarioModificado extends Escenario implements Cloneable {
     
     public static int ESCENARIO_NORMAL =0;
     public static int ESCENARIO_PESIMISTA=1;
@@ -23,6 +23,17 @@ public class EscenarioModificado extends Escenario {
     public EscenarioModificado(Escenario base){
         super(base);
         this.crearGastosEInversiones(base);
+    }
+    
+    public EscenarioModificado(EscenarioModificado base){
+        super((Escenario)base);
+        this.crearGastosEInversiones((Escenario)base);
+        
+        this.tasaDisminucionCostos = base.tasaDisminucionCostos;
+        this.tasaDisminucionIngresos = base.tasaDisminucionIngresos;
+        this.tasaIncrementoCostos = base.tasaIncrementoCostos;
+        this.tasaIncrementoIngresos = base.tasaIncrementoIngresos;
+        this.tipoEscenario = base.tipoEscenario;
     }
     
     public void setTasaIncrementoIngresos(double tasa){

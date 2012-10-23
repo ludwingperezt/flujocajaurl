@@ -37,7 +37,8 @@ public class Costos {
     public Costos (Costos base){
         this.factura = base.factura;
         this.tipoCosto = base.tipoCosto;
-        this.costos = base.costos.clone();
+        if (base.costos !=null)
+            this.costos = base.costos.clone();
         
         if (base.modeloPorcentual!=null)
             this.modeloPorcentual = new ModeloPorcentual(base.getModeloPorcentual());

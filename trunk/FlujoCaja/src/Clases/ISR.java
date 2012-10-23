@@ -46,16 +46,26 @@ public class ISR {
     }
 
     public ISR(ISR base){
-        this.ingresos = base.ingresos.clone();
-        this.regimen = base.regimen.clone();
-        this.ISRporPagar = base.ISRporPagar.clone();
-        this.egresos = base.egresos.clone();
-        this.deduciblesSiguientePeriodo = base.deduciblesSiguientePeriodo.clone();
-        this.UAI = base.UAI.clone();
-        this.UAIFiscal = base.UAIFiscal.clone();
-        this.ISRPorPagarTemporal = base.ISRPorPagarTemporal.clone();
-        this.porcentajeUtilidad = base.porcentajeUtilidad.clone();
-        this.egresosDeducibles97 = base.egresosDeducibles97.clone();
+        if (base.ingresos!=null)
+            this.ingresos = base.ingresos.clone();
+        if (base.regimen!=null)
+            this.regimen = base.regimen.clone();
+        if (base.ISRporPagar!=null)
+            this.ISRporPagar = base.ISRporPagar.clone();
+        if (base.egresos!=null)
+            this.egresos = base.egresos.clone();
+        if (base.deduciblesSiguientePeriodo!=null)
+            this.deduciblesSiguientePeriodo = base.deduciblesSiguientePeriodo.clone();
+        if (base.UAI!=null)
+            this.UAI = base.UAI.clone();
+        if (base.UAIFiscal!=null)
+            this.UAIFiscal = base.UAIFiscal.clone();
+        if (base.ISRPorPagarTemporal!=null)
+            this.ISRPorPagarTemporal = base.ISRPorPagarTemporal.clone();
+        if (base.porcentajeUtilidad!=null)
+            this.porcentajeUtilidad = base.porcentajeUtilidad.clone();
+        if (base.egresosDeducibles97!=null)
+            this.egresosDeducibles97 = base.egresosDeducibles97.clone();
         this.escala = base.escala;
     }
     

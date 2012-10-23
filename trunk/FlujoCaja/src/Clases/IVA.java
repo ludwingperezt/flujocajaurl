@@ -36,12 +36,18 @@ public class IVA {
     }
 
     public IVA(IVA base){
-        this.IVACredito = base.IVACredito.clone();
-        this.IVADebito = base.IVADebito.clone();
-        this.IVAPorCobrar = base.IVAPorCobrar.clone();
-        this.IVAPorPagar = base.IVAPorPagar.clone();
-        this.egresos = base.egresos.clone();
-        this.diferenciaIVADebitoIVACredito = base.diferenciaIVADebitoIVACredito.clone();
+        if (base.IVACredito!=null)
+            this.IVACredito = base.IVACredito.clone();
+        if (base.IVADebito!=null)
+            this.IVADebito = base.IVADebito.clone();
+        if (base.IVAPorCobrar!=null)
+            this.IVAPorCobrar = base.IVAPorCobrar.clone();
+        if (base.IVAPorPagar!=null)
+            this.IVAPorPagar = base.IVAPorPagar.clone();
+        if (base.egresos !=null)
+            this.egresos = base.egresos.clone();
+        if (base.diferenciaIVADebitoIVACredito!=null)
+            this.diferenciaIVADebitoIVACredito = base.diferenciaIVADebitoIVACredito.clone();
     }
     
     public void setEgresos(double [] egresos){

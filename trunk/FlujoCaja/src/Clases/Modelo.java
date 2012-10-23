@@ -64,8 +64,10 @@ public class Modelo {
     
     public Modelo(Modelo base){
         this.tipo = base.tipo;
-        this.x = base.x.clone();
-        this.y = base.y.clone();
+        if (base.x!=null)
+            this.x = base.x.clone();
+        if (base.y!=null)
+            this.y = base.y.clone();
         this.n = base.n;
         this.r = base.r;
         this.r2 = base.r2;
@@ -75,9 +77,12 @@ public class Modelo {
         this.Sxy = base.Sxy;
         this.porcentajeConfianza = base.porcentajeConfianza;
         this.valorATomarDeEstimacion = base.valorATomarDeEstimacion;
-        this.valorCentral = base.valorCentral.clone();
-        this.limiteInferior = base.limiteInferior.clone();
-        this.limiteSuperior = base.limiteSuperior.clone();
+        if (base.valorCentral!=null)
+            this.valorCentral = base.valorCentral.clone();
+        if (base.limiteInferior!=null)
+            this.limiteInferior = base.limiteInferior.clone();
+        if (base.limiteSuperior!=null)
+            this.limiteSuperior = base.limiteSuperior.clone();
     }
     
 

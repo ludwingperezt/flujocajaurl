@@ -109,6 +109,7 @@ public class FlujoCajaView extends FrameView {
         menuImpuestos.setVisible(false);
         panelTabs.setVisible(false);
         menuOperaciones.setVisible(false);
+        menuHerramientas.setVisible(false);
     }
 
     private boolean buscarCuenta(String nombre){
@@ -166,6 +167,7 @@ public class FlujoCajaView extends FrameView {
         modelo.addRow(fila);
         mapa.put(modelo.getRowCount()-1, nombre);
     }
+    
     //usada para la tmar
     private void insertarFilaTablaPrincipal(String nombre,String valor){
         DefaultTableModel modelo = (DefaultTableModel) this.tablaPrincipal.getModel();
@@ -1675,6 +1677,7 @@ public class FlujoCajaView extends FrameView {
         menuImpuestos.setVisible(true);
         panelTabs.setVisible(true);
         menuOperaciones.setVisible(true);
+        menuHerramientas.setVisible(true);
         
         this.activosNuevos.setText(Double.toString(this.escenarioNormal.getActivos()));
         this.activosAnteriores.setText(Double.toString(this.escenarioNormal.getActivosAnteriores()));

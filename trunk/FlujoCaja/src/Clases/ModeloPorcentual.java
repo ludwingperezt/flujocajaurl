@@ -19,9 +19,12 @@ public class ModeloPorcentual {
     }
     
     public ModeloPorcentual(ModeloPorcentual base){
-        this.x = base.x.clone();
-        this.y = base.y.clone();
-        this.listaPorcentajes = base.listaPorcentajes.clone();
+        if (base.x!=null)
+            this.x = base.x.clone();
+        if (base.y!=null)
+            this.y = base.y.clone();
+        if (base.listaPorcentajes!=null)
+            this.listaPorcentajes = base.listaPorcentajes.clone();
         this.promedio = base.promedio;
         this.ingresoManual = base.ingresoManual;
     }
