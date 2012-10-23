@@ -49,8 +49,10 @@ public class Intereses {
         this.factorI = base.factorI;
         this.renta = base.renta;
         this.amortizacion = base.amortizacion;
-        this.resumenInteresesAnualesCuotaNivelada = base.resumenInteresesAnualesCuotaNivelada.clone();
-        this.resumenInteresesAnualesCuotaNoNivelada = base.resumenInteresesAnualesCuotaNoNivelada.clone();
+        if (base.resumenInteresesAnualesCuotaNivelada!=null)
+            this.resumenInteresesAnualesCuotaNivelada = base.resumenInteresesAnualesCuotaNivelada.clone();
+        if (base.resumenInteresesAnualesCuotaNoNivelada!=null)
+            this.resumenInteresesAnualesCuotaNoNivelada = base.resumenInteresesAnualesCuotaNoNivelada.clone();
         this.cuotaNivelada = base.cuotaNivelada;
         this.entidadSupervisada = base.entidadSupervisada;
         this.pagos = base.pagos;

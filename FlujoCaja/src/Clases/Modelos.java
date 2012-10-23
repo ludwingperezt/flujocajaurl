@@ -25,8 +25,10 @@ public class Modelos {
     
     public Modelos(Modelos base){
         this.nombreVariable = base.nombreVariable;
-        this.historicosX = base.historicosX.clone();
-        this.historicosY = base.historicosY.clone();
+        if (base.historicosX!=null)
+            this.historicosX = base.historicosX.clone();
+        if (base.historicosY!=null)
+            this.historicosY = base.historicosY.clone();
         if (base.listaModelos!=null){
             this.listaModelos = new ArrayList<Modelo>();
             for(Modelo m:base.listaModelos){

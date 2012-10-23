@@ -25,9 +25,12 @@ public class Ingresos {
     
     public Ingresos(Ingresos base){
         this.tipoIngreso = base.tipoIngreso;
-        this.modeloIngresos = new Modelo(base.modeloIngresos);
-        this.ingresosHistoricos = base.ingresosHistoricos.clone();
-        this.listaIngresos = base.listaIngresos.clone();
+        if (base.modeloIngresos!=null)
+            this.modeloIngresos = new Modelo(base.modeloIngresos);
+        if (base.ingresosHistoricos!=null)
+            this.ingresosHistoricos = base.ingresosHistoricos.clone();
+        if (base.listaIngresos!=null)
+            this.listaIngresos = base.listaIngresos.clone();
     }
     
     public void setTipoIngreso(int val){
@@ -87,6 +90,7 @@ public class Ingresos {
     }
 
     public void setListaIngresos(double[] datos) {
+        this.tipoIngreso = INGRESO_MANUAL;
         this.listaIngresos = datos;
     }
     

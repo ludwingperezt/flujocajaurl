@@ -36,7 +36,8 @@ public class Gasto {
         this.nombreGasto = base.nombreGasto;
         this.factura = base.factura;
         this.escudoFiscal = base.escudoFiscal;
-        this.listaGastos = base.listaGastos.clone();
+        if (base.listaGastos!=null)
+            this.listaGastos = base.listaGastos.clone();
         if (base.modeloGastos!=null)
             this.modeloGastos = new Modelo(base.modeloGastos);
         if (base.modeloPorcentual!=null)

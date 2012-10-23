@@ -62,9 +62,9 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         
         tablaResultados.setModel(modelo);
         
-        modelo.addRow(new Object[]{"Puntual",this.escenarioNormal.getTMARFormateada(),this.escenarioNormal.getInversionInicial(),this.escenarioNormal.getPayback_string(),this.escenarioNormal.getSumatoriaVAN(),this.escenarioNormal.getTIR_string()});
-        modelo.addRow(new Object[]{"Puntual",this.escenarioOptimista.getTMARFormateada(),this.escenarioOptimista.getInversionInicial(),this.escenarioOptimista.getPayback_string(),this.escenarioOptimista.getSumatoriaVAN(),this.escenarioOptimista.getTIR_string()});
-        modelo.addRow(new Object[]{"Pesimista",this.escenarioPesimista.getTMARFormateada(),this.escenarioPesimista.getInversionInicial(),this.escenarioPesimista.getPayback_string(),this.escenarioPesimista.getSumatoriaVAN(),this.escenarioPesimista.getTIR_string()});
+        modelo.addRow(new Object[]{"Puntual",this.escenarioNormal.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioNormal.getInversionInicial()),this.escenarioNormal.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioNormal.getSumatoriaVAN()),this.escenarioNormal.getTIR_string()});
+        modelo.addRow(new Object[]{"Optimista",this.escenarioOptimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getInversionInicial()),this.escenarioOptimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getSumatoriaVAN()),this.escenarioOptimista.getTIR_string()});
+        modelo.addRow(new Object[]{"Pesimista",this.escenarioPesimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getInversionInicial()),this.escenarioPesimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getSumatoriaVAN()),this.escenarioPesimista.getTIR_string()});
         
         double tirPonderada = (this.escenarioOptimista.getTIR()-this.escenarioPesimista.getTIR())*100;
         String tir = "Err";
@@ -293,8 +293,16 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        menuArchivo = new javax.swing.JMenu();
+        menuImpuestos = new javax.swing.JMenu();
+        menuDetalleImpuestosOptimista = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        menuDetalleImpuestosPesimista = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -550,13 +558,48 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
 
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
-        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
-        jMenu1.setName("jMenu1"); // NOI18N
-        jMenuBar1.add(jMenu1);
+        menuArchivo.setText(resourceMap.getString("menuArchivo.text")); // NOI18N
+        menuArchivo.setName("menuArchivo"); // NOI18N
+        jMenuBar1.add(menuArchivo);
 
-        jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
-        jMenu2.setName("jMenu2"); // NOI18N
-        jMenuBar1.add(jMenu2);
+        menuImpuestos.setText(resourceMap.getString("menuImpuestos.text")); // NOI18N
+        menuImpuestos.setName("menuImpuestos"); // NOI18N
+
+        menuDetalleImpuestosOptimista.setText(resourceMap.getString("menuDetalleImpuestosOptimista.text")); // NOI18N
+        menuDetalleImpuestosOptimista.setName("menuDetalleImpuestosOptimista"); // NOI18N
+
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        menuDetalleImpuestosOptimista.add(jMenuItem1);
+
+        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        menuDetalleImpuestosOptimista.add(jMenuItem2);
+
+        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        menuDetalleImpuestosOptimista.add(jMenuItem3);
+
+        menuImpuestos.add(menuDetalleImpuestosOptimista);
+
+        menuDetalleImpuestosPesimista.setText(resourceMap.getString("menuDetalleImpuestosPesimista.text")); // NOI18N
+        menuDetalleImpuestosPesimista.setName("menuDetalleImpuestosPesimista"); // NOI18N
+
+        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        menuDetalleImpuestosPesimista.add(jMenuItem4);
+
+        jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
+        jMenuItem5.setName("jMenuItem5"); // NOI18N
+        menuDetalleImpuestosPesimista.add(jMenuItem5);
+
+        jMenuItem6.setText(resourceMap.getString("jMenuItem6.text")); // NOI18N
+        jMenuItem6.setName("jMenuItem6"); // NOI18N
+        menuDetalleImpuestosPesimista.add(jMenuItem6);
+
+        menuImpuestos.add(menuDetalleImpuestosPesimista);
+
+        jMenuBar1.add(menuImpuestos);
 
         setJMenuBar(jMenuBar1);
 
@@ -641,15 +684,23 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuDetalleImpuestosOptimista;
+    private javax.swing.JMenu menuDetalleImpuestosPesimista;
+    private javax.swing.JMenu menuImpuestos;
     private javax.swing.JPanel panelCaracteristicas;
     private javax.swing.JPanel panelDatosOptimistas;
     private javax.swing.JPanel panelPesimista;

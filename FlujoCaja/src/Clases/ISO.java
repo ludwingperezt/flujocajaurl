@@ -34,12 +34,18 @@ public class ISO {
      */
     public ISO(ISO base){
         this.regimen = base.regimen;
-        this.porcentajeUtilidadBruta = base.porcentajeUtilidadBruta.clone();
-        this.isoIngresos = base.isoIngresos.clone();
-        this.isoActivos = base.isoActivos.clone();
-        this.isoPorPagarTemporal = base.isoPorPagarTemporal.clone();
-        this.isoPorPagarDefinitivo = base.isoPorPagarDefinitivo.clone();
-        this.isoAcumulado = base.isoAcumulado.clone();
+        if (base.porcentajeUtilidadBruta!=null)
+            this.porcentajeUtilidadBruta = base.porcentajeUtilidadBruta.clone();
+        if (base.isoIngresos!=null)
+            this.isoIngresos = base.isoIngresos.clone();
+        if (base.isoActivos!=null)
+            this.isoActivos = base.isoActivos.clone();
+        if (base.isoPorPagarTemporal!=null)
+            this.isoPorPagarTemporal = base.isoPorPagarTemporal.clone();
+        if (base.isoPorPagarDefinitivo!=null)
+            this.isoPorPagarDefinitivo = base.isoPorPagarDefinitivo.clone();
+        if (base.isoAcumulado!=null)
+            this.isoAcumulado = base.isoAcumulado.clone();
     }
 
     public double[] getIsoActivos () {
