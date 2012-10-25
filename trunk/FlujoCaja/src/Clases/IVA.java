@@ -6,11 +6,13 @@
 package Clases;
 
 import controlador.Escenario;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ludwing
  */
+@XmlType
 public class IVA {
 
     private Escenario padre;
@@ -19,8 +21,7 @@ public class IVA {
     private double [] IVAPorPagar;
     private double [] IVAPorCobrar;
     private double [] egresos;
-    private double [] diferenciaIVADebitoIVACredito;
-    
+    private double [] diferenciaIVADebitoIVACredito;    
     
     //private int regimen;
     //private boolean cantidadesNetas;
@@ -62,22 +63,47 @@ public class IVA {
     {
         return this.IVACredito;
     }
+    public void setIVACredito(double [] val){
+        this.IVACredito = val;
+    }
     public double[] getIVADebito()
     {
         return this.IVADebito;
+    }
+    public void setIVADebito(double [] val){
+        this.IVADebito = val;
     }
     public double[] getIVAPorCobrar()
     {
         return this.IVAPorCobrar;
     }
+    public void setIVAPorCobrar(double [] val){
+        this.IVAPorCobrar = val;
+    }
     public double[] getIVAPorPagar()
     {
         return this.IVAPorPagar;
+    }
+    public void setIVAPorPagar(double [] val){
+        this.IVAPorPagar = val;
     }
 
     public double[] getDiferenciaIVADebitoIVACredito(){
         return this.diferenciaIVADebitoIVACredito;
     }
+    public void setDiferenciaIVADebitoIVACredito(double []val){
+        this.diferenciaIVADebitoIVACredito = val;
+    }
+    
+    public void setPadre(Escenario modelo) {
+        this.padre = modelo;
+    }
+    
+    public Escenario getPadre(){
+        return this.padre;
+    }
+    
+    
     
     public void calcularIVA(double [] ingresos, double [] egresos)
     {
@@ -146,15 +172,6 @@ public class IVA {
         this.IVAPorPagar = new double[IVACredito.length];
         this.diferenciaIVADebitoIVACredito = new double[IVACredito.length];
     }
-
-    public void setPadre(Escenario modelo) {
-        this.padre = modelo;
-    }
-    
-    public Escenario getPadre(){
-        return this.padre;
-    }
-    
     
     public void standalone(double [] ingresos, double [] egresos, boolean datosNetos)
     {

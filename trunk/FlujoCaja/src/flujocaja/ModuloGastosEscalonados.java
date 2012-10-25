@@ -266,7 +266,7 @@ public class ModuloGastosEscalonados extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.modeloGasto = new Gasto();
         this.modeloGasto.setTipoGasto(Gasto.GASTO_ESCALONADO);
-        this.modeloGasto.setNombre(jTextField1.getText());
+        this.modeloGasto.setNombreGasto(jTextField1.getText());
         this.modeloGasto.setBase(Double.parseDouble(jTextField2.getText()));
         this.modeloGasto.setAnioBase(Integer.parseInt(jTextField3.getText()));
         this.modeloGasto.setTasaIncremento(Double.parseDouble(jTextField4.getText())/100);

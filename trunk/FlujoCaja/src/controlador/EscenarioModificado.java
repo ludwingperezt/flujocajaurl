@@ -4,10 +4,23 @@
  */
 package controlador;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author HP G42
  */
+@XmlRootElement
 public class EscenarioModificado extends Escenario implements Cloneable {
     
     public static int ESCENARIO_NORMAL =0;
@@ -77,7 +90,7 @@ public class EscenarioModificado extends Escenario implements Cloneable {
                 ingresos[i] = ingresos[i] + (ingresos[i] * this.tasaIncrementoIngresos);
                 costos[i] = costos[i] - (costos[i]*this.tasaDisminucionCostos);
             }
-            this.modeloIngresos.setListaIngresos(ingresos);
+            this.modeloIngresos.setListaIngresosManualmente(ingresos);
             this.modeloCostos.setCostos(costos);
         }
         else if (this.tipoEscenario==EscenarioModificado.ESCENARIO_PESIMISTA){
@@ -87,10 +100,46 @@ public class EscenarioModificado extends Escenario implements Cloneable {
                 ingresos[i] = ingresos[i] - (ingresos[i] * this.tasaDisminucionIngresos);
                 costos[i] = costos[i] + (costos[i]*this.tasaIncrementoCostos);
             }
-            this.modeloIngresos.setListaIngresos(ingresos);
+            this.modeloIngresos.setListaIngresosManualmente(ingresos);
             this.modeloCostos.setCostos(costos);
         }
         this.recalcularTodo();
     }
     
+    
+    @Override
+    public void serializarAXML(String direccion){
+        FileOutputStream archivo = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(EscenarioModificado.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            archivo = new FileOutputStream(direccion);            
+            //guardamos el objeto serializado en un documento XML
+            marshaller.marshal(this, archivo);
+             
+            archivo.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EscenarioModificado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EscenarioModificado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JAXBException ex) {
+            Logger.getLogger(EscenarioModificado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+        
+    }
+    
+    public static EscenarioModificado deserializarDeXML(String direccion){
+        EscenarioModificado escenario = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(EscenarioModificado.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            //Deserealizamos a partir de un documento XML
+            escenario = (EscenarioModificado) unmarshaller.unmarshal(new File(direccion));            
+        } catch (JAXBException ex) {
+            Logger.getLogger(EscenarioModificado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return escenario;
+    }
 }

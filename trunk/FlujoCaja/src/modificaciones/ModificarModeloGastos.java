@@ -44,7 +44,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     }
     
     private void cargarDatos(){
-        this.nombre.setText(modificado.getNombre());
+        this.nombre.setText(modificado.getNombreGasto());
         if (this.modificado.getFactura())
             factura.setSelected(true);
         else
@@ -777,7 +777,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private void variableCambiarPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_variableCambiarPorcentajeActionPerformed
         // TODO add your handling code here:
         EstimacionPorcentual epc = new EstimacionPorcentual(null, true);
-        ModeloPorcentual mp = epc.modificarPorcentaje(modificado.getModeloPorcentual(),"Gasto: "+modificado.getNombre());
+        ModeloPorcentual mp = epc.modificarPorcentaje(modificado.getModeloPorcentual(),"Gasto: "+modificado.getNombreGasto());
         if (mp!=null){
             modificado.setCantidadPeriodos(Integer.parseInt(variablePeriodos.getText()));
             modificado.setModeloPorcentual(mp);
@@ -795,7 +795,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private void variableCambiarAModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_variableCambiarAModeloActionPerformed
         // TODO add your handling code here:
         ModeloRegresion ventana = new ModeloRegresion(null, true);
-        Modelo modeloR = ventana.determinarModeloOptimo("Gasto: "+modificado.getNombre());
+        Modelo modeloR = ventana.determinarModeloOptimo("Gasto: "+modificado.getNombreGasto());
         if (modeloR!=null){
             modificado.setCantidadPeriodos(Integer.parseInt(variablePeriodos.getText()));
             modificado.setFactura(factura.isSelected());
@@ -810,7 +810,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private void modeloCambiarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeloCambiarModeloActionPerformed
         // TODO add your handling code here:
         ModeloRegresion ventana = new ModeloRegresion(null, true);
-        Modelo modeloR = ventana.modificarModelo(modificado.getModeloGastos(),"Gasto: "+modificado.getNombre());
+        Modelo modeloR = ventana.modificarModelo(modificado.getModeloGastos(),"Gasto: "+modificado.getNombreGasto());
         if (modeloR!=null){
             modificado.setModeloGastos(modeloR);
             modificado.setCantidadPeriodos(Integer.parseInt(modeloPeriodos.getText()));
@@ -825,7 +825,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private void modeloCambiarAPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeloCambiarAPorcentajeActionPerformed
         // TODO add your handling code here:
         EstimacionPorcentual epc = new EstimacionPorcentual(null, true);
-        ModeloPorcentual mp = epc.estimarPorcentaje("Gasto: "+modificado.getNombre());
+        ModeloPorcentual mp = epc.estimarPorcentaje("Gasto: "+modificado.getNombreGasto());
         if (mp!=null){
             modificado.setModeloPorcentual(mp);
             modificado.setFactura(factura.isSelected());
@@ -917,11 +917,11 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
 
     private void gastoEscalonado(){
         ModuloGastosEscalonados ventanaGasto = new ModuloGastosEscalonados(null, true);
-        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre());
+        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto());
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
-            temporal.setNombre(modificado.getNombre());
+            temporal.setNombreGasto(modificado.getNombreGasto());
             this.escenarioNormal.removerGasto(modificado);
             this.escenarioNormal.insertarGasto(temporal);
             //this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura() ,temporal.getListaGastos());
@@ -930,12 +930,12 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     
     private void gastoCuotaFija(){
         ModuloGastosCoutaFija ventanaGasto = new ModuloGastosCoutaFija(null, true);
-        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre());
+        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto());
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             //this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura() ,temporal.getListaGastos());
-            temporal.setNombre(modificado.getNombre());
+            temporal.setNombreGasto(modificado.getNombreGasto());
             this.escenarioNormal.removerGasto(modificado);
             this.escenarioNormal.insertarGasto(temporal);
         }
@@ -945,13 +945,13 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
         ModuloGastosSegunVariable ventanaGasto = new ModuloGastosSegunVariable(null, true);
         Gasto temporal;
         if (modificado.getTipoGasto()==Gasto.GASTO_SEGUN_INGRESOS)
-            temporal = ventanaGasto.modificarModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre(),true,modificado.getFactura(),modificado.getEscudoFiscal());
+            temporal = ventanaGasto.modificarModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto(),true,modificado.getFactura(),modificado.getEscudoFiscal());
         else
-            temporal = ventanaGasto.modificarModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre(),false,modificado.getFactura(),modificado.getEscudoFiscal());
+            temporal = ventanaGasto.modificarModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto(),false,modificado.getFactura(),modificado.getEscudoFiscal());
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
-            temporal.setNombre(modificado.getNombre());
+            temporal.setNombreGasto(modificado.getNombreGasto());
             this.escenarioNormal.removerGasto(modificado);
             this.escenarioNormal.insertarGasto(temporal);
             //this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura(), temporal.getListaGastos());
@@ -960,14 +960,14 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
 
     private void gastosDepreciaciones() {
         ModuloGastosPorcentuales ventanaGasto = new ModuloGastosPorcentuales(null, true);
-        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre());
+        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto());
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
 
             temporal.calcularGastos();
 
             //this.insertarFilaTablaPrincipal(temporal.getNombre(),temporal.getFactura(), temporal.getListaGastos());
-            temporal.setNombre(modificado.getNombre());
+            temporal.setNombreGasto(modificado.getNombreGasto());
             this.escenarioNormal.removerGasto(modificado);
             this.escenarioNormal.insertarGasto(temporal);
         }
@@ -975,18 +975,18 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
 
     private void gastosModeloPronostico() {
         ModuloGastosPorModelo ventanaGasto = new ModuloGastosPorModelo(null, true);
-        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre());
+        Gasto temporal = ventanaGasto.obtenerModeloGasto(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto());
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
 
             ModeloRegresion ventanaRegresion = new ModeloRegresion(null, true);
-            Modelo optimo = ventanaRegresion.determinarModeloOptimo("Gasto: "+modificado.getNombre());
+            Modelo optimo = ventanaRegresion.determinarModeloOptimo("Gasto: "+modificado.getNombreGasto());
 
             temporal.setModeloGastos(optimo);
             temporal.calcularGastos();
 
             //this.insertarFilaTablaPrincipal(temporal.getNombre(),temporal.getFactura(), temporal.getListaGastos());
-            temporal.setNombre(modificado.getNombre());
+            temporal.setNombreGasto(modificado.getNombreGasto());
             this.escenarioNormal.removerGasto(modificado);
             this.escenarioNormal.insertarGasto(temporal);
         }
@@ -997,9 +997,9 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
         Gasto temporal;
         
         if (modificado.getTipoGasto()==Gasto.GASTO_SEGUN_INGRESOS)
-            temporal = ventanaGasto.modificarModeloGastoManual(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre(),true,modificado.getFactura(),modificado.getEscudoFiscal());
+            temporal = ventanaGasto.modificarModeloGastoManual(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto(),true,modificado.getFactura(),modificado.getEscudoFiscal());
         else
-            temporal = ventanaGasto.modificarModeloGastoManual(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombre(),false,modificado.getFactura(),modificado.getEscudoFiscal());
+            temporal = ventanaGasto.modificarModeloGastoManual(this.escenarioNormal.getNumeroPeriodos(),modificado.getNombreGasto(),false,modificado.getFactura(),modificado.getEscudoFiscal());
         
         if (temporal!=null){
             Manual m = new Manual(null, true);
@@ -1007,7 +1007,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             if (datos!=null){
                 temporal.setGastosManualmente(datos);
                 temporal.setPadre(escenarioNormal);
-                temporal.setNombre(modificado.getNombre());
+                temporal.setNombreGasto(modificado.getNombreGasto());
                 this.escenarioNormal.removerGasto(modificado);
                 this.escenarioNormal.insertarGasto(temporal);
             }

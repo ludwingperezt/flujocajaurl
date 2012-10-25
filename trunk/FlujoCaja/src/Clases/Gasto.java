@@ -1,8 +1,9 @@
 package Clases;
 
 import controlador.Escenario;
+import javax.xml.bind.annotation.XmlType;
 
-
+@XmlType
 public class Gasto {
 
     public static int GASTO_ESCALONADO = 0;
@@ -20,6 +21,30 @@ public class Gasto {
     private double base;
     private double tasaIncremento;
     private int anioBase;
+    
+    private int cantidadPeriodos;
+
+    private int tipoGasto;
+
+    private String nombreGasto;
+
+    private boolean factura;
+    private boolean escudoFiscal;
+
+    private double [] listaGastos;
+
+    private Modelo modeloGastos = null;
+    private ModeloPorcentual modeloPorcentual = null;
+    private Gasto gastoBase = null;
+    private Intereses interesesBase = null;
+    
+    //private Modelos listaModelos;
+
+
+    public Gasto () {
+        //this.nombreGasto = "Gasto"+Integer.toString(ID);
+        //Gasto.ID++;
+    }
     
     /**
      * Constructor copia de objetos tipo Gasto.
@@ -44,7 +69,7 @@ public class Gasto {
             this.modeloPorcentual = new ModeloPorcentual(base.modeloPorcentual);
         if (base.gastoBase!=null){
             this.gastoBase = new Gasto();
-            this.gastoBase.setNombre(base.gastoBase.nombreGasto);
+            this.gastoBase.setNombreGasto(base.gastoBase.nombreGasto);
         }
         if (base.interesesBase!=null){
             this.interesesBase = new Intereses();
@@ -52,29 +77,6 @@ public class Gasto {
         }
     }
 
-    private int cantidadPeriodos;
-
-    private int tipoGasto;
-
-    private String nombreGasto;
-
-    private boolean factura;
-    private boolean escudoFiscal;
-
-    private double [] listaGastos;
-
-    private Modelo modeloGastos = null;
-    private ModeloPorcentual modeloPorcentual = null;
-    private Gasto gastoBase = null;
-    private Intereses interesesBase = null;
-    
-    //private Modelos listaModelos;
-
-
-    public Gasto () {
-        //this.nombreGasto = "Gasto"+Integer.toString(ID);
-        //Gasto.ID++;
-    }
 
     public void setGastoBase(Gasto val){
         this.gastoBase = val;
@@ -187,13 +189,17 @@ public class Gasto {
     {
         return this.listaGastos;
     }
+    
+    public void setListaGastos(double [] val){
+        this.listaGastos = val;
+    }
 
-    public void setNombre(String val)
+    public void setNombreGasto(String val)
     {
         this.nombreGasto = val;
     }
 
-    public String getNombre()
+    public String getNombreGasto()
     {
         return this.nombreGasto;
     }

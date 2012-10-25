@@ -109,7 +109,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             for(Gasto g : listaGastos){
                 iterador = g.getListaGastos();
                 if (iterador!=null)
-                    this.insertarFilaTabla(g.getNombre(), (g.getFactura())? 1:0, iterador,modelo);
+                    this.insertarFilaTabla(g.getNombreGasto(), (g.getFactura())? 1:0, iterador,modelo);
             }
         }
         //intereses
@@ -188,7 +188,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             for(Gasto g : listaGastos){
                 iterador = g.getListaGastos();
                 if (iterador!=null)
-                    this.insertarFilaTabla(g.getNombre(), (g.getFactura())? 1:0, iterador,modelo);
+                    this.insertarFilaTabla(g.getNombreGasto(), (g.getFactura())? 1:0, iterador,modelo);
             }
         }
         //intereses

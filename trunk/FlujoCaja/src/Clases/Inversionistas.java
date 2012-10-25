@@ -7,11 +7,13 @@ package Clases;
 
 import controlador.Escenario;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ludwing
  */
+@XmlType
 public class Inversionistas {
 
     private Escenario padre;
@@ -41,6 +43,9 @@ public class Inversionistas {
     public ArrayList<Inversionista> getListaInversionistas()
     {
         return this.listaInversionistas;
+    }
+    public void setListaListaInversionistas(ArrayList<Inversionista> val){
+        this.listaInversionistas = val;
     }
     public Inversionista getInversionista(int i)
     {

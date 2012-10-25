@@ -497,7 +497,7 @@ public class EstimacionPorcentual extends javax.swing.JDialog {
         if (this.modeloPorcentual==null)
             this.modeloPorcentual = new ModeloPorcentual();
         String porcentaje = JOptionPane.showInputDialog(null, "Ingrese el nuevo porcentaje", "Porcentaje manual", JOptionPane.QUESTION_MESSAGE);
-        this.modeloPorcentual.setPromedio(ModeloPorcentual.formatearPorcentaje(porcentaje,this.redondear.isSelected()));
+        this.modeloPorcentual.setPromedioManual(ModeloPorcentual.formatearPorcentaje(porcentaje,this.redondear.isSelected()));
         if (standalone)
             this.txtPromedio.setText(porcentaje);
         else

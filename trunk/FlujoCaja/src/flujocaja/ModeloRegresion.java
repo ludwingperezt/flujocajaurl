@@ -111,7 +111,7 @@ public class ModeloRegresion extends javax.swing.JDialog {
             modeloTabla.addColumn("r");
             modeloTabla.addColumn("r2 (%)");
             modeloTabla.addColumn("Sxy");
-            ArrayList<Modelo> modelos = modelosPronosticacion.getModelos();
+            ArrayList<Modelo> modelos = modelosPronosticacion.getListaModelos();
 
             for (Modelo i: modelos){
                 Object []fila = new Object[4];
@@ -696,7 +696,7 @@ public class ModeloRegresion extends javax.swing.JDialog {
     private void estimarConModeloSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estimarConModeloSeleccionadoActionPerformed
         // TODO add your handling code here:
         int index = this.jTable2.getSelectedRow();
-        Modelo modelo = this.modelosPronosticacion.getModelos().get(index);
+        Modelo modelo = this.modelosPronosticacion.getListaModelos().get(index);
         EstimacionValoresFuturos evf = new EstimacionValoresFuturos(null, false);
         evf.estimarValores(modelo);
     }//GEN-LAST:event_estimarConModeloSeleccionadoActionPerformed

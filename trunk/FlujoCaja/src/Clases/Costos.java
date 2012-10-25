@@ -6,11 +6,13 @@
 package Clases;
 
 import controlador.Escenario;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ludwing
  */
+@XmlType
 public class Costos {
 
     public static int COSTO_PORCENTUAL = 0;
@@ -19,15 +21,15 @@ public class Costos {
     
     private Escenario padre;
 
-    private Modelo modeloPronosticacion = null;
+    private Modelo modeloPronosticacion = null; //
     
-    private ModeloPorcentual modeloPorcentual = null;
+    private ModeloPorcentual modeloPorcentual = null; //
     
     private double [] costos;
 
     private boolean factura;
     
-    private int tipoCosto;
+    private int tipoCosto; //
 
 
 
@@ -56,9 +58,7 @@ public class Costos {
     public ModeloPorcentual getModeloPorcentual(){
         return this.modeloPorcentual;        
     }
-    
-   
-    
+     
     public int getTipoCosto(){
         return this.tipoCosto;
     }
@@ -80,7 +80,7 @@ public class Costos {
     }
 
     public void setPromedio (double val) {
-        this.modeloPorcentual.setPromedio(val);
+        this.modeloPorcentual.setPromedioManual(val);
         this.setTipoCosto(Costos.COSTO_PORCENTUAL);
     }
 
@@ -143,7 +143,7 @@ public class Costos {
      * Hace el calculo de los costos implicitamente.
      * @return 
      */
-    public double [] getCostos(){
+    public double [] getPronosticarCostos(){
         //if (this.costosValorCentral==null)
         this.pronosticarCostos();
         return this.costos;
@@ -163,5 +163,8 @@ public class Costos {
     public void setCostos(double [] lista){
         this.costos = lista;
         this.setTipoCosto(Costos.COSTO_MANUAL);
+    }
+    public double [] getCostos(){
+        return this.costos;
     }
 }

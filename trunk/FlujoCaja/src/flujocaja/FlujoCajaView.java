@@ -241,7 +241,7 @@ public class FlujoCajaView extends FrameView {
             for(Gasto g : listaGastos){
                 iterador = g.getListaGastos();
                 if (iterador!=null)
-                    this.insertarFilaTablaPrincipal(g.getNombre(), g.getFactura(), iterador);
+                    this.insertarFilaTablaPrincipal(g.getNombreGasto(), g.getFactura(), iterador);
             }
         }
         //intereses
@@ -1935,7 +1935,7 @@ public class FlujoCajaView extends FrameView {
             for(Gasto g : listaGastos){
                 iterador = g.getListaGastos();
                 if (iterador!=null)
-                    this.insertarFilaTablaDatosExactos(g.getNombre(), g.getFactura(), iterador);
+                    this.insertarFilaTablaDatosExactos(g.getNombreGasto(), g.getFactura(), iterador);
             }
         }
         //intereses
@@ -2299,7 +2299,7 @@ public class FlujoCajaView extends FrameView {
             mCostos.setModeloPorcentual(mPorcentual);
             escenarioNormal.setModeloCostos(mCostos);
 
-            double [] listaCostos = mCostos.getCostos();
+            double [] listaCostos = mCostos.getPronosticarCostos();
             if (listaCostos!=null){
                 this.insertarFilaTablaPrincipal("Costos", mCostos.getFactura(),listaCostos);
             }
@@ -2315,7 +2315,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setFactura(true);
             temporal.setModeloPronosticacion(modeloR);
             this.escenarioNormal.setModeloCostos(temporal);
-            this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getCostos());
+            this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getPronosticarCostos());
         }        
     }
     
@@ -2326,7 +2326,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura() ,temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura() ,temporal.getListaGastos());
         }
     }
     
@@ -2336,7 +2336,7 @@ public class FlujoCajaView extends FrameView {
         if (temporal!=null){
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura() ,temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura() ,temporal.getListaGastos());
             this.escenarioNormal.insertarGasto(temporal);
         }
     }
@@ -2348,7 +2348,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
         }
     }
     
@@ -2359,7 +2359,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
         }
     }
     
@@ -2371,7 +2371,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
         }
     }
     
@@ -2383,7 +2383,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
-            this.insertarFilaTablaPrincipal(temporal.getNombre(), temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
         }
     }
 
@@ -2395,7 +2395,7 @@ public class FlujoCajaView extends FrameView {
 
             temporal.calcularGastos();
 
-            this.insertarFilaTablaPrincipal(temporal.getNombre(),temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(),temporal.getFactura(), temporal.getListaGastos());
             this.escenarioNormal.insertarGasto(temporal);
         }
     }
@@ -2407,12 +2407,12 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
 
             ModeloRegresion ventanaRegresion = new ModeloRegresion(null, true);
-            Modelo optimo = ventanaRegresion.determinarModeloOptimo("Gasto: "+temporal.getNombre());
+            Modelo optimo = ventanaRegresion.determinarModeloOptimo("Gasto: "+temporal.getNombreGasto());
 
             temporal.setModeloGastos(optimo);
             temporal.calcularGastos();
 
-            this.insertarFilaTablaPrincipal(temporal.getNombre(),temporal.getFactura(), temporal.getListaGastos());
+            this.insertarFilaTablaPrincipal(temporal.getNombreGasto(),temporal.getFactura(), temporal.getListaGastos());
             this.escenarioNormal.insertarGasto(temporal);
         }
     }
@@ -2437,7 +2437,7 @@ public class FlujoCajaView extends FrameView {
             mIngresos.setIngresosHistoricos(temp.getY());
             escenarioNormal.setModeloIngresos(mIngresos);
 
-            double [] listaIngresos = mIngresos.getIngresos();
+            double [] listaIngresos = mIngresos.getCalcularIngresos();
 
             if (listaIngresos!=null){
                 this.insertarFilaTablaPrincipal("Ingresos", listaIngresos);
@@ -2573,7 +2573,7 @@ public class FlujoCajaView extends FrameView {
             temporal.setFactura(true);
             temporal.setCostos(costos);
             this.escenarioNormal.setModeloCostos(temporal);
-            this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getCostos());
+            this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getPronosticarCostos());
         }
     }
 
@@ -2587,7 +2587,7 @@ public class FlujoCajaView extends FrameView {
                 temporal.setGastosManualmente(datos);
                 temporal.setPadre(escenarioNormal);
                 this.escenarioNormal.insertarGasto(temporal);
-                this.insertarFilaTablaPrincipal(temporal.getNombre(),temporal.getFactura(), temporal.getListaGastos());
+                this.insertarFilaTablaPrincipal(temporal.getNombreGasto(),temporal.getFactura(), temporal.getListaGastos());
             }
         }
     }
@@ -2598,10 +2598,10 @@ public class FlujoCajaView extends FrameView {
         if (datos!=null){
             Ingresos i = new Ingresos();
             i.setTipoIngreso(Ingresos.INGRESO_MANUAL);
-            i.setListaIngresos(datos);
+            i.setListaIngresosManualmente(datos);
             i.setPadre(escenarioNormal);
             escenarioNormal.setModeloIngresos(i);
-            this.insertarFilaTablaPrincipal("Ingresos",i.getIngresos());
+            this.insertarFilaTablaPrincipal("Ingresos",i.getCalcularIngresos());
         }
     }
 

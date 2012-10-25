@@ -1,8 +1,9 @@
 package Clases;
 
 import controlador.Escenario;
+import javax.xml.bind.annotation.XmlType;
 
-
+@XmlType
 public class Ingresos {
     
     public static int INGRESO_MODELO_PRONOSTICACION = 0;
@@ -73,11 +74,19 @@ public class Ingresos {
         this.modeloIngresos = val;
     }
     
+    public double[] getListaIngresos(){
+        return this.listaIngresos;
+    }
+    
+    public void setListaIngresos(double [] val){
+        this.listaIngresos = val;
+    }
+    
     public double [] getIngresosActuales(){
         return this.listaIngresos;
     }
 
-    public double [] getIngresos(){
+    public double [] getCalcularIngresos(){
         if (this.tipoIngreso==Ingresos.INGRESO_MODELO_PRONOSTICACION){
             this.pronosticarIngresos();
         }
@@ -89,7 +98,7 @@ public class Ingresos {
             this.listaIngresos = this.modeloIngresos.estimarValores(this.padre.getNumeroPeriodos());
     }
 
-    public void setListaIngresos(double[] datos) {
+    public void setListaIngresosManualmente(double[] datos) {
         this.tipoIngreso = INGRESO_MANUAL;
         this.listaIngresos = datos;
     }

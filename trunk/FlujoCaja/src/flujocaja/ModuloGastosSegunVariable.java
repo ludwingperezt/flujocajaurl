@@ -41,7 +41,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
         
         if (modeloGasto!=null){
             EstimacionPorcentual epc = new EstimacionPorcentual(null, true);
-            ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombre());
+            ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombreGasto());
 
             if (modelo!=null)
                 this.modeloGasto.setModeloPorcentual(modelo);        
@@ -59,7 +59,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
         this.setVisible(true);
         
         EstimacionPorcentual epc = new EstimacionPorcentual(null, true);
-        ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombre());
+        ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombreGasto());
         
         if (modelo!=null)
             this.modeloGasto.setModeloPorcentual(modelo);        
@@ -77,7 +77,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
         this.setVisible(true);
         
         EstimacionPorcentual epc = new EstimacionPorcentual(null, true);
-        ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombre());
+        ModeloPorcentual modelo = epc.estimarPorcentaje("Gasto: "+this.modeloGasto.getNombreGasto());
         
         if (modelo!=null){
             this.modeloGasto.setModeloPorcentual(modelo);       
@@ -335,7 +335,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.modeloGasto = new Gasto();
-        this.modeloGasto.setNombre(jTextField1.getText());
+        this.modeloGasto.setNombreGasto(jTextField1.getText());
         this.modeloGasto.setCantidadPeriodos(Integer.parseInt(periodos.getText()));
         if (porcentualAIngresos.isSelected())
             this.modeloGasto.setTipoGasto(Gasto.GASTO_SEGUN_INGRESOS);
