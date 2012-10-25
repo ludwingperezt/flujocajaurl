@@ -6,11 +6,13 @@
 package Clases;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ludwing
  */
+@XmlType
 public class Modelos {
 
     private ArrayList<Modelo> listaModelos;
@@ -72,10 +74,14 @@ public class Modelos {
     {
         return this.nombreVariable;
     }
-    public ArrayList<Modelo> getModelos()
+    public ArrayList<Modelo> getListaModelos()
     {
         return this.listaModelos;
     }
+    public void setListaModelos(ArrayList<Modelo> val){
+        this.listaModelos = val;
+    }
+    
     public Modelo obtenerMejorModelo()
     {
         double SxyMenor = listaModelos.get(0).getSxy();

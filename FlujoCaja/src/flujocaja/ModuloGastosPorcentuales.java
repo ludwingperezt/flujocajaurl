@@ -256,7 +256,7 @@ public class ModuloGastosPorcentuales extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.modeloGasto = new Gasto();
-        this.modeloGasto.setNombre(jTextField1.getText());
+        this.modeloGasto.setNombreGasto(jTextField1.getText());
         this.modeloGasto.setBase(Double.parseDouble(jTextField2.getText()));
         this.modeloGasto.setTasaIncremento(Double.parseDouble(jTextField3.getText())/100);
         this.modeloGasto.setCantidadPeriodos(Integer.parseInt(jTextField4.getText()));

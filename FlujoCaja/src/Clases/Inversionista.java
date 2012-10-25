@@ -1,6 +1,8 @@
 package Clases;
 
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType
 public class Inversionista {
 
     protected static double inflacion = 0.09;

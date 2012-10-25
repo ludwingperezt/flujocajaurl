@@ -2,8 +2,9 @@ package Clases;
 
 import controlador.Escenario;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlType;
 
-
+@XmlType
 public class ISR {
 
     public static double TASA_PERMITIDA = 0.97;
@@ -42,6 +43,8 @@ public class ISR {
 
     private double escala; //esta escala
 
+    
+
     public ISR () {
     }
 
@@ -67,6 +70,14 @@ public class ISR {
         if (base.egresosDeducibles97!=null)
             this.egresosDeducibles97 = base.egresosDeducibles97.clone();
         this.escala = base.escala;
+    }
+    
+    public void setEscala(double escala) {
+        this.escala = escala;
+    }
+
+    public double getEscala() {
+        return escala;
     }
     
     public void setPadre(Escenario val){
@@ -121,13 +132,19 @@ public class ISR {
         return egresos;
     }
     
-    public double[] getIngresos () {
-        return ingresos;
-    }
-
     public void setEgresos (double[] val) {
         this.egresos = val;
     }
+    
+    public double[] getIngresos () {
+        return ingresos;
+    }
+    
+    public void setIngresos(double [] val){
+        this.ingresos = val;
+    }
+
+    
 
     public double[] getEgresosDeducibles97 () {
         return egresosDeducibles97;
@@ -173,7 +190,7 @@ public class ISR {
         this.egresosDeducibles97 = new double[periodos];
         this.porcentajeUtilidad = new double[periodos];
         this.regimen = new double[periodos];
-        this.ingresos = this.padre.getModeloIngresos().getIngresos();
+        this.ingresos = this.padre.getModeloIngresos().getCalcularIngresos();
         
         calcularDeducibles();
         calcularUAI();
@@ -203,7 +220,7 @@ public class ISR {
     private void calcularDeducibles(){
         if (this.padre.getDatosNetos()){ //si las cantidades son netas
             this.egresos = new double[this.padre.getNumeroPeriodos()];
-            double [] costos = this.padre.getModeloCostos().getCostos();
+            double [] costos = this.padre.getModeloCostos().getPronosticarCostos();
             ArrayList<Gasto> listaGastos = this.padre.getListaGastos();
             ArrayList<Intereses> listaIntereses = this.padre.getListaIntereses();
             for (int i=0; i<egresos.length; i++){
@@ -225,7 +242,7 @@ public class ISR {
             this.egresos = new double[this.padre.getNumeroPeriodos()];
             
             double [] costosSinFactura = new double[this.egresos.length];
-            double [] costos = this.padre.getModeloCostos().getCostos();
+            double [] costos = this.padre.getModeloCostos().getPronosticarCostos();
             
             ArrayList<Gasto> listaGastos = this.padre.getListaGastos();
             ArrayList<Intereses> listaIntereses = this.padre.getListaIntereses();
@@ -260,7 +277,7 @@ public class ISR {
     }
 
     private void calcularUAI(){
-        //this.ingresos = this.padre.getModeloIngresos().getIngresos();
+        //this.ingresos = this.padre.getModeloIngresos().getCalcularIngresos();
         for (int i=0; i<this.egresos.length;i++){
             if (this.padre.getDatosNetos())
                 this.UAI[i] = ingresos[i]-egresos[i];

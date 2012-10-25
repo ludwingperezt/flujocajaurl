@@ -236,7 +236,7 @@ public class ModuloGastosCoutaFija extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.modeloGasto = new Gasto();
-        modeloGasto.setNombre(jTextField1.getText());
+        modeloGasto.setNombreGasto(jTextField1.getText());
         modeloGasto.setCouta(Double.parseDouble(jTextField2.getText()));
         modeloGasto.setCantidadPeriodos(Integer.parseInt(jTextField3.getText()));
         modeloGasto.setFactura(jRadioButton1.isSelected());

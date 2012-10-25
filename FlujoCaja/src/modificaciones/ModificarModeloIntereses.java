@@ -44,10 +44,10 @@ public class ModificarModeloIntereses extends javax.swing.JDialog {
             entidadNoSupervisada.setSelected(false);
         
         monto.setText(Double.toString(modificado.getMonto()));
-        periodos.setText(Integer.toString(modificado.getPlazo()));
+        periodos.setText(Integer.toString(modificado.getPlazoInt()));
         interes.setText(Double.toString(modificado.getTasaInteres()*100));
-        capitalizaciones.setText(Integer.toString(modificado.getCapitalizaciones()));
-        cantidadPagos.setText(Integer.toString(modificado.getNumeroPagosAnuales()));
+        capitalizaciones.setText(Integer.toString(modificado.getCapitalizacionesInt()));
+        cantidadPagos.setText(Integer.toString(modificado.getNumeroPagosAnualesInt()));
         
         this.rellenarTabla();
         
@@ -61,7 +61,7 @@ public class ModificarModeloIntereses extends javax.swing.JDialog {
     private void rellenarTabla(){
         double [] cuotas = modificado.getListaCuotasAnuales();
         int [] anios = escenarioNormal.getListaAnios();
-        Object [] fila = new Object[modificado.getNumeroPagosAnuales()];
+        Object [] fila = new Object[modificado.getNumeroPagosAnualesInt()];
         
         DefaultTableModel modelo = new DefaultTableModel();
         for (int i=0; i<cuotas.length; i++){
@@ -299,10 +299,10 @@ public class ModificarModeloIntereses extends javax.swing.JDialog {
     private void niveladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_niveladaActionPerformed
         // TODO add your handling code here:
         modificado.setMonto(Double.parseDouble(monto.getText()));
-        modificado.setPlazo(Integer.parseInt(periodos.getText()));
+        modificado.setPlazoInt(Integer.parseInt(periodos.getText()));
         modificado.setTasaInteres(Double.parseDouble(interes.getText())/100);
-        modificado.setCapitalizaciones(Integer.parseInt(capitalizaciones.getText()));
-        modificado.setNumeroPagosAnuales(Integer.parseInt(cantidadPagos.getText()));
+        modificado.setCapitalizacionesInt(Integer.parseInt(capitalizaciones.getText()));
+        modificado.setNumeroPagosAnualesInt(Integer.parseInt(cantidadPagos.getText()));
         modificado.setEntidadSupervisada(entidadSupervisada.isSelected());
         modificado.setTipoCuota(true);
         jLabel1.setText("Cuotas niveladas");
@@ -313,10 +313,10 @@ public class ModificarModeloIntereses extends javax.swing.JDialog {
     private void noNiveladasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noNiveladasActionPerformed
         // TODO add your handling code here:
         modificado.setMonto(Double.parseDouble(monto.getText()));
-        modificado.setPlazo(Integer.parseInt(periodos.getText()));
+        modificado.setPlazoInt(Integer.parseInt(periodos.getText()));
         modificado.setTasaInteres(Double.parseDouble(interes.getText())/100);
-        modificado.setCapitalizaciones(Integer.parseInt(capitalizaciones.getText()));
-        modificado.setNumeroPagosAnuales(Integer.parseInt(cantidadPagos.getText()));
+        modificado.setCapitalizacionesInt(Integer.parseInt(capitalizaciones.getText()));
+        modificado.setNumeroPagosAnualesInt(Integer.parseInt(cantidadPagos.getText()));
         modificado.setEntidadSupervisada(entidadSupervisada.isSelected());
         modificado.setTipoCuota(false);
         jLabel1.setText("Cuotas no niveladas");

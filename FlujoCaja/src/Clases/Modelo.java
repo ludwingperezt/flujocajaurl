@@ -1,5 +1,6 @@
 package Clases;
 
+import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.DecompositionSolver;
@@ -7,7 +8,7 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-
+@XmlType
 public class Modelo {
     
     public static double CONFIANZA_90 = 1.65;
@@ -85,7 +86,6 @@ public class Modelo {
             this.limiteSuperior = base.limiteSuperior.clone();
     }
     
-
     public Modelo (double[]x,double[]y,int tipoCorrelacion) throws Exception {
         this.calcularVarianzas(x, y, tipoCorrelacion);
     }
@@ -182,6 +182,38 @@ public class Modelo {
     public void setC(double c)
     {
         this.c = c;
+    }
+    
+    public double[] getLimiteInferior() {
+        return limiteInferior;
+    }
+
+    public void setLimiteInferior(double[] limiteInferior) {
+        this.limiteInferior = limiteInferior;
+    }
+
+    public double[] getLimiteSuperior() {
+        return limiteSuperior;
+    }
+
+    public void setLimiteSuperior(double[] limiteSuperior) {
+        this.limiteSuperior = limiteSuperior;
+    }
+
+    public double getPorcentajeConfianza() {
+        return porcentajeConfianza;
+    }
+
+    public void setPorcentajeConfianza(double porcentajeConfianza) {
+        this.porcentajeConfianza = porcentajeConfianza;
+    }
+
+    public double[] getValorCentral() {
+        return valorCentral;
+    }
+
+    public void setValorCentral(double[] valorCentral) {
+        this.valorCentral = valorCentral;
     }
 
     public void setConfianza(double confianza){

@@ -1,39 +1,48 @@
 package Clases;
 
 import controlador.Escenario;
+import javax.xml.bind.annotation.XmlType;
 
-
+@XmlType
 public class Intereses {
 
-    private static int ID = 0;    
+    private static int ID = 0;
+
+    public static int getID() {
+        return ID;
+    }
+
+    public static void setID(int ID) {
+        Intereses.ID = ID;
+    }
     
-    private double monto;
+    private double monto; //
 
-    private double tasaInteres;
+    private double tasaInteres; //
 
-    private double plazo;
+    private double plazo; //
 
-    private double capitalizaciones;
+    private double capitalizaciones; //
 
-    private double numeroPagosAnuales;
+    private double numeroPagosAnuales; //
 
-    private double factorI;
+    private double factorI; //    
 
-    private double renta;
+    private double renta; //
 
-    private double amortizacion;    
-    
-    private double [] resumenInteresesAnualesCuotaNivelada;
+    private double amortizacion; //
 
-    private double [] resumenInteresesAnualesCuotaNoNivelada;
+    private double [] resumenInteresesAnualesCuotaNivelada; //
 
-    private boolean cuotaNivelada;
+    private double [] resumenInteresesAnualesCuotaNoNivelada; //
 
-    private boolean entidadSupervisada;
+    private boolean cuotaNivelada; //
+   
+    private boolean entidadSupervisada; //
 
-    private int pagos;
-    private Escenario padre;
-    private String nombre;
+    private int pagos; //
+    private Escenario padre; //
+    private String nombre; //
 
     public Intereses () {
         this.nombre = "Prestamo"+Integer.toString(ID);
@@ -75,14 +84,85 @@ public class Intereses {
     public void setEntidadSupervisada(boolean val){
         this.entidadSupervisada = val;
     }
-    public int getCapitalizaciones () {
+    
+    public void setCuotaNivelada(boolean cuotaNivelada) {
+        this.cuotaNivelada = cuotaNivelada;
+    }
+
+    public boolean getCuotaNivelada() {
+        return cuotaNivelada;
+    }
+
+    public void setPadre(Escenario modelo) {
+        this.padre = modelo;
+    }
+    public Escenario getPadre(){
+        return this.padre;
+    }
+    
+    public void setPagos(int val){
+        this.pagos = val;
+    }
+    
+    public int getPagos(){
+        return this.pagos;
+    }
+    
+    public void setResumenInteresesAnualesCuotaNivelada(double[] val) {
+        this.resumenInteresesAnualesCuotaNivelada = val;
+    }
+
+    public void setResumenInteresesAnualesCuotaNoNivelada(double[] val) {
+        this.resumenInteresesAnualesCuotaNoNivelada = val;
+    }
+
+    public double[] getResumenInteresesAnualesCuotaNivelada() {
+        return resumenInteresesAnualesCuotaNivelada;
+    }
+
+    public double[] getResumenInteresesAnualesCuotaNoNivelada() {
+        return resumenInteresesAnualesCuotaNoNivelada;
+    }
+
+    public void setFactorI(double factorI) {
+        this.factorI = factorI;
+    }
+
+    public double getFactorI() {
+        return factorI;
+    }
+    
+    /**
+     * Indica si se utilizará cuota nivelada o no nivelada
+     * @param val True: para indicar que es cuota nivelada. False si es cuota no nivelada
+     */
+    public void setTipoCuota(boolean val){
+        this.cuotaNivelada = val;
+    }
+    /**
+     * Indica que tipo de cuota se está utilizando: nivelada o no nivelada
+     * @return True: si la cuota es nivelada, False si es cuota no nivelada
+     */
+    public boolean getTipoCuota(){
+        return this.cuotaNivelada;
+    }
+    
+    public int getCapitalizacionesInt () {
         return (int)capitalizaciones;
     }
 
-    public void setCapitalizaciones (int val) {
+    public void setCapitalizacionesInt (int val) {
         this.capitalizaciones = (double)val;
     }
 
+    public double getCapitalizaciones(){
+        return this.capitalizaciones;
+    }
+    
+    public void setCapitalizaciones(double val){
+        this.capitalizaciones = val;
+    }
+    
     public double getMonto () {
         return monto;
     }
@@ -91,20 +171,36 @@ public class Intereses {
         this.monto = val;
     }
 
-    public int getNumeroPagosAnuales () {
+    public int getNumeroPagosAnualesInt () {
         return (int)numeroPagosAnuales;
     }
 
-    public void setNumeroPagosAnuales (int val) {
+    public void setNumeroPagosAnualesInt (int val) {
         this.numeroPagosAnuales = (double)val;
     }
 
-    public int getPlazo () {
+    public double getNumeroPagosAnuales(){
+        return this.numeroPagosAnuales;
+    }
+    
+    public void setNumeroPagosAnuales(double val){
+        this.numeroPagosAnuales = val;
+    }
+    
+    public int getPlazoInt () {
         return (int)plazo;
     }
 
-    public void setPlazo (int val) {
+    public void setPlazoInt (int val) {
         this.plazo = (double)val;
+    }
+    
+    public double getPlazo(){
+        return this.plazo;
+    }
+    
+    public void setPlazo(double val){
+        this.plazo = val;
     }
 
     public double getTasaInteres () {
@@ -119,10 +215,18 @@ public class Intereses {
     {
         return this.renta;
     }
+    
+    public void setRenta(double val){
+        this.renta = val;
+    }
 
     public double getAmortizacion()
     {
         return this.amortizacion;
+    }
+    
+    public void setAmortizacion(double val) {
+        this.amortizacion = val;
     }
 
     public double [] getPagosAnualesInteresesCuotaNoNivelada()
@@ -283,20 +387,7 @@ public class Intereses {
     private void calcularFactorI() {
         this.factorI = Math.pow((1+(tasaInteres/capitalizaciones)), (capitalizaciones/numeroPagosAnuales))- 1;
     }
-    /**
-     * Indica si se utilizará cuota nivelada o no nivelada
-     * @param val True: para indicar que es cuota nivelada. False si es cuota no nivelada
-     */
-    public void setTipoCuota(boolean val){
-        this.cuotaNivelada = val;
-    }
-    /**
-     * Indica que tipo de cuota se está utilizando: nivelada o no nivelada
-     * @return True: si la cuota es nivelada, False si es cuota no nivelada
-     */
-    public boolean getTipoCuota(){
-        return this.cuotaNivelada;
-    }
+    
 
     /**
      * Este método retorna la lista de cuotas a pagar por intereses seleccionando automaticamente que tipo de cuota se eligió para el préstamo
@@ -317,12 +408,7 @@ public class Intereses {
             return this.resumenInteresesAnualesCuotaNoNivelada;
     }
 
-    public void setPadre(Escenario modelo) {
-        this.padre = modelo;
-    }
-    public Escenario getPadre(){
-        return this.padre;
-    }
+    
 
 
 }

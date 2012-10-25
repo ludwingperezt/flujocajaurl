@@ -2,8 +2,20 @@ package controlador;
 import Clases.*;
 import Financieras.TIR;
 import Financieras.VAN;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Escenario {
     
     public static int INVERSION_INICIAL_MANUAL = 0;
@@ -142,10 +154,10 @@ public class Escenario {
             for (Gasto g:this.listaGastos){
                 if (g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO){
                 //if (g.getGastoBase()!=null){
-                    String nombre = g.getGastoBase().getNombre();
+                    String nombre = g.getGastoBase().getNombreGasto();
                     Gasto t = null;
                     for (Gasto k:this.listaGastos){
-                        if (k.getNombre().equals(nombre)){
+                        if (k.getNombreGasto().equals(nombre)){
                             t = k;
                             break;
                         }
@@ -193,6 +205,7 @@ public class Escenario {
     
     public void setModeloISO(ISO modelo){
         this.modeloISO=modelo;
+        this.modeloISO.setPadre(this);
     }
     
     public ISO getModeloISO(){
@@ -249,6 +262,7 @@ public class Escenario {
 
     public void setModeloISR(ISR modelo){
         this.modeloISR = modelo;
+        this.modeloISO.setPadre(this);
     }
 
     public ISR getModeloISR(){
@@ -358,7 +372,7 @@ public class Escenario {
      * @return 
      */
     public double[] ingresos(){
-        return this.modeloIngresos.getIngresos();
+        return this.modeloIngresos.getCalcularIngresos();
     }
 
     /**
@@ -366,7 +380,7 @@ public class Escenario {
      * @return 
      */
     public double[] costos(){
-        return this.modeloCostos.getCostos();
+        return this.modeloCostos.getPronosticarCostos();
     }
     
     
@@ -387,8 +401,8 @@ public class Escenario {
 
     public double[] utilidadBruta() {
         this.utilidadBruta = new double[this.getNumeroPeriodos()];
-        double [] ingresos = this.modeloIngresos.getIngresos();
-        double [] costos = this.modeloCostos.getCostos();
+        double [] ingresos = this.modeloIngresos.getCalcularIngresos();
+        double [] costos = this.modeloCostos.getPronosticarCostos();
         for (int i=0; i<this.getNumeroPeriodos(); i++){
             utilidadBruta[i]=ingresos[i]-costos[i];
         }
@@ -424,7 +438,7 @@ public class Escenario {
                     egresos[i] += gastos[i];
             }
         }
-        this.modeloIVA.calcularIVA(this.modeloIngresos.getIngresos(), egresos);
+        this.modeloIVA.calcularIVA(this.modeloIngresos.getCalcularIngresos(), egresos);
         return this.modeloIVA.getIVAPorPagar();
     }
 
@@ -537,7 +551,7 @@ public class Escenario {
     public boolean gastoValido(String nombre) {
         boolean bandera = false;
         for (Gasto g:listaGastos){
-            if (nombre.equals(g.getNombre())){
+            if (nombre.equals(g.getNombreGasto())){
                 bandera = true;
                 break;
             }
@@ -548,7 +562,7 @@ public class Escenario {
     public Gasto obtenerGasto(String nombre) {
         Gasto temporal = null;
         for(Gasto g:listaGastos){
-            if (nombre.equals(g.getNombre())){
+            if (nombre.equals(g.getNombreGasto())){
                 temporal = g;
                 break;
             }
@@ -607,6 +621,10 @@ public class Escenario {
         return this.escudosFiscales;
     }
     
+    public void setEscudosFiscales(double [] eFiscales){
+        this.escudosFiscales = eFiscales;
+    }
+    
     /**
      * Devuelve los valores de flujo de efectivo neto, sin realizar operaciones, es decir los valores actuales
      * @return 
@@ -615,12 +633,20 @@ public class Escenario {
         return this.FEN;
     }
     
+    public void setFEN(double [] val){
+        this.FEN = val;
+    }
+    
     /**
      * Devuelve los valores de valor actual neto, sin realizar operaciones, es decir los valores actuales
      * @return 
      */
     public double [] getVAN(){
         return this.VAN;
+    }
+    
+    public void setVAN(double [] van){
+        this.VAN = van;
     }
     
     /**
@@ -791,6 +817,41 @@ public class Escenario {
      */
     public void removerPrestamo(Intereses val) {
         listaIntereses.remove(val);
+    }
+    
+    public void serializarAXML(String direccion){
+        FileOutputStream archivo = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(Escenario.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            archivo = new FileOutputStream(direccion);            
+            //guardamos el objeto serializado en un documento XML
+            marshaller.marshal(this, archivo);
+             
+            archivo.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JAXBException ex) {
+            Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+        
+    }
+    
+    public static Escenario deserializarDeXML(String direccion){
+        Escenario escenario = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(Escenario.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            //Deserealizamos a partir de un documento XML
+            escenario = (Escenario) unmarshaller.unmarshal(new File(direccion));            
+        } catch (JAXBException ex) {
+            Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return escenario;
     }
 }
 

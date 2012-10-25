@@ -1,8 +1,9 @@
 package Clases;
 
 import java.text.NumberFormat;
+import javax.xml.bind.annotation.XmlType;
 
-
+@XmlType
 public class ModeloPorcentual {
 
     private double[] x;
@@ -48,6 +49,10 @@ public class ModeloPorcentual {
     public double getPromedio () {
         return promedio;
     }
+    
+    public void setPromedio(double val){
+        this.promedio = val;
+    }
 
     /**
      * Ésta función se debe utilizar para establecer de manera manual el porcentaje.
@@ -56,7 +61,7 @@ public class ModeloPorcentual {
      * Si se utiliza ésta función para establecer un porcentaje manual, se establecerá la propiedad ingresoManual = true
      * @param val 
      */
-    public void setPromedio (double val) {
+    public void setPromedioManual (double val) {
         this.promedio = val;
         this.ingresoManual = true;
     }

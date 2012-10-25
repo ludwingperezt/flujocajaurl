@@ -222,7 +222,7 @@ public class ModuloGastosPorModelo extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.modeloGasto = new Gasto();
-        this.modeloGasto.setNombre(jTextField1.getText());
+        this.modeloGasto.setNombreGasto(jTextField1.getText());
         this.modeloGasto.setCantidadPeriodos(Integer.parseInt(jTextField2.getText()));
         this.modeloGasto.setFactura(jRadioButton1.isSelected());
         this.modeloGasto.setEscudoFiscal(escudoFiscal.isSelected());

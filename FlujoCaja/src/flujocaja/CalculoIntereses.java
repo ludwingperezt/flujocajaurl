@@ -366,10 +366,10 @@ public class CalculoIntereses extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.estimadorIntereses = new Intereses();
         estimadorIntereses.setMonto(Double.parseDouble(jTextField1.getText()));
-        estimadorIntereses.setPlazo(Integer.parseInt(jTextField2.getText()));
+        estimadorIntereses.setPlazoInt(Integer.parseInt(jTextField2.getText()));
         estimadorIntereses.setTasaInteres(Double.parseDouble(jTextField3.getText())/100);
-        estimadorIntereses.setCapitalizaciones(Integer.parseInt(jTextField4.getText()));
-        estimadorIntereses.setNumeroPagosAnuales(Integer.parseInt(jTextField5.getText()));
+        estimadorIntereses.setCapitalizacionesInt(Integer.parseInt(jTextField4.getText()));
+        estimadorIntereses.setNumeroPagosAnualesInt(Integer.parseInt(jTextField5.getText()));
         estimadorIntereses.setEntidadSupervisada(jRadioButton1.isSelected());
         this.rellenarTablas();
     }//GEN-LAST:event_jButton1ActionPerformed
