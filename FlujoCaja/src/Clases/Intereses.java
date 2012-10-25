@@ -1,9 +1,7 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class Intereses {
 
     private static int ID = 0;

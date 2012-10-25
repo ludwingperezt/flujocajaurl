@@ -6,13 +6,12 @@
 package Clases;
 
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ludwing
  */
-@XmlType
+
 public class Modelos {
 
     private ArrayList<Modelo> listaModelos;

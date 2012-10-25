@@ -123,6 +123,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jButton1" alignment="0" max="32767" attributes="1"/>
                                       <Component id="botonTMAR1" alignment="0" max="32767" attributes="1"/>
                                       <Component id="calcularVAN" alignment="0" max="32767" attributes="1"/>
                                       <Component id="utilidadNeta" alignment="0" max="32767" attributes="1"/>
@@ -136,7 +137,7 @@
                                       <Component id="calcularISR" alignment="1" max="32767" attributes="1"/>
                                       <Component id="calcularUtilidaBruta" alignment="0" max="32767" attributes="1"/>
                                       <Component id="flujoEfectivoNeto" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="calcularTodo" alignment="0" min="-2" max="-2" attributes="1"/>
+                                      <Component id="calcularTodo" alignment="0" max="32767" attributes="1"/>
                                   </Group>
                                   <EmptySpace pref="20" max="32767" attributes="0"/>
                               </Group>
@@ -173,7 +174,9 @@
                                   <Component id="calcularVAN" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="calcularTodo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="15" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -303,6 +306,15 @@
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonTMAR1ActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="jButton1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+                            <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -523,8 +535,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="empresaNueva" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empresaNoNueva" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionEmpresaNueva" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionEmpresaNoNueva" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="36" max="32767" attributes="0"/>
                           </Group>
@@ -533,38 +545,38 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="empresaNueva" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionEmpresaNueva" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="empresaNoNueva" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionEmpresaNoNueva" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JRadioButton" name="empresaNueva">
+                    <Component class="javax.swing.JRadioButton" name="opcionEmpresaNueva">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup3"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" resourceKey="empresaNueva.text"/>
-                        <Property name="name" type="java.lang.String" value="empresaNueva" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionEmpresaNueva.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionEmpresaNueva" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empresaNuevaActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionEmpresaNuevaActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="empresaNoNueva">
+                    <Component class="javax.swing.JRadioButton" name="opcionEmpresaNoNueva">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup3"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="empresaNoNueva.text"/>
-                        <Property name="name" type="java.lang.String" value="empresaNoNueva" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionEmpresaNoNueva.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionEmpresaNoNueva" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empresaNoNuevaActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionEmpresaNoNuevaActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -647,44 +659,44 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ISRaISO" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ISOaISR" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="opcionISRaISO" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="opcionISOaISR" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="ISOaISR" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionISOaISR" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="ISRaISO" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionISRaISO" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JRadioButton" name="ISOaISR">
+                    <Component class="javax.swing.JRadioButton" name="opcionISOaISR">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup5"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" resourceKey="ISOaISR.text"/>
-                        <Property name="name" type="java.lang.String" value="ISOaISR" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionISOaISR.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionISOaISR" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ISOaISRActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionISOaISRActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="ISRaISO">
+                    <Component class="javax.swing.JRadioButton" name="opcionISRaISO">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup5"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="ISRaISO.text"/>
-                        <Property name="name" type="java.lang.String" value="ISRaISO" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionISRaISO.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionISRaISO" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ISRaISOActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionISRaISOActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -870,10 +882,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="inversionMasActivos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="soloInversion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="soloActivos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="manual" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionInversionMasActivos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionSoloInversion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionSoloActivos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="opcionManual" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="1">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -887,13 +899,13 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="inversionMasActivos" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionInversionMasActivos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="soloInversion" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionSoloInversion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="soloActivos" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionSoloActivos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="manual" min="-2" max="-2" attributes="0"/>
+                              <Component id="opcionManual" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -905,53 +917,53 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JRadioButton" name="inversionMasActivos">
+                    <Component class="javax.swing.JRadioButton" name="opcionInversionMasActivos">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup7"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" resourceKey="inversionMasActivos.text"/>
-                        <Property name="name" type="java.lang.String" value="inversionMasActivos" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionInversionMasActivos.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionInversionMasActivos" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inversionMasActivosActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionInversionMasActivosActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="soloInversion">
+                    <Component class="javax.swing.JRadioButton" name="opcionSoloInversion">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup7"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="soloInversion.text"/>
-                        <Property name="name" type="java.lang.String" value="soloInversion" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionSoloInversion.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionSoloInversion" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soloInversionActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionSoloInversionActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="soloActivos">
+                    <Component class="javax.swing.JRadioButton" name="opcionSoloActivos">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup7"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="soloActivos.text"/>
-                        <Property name="name" type="java.lang.String" value="soloActivos" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionSoloActivos.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionSoloActivos" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soloActivosActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionSoloActivosActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="manual">
+                    <Component class="javax.swing.JRadioButton" name="opcionManual">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup7"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="manual.text"/>
-                        <Property name="name" type="java.lang.String" value="manual" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="opcionManual.text"/>
+                        <Property name="name" type="java.lang.String" value="opcionManual" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manualActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcionManualActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -1219,13 +1231,28 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="establecerPeriodoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+            <MenuItem class="javax.swing.JMenuItem" name="menuAbrir">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jMenuItem9.text"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem9" noResource="true"/>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+A"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="menuAbrir.text"/>
+                <Property name="name" type="java.lang.String" value="menuAbrir" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAbrirActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuGuardar">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+G"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="menuGuardar.text"/>
+                <Property name="name" type="java.lang.String" value="menuGuardar" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuGuardarActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
@@ -1271,6 +1298,18 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCantidadesExactasActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuRecargar">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+R"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="menuRecargar.text"/>
+                <Property name="name" type="java.lang.String" value="menuRecargar" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuRecargarActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -1,9 +1,7 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class ISO {
 
     public static int ISO_ACREDITABLE_ISR = 0;

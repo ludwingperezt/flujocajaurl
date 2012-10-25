@@ -6,13 +6,13 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
+
 
 /**
  *
  * @author ludwing
  */
-@XmlType
+
 public class IVA {
 
     private Escenario padre;

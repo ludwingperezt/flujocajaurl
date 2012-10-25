@@ -7,13 +7,13 @@ package Clases;
 
 import controlador.Escenario;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlType;
+
 
 /**
  *
  * @author ludwing
  */
-@XmlType
+
 public class Inversionistas {
 
     private Escenario padre;
@@ -80,5 +80,12 @@ public class Inversionistas {
 
     public void vaciarListaInversionistas() {
         this.listaInversionistas.clear();
+    }
+
+    public void insertarInversionista(String nombre, double participacion, double riesgo, double inflacion) {
+        Inversionista temp = new Inversionista();
+        temp.setTasaInflacion(inflacion);
+        temp.calcularDatos(nombre, participacion/100, riesgo/100);
+        this.listaInversionistas.add(temp);
     }
 }

@@ -1,8 +1,6 @@
 package Clases;
 
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class Inversionista {
 
     protected static double inflacion = 0.09;
@@ -16,6 +14,8 @@ public class Inversionista {
     private double tmar;
 
     private double tmarPonderada;
+    
+    private double tasaInflacion;
 
     public Inversionista () {
     }
@@ -26,6 +26,8 @@ public class Inversionista {
         this.riesgo = base.riesgo;
         this.tmar = base.tmar;
         this.tmarPonderada = base.tmarPonderada;
+        this.tasaInflacion = base.tasaInflacion;
+        Inversionista.inflacion = base.tasaInflacion;
     }
 
     public static double getInflacion () {
@@ -83,6 +85,15 @@ public class Inversionista {
         this.setRiesgo(riesgo);
         this.tmar = riesgo + Inversionista.inflacion + (riesgo*Inversionista.inflacion);
         this.tmarPonderada = tmar * participacion;
+    }
+
+    public void setTasaInflacion(double inflacion) {
+        this.tasaInflacion = inflacion;
+        Inversionista.inflacion = inflacion;
+    }
+    
+    public double getTasaInflacion(){
+        return this.tasaInflacion;
     }
    
 }

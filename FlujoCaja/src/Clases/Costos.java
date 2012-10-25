@@ -6,13 +6,13 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
+
 
 /**
  *
  * @author ludwing
  */
-@XmlType
+
 public class Costos {
 
     public static int COSTO_PORCENTUAL = 0;

@@ -1,9 +1,7 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class Gasto {
 
     public static int GASTO_ESCALONADO = 0;
