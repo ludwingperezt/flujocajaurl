@@ -2,9 +2,9 @@ package Clases;
 
 import controlador.Escenario;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
+
+
 public class ISR {
 
     public static double TASA_PERMITIDA = 0.97;

@@ -1,9 +1,7 @@
 package Clases;
 
 import java.text.NumberFormat;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class ModeloPorcentual {
 
     private double[] x;

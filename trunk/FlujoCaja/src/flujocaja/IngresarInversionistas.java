@@ -60,7 +60,7 @@ public class IngresarInversionistas extends javax.swing.JDialog {
                     String nombre = modelo.getValueAt(i, 0).toString();
                     double participacion = new Double(modelo.getValueAt(i, 2).toString());
                     double riesgo = new Double(modelo.getValueAt(i, 1).toString());
-                    listaInversionistas.insertarInversionista(nombre, participacion, riesgo);
+                    listaInversionistas.insertarInversionista(nombre, participacion, riesgo, Inversionista.getInflacion());
                 }
                 listaInversionistas.obtenerSumaTmarPonderada();
                 return true;

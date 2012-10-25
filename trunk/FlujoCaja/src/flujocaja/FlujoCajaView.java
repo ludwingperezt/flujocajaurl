@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modificaciones.ModificarModeloCostos;
@@ -185,10 +186,25 @@ public class FlujoCajaView extends FrameView {
     }
     
 
+    private void setOpcionesDeEscenario(){
+        this.escenarioNormal.setEmpresaNueva(opcionEmpresaNueva.isSelected());
+        this.escenarioNormal.setPatenteDeComercio(opcionPatente.isSelected());
+        this.escenarioNormal.setDatosNetos(opcionDatosNetos.isSelected());
+        this.escenarioNormal.setEmpresaIndividual(opcionEmpresaIndividual.isSelected());
+        
+        if (opcionInversionMasActivos.isSelected())
+            this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_ACTIVOS_MAS_PRESTAMOS);
+        else if (opcionSoloInversion.isSelected())
+            this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_SOLO_PRESTAMOS);
+        else if (opcionSoloActivos.isSelected())
+            this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_SOLO_ACTIVOS);
+        else if (opcionManual.isSelected())
+            this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_MANUAL);
+    }
+    
     private void recargarDatos(){
         ///// PARTE DE ESTABLECIMIENTO DE CARACTERISTICAS GENERALES
-        this.escenarioNormal.setEmpresaNueva(empresaNueva.isSelected());
-        this.escenarioNormal.setPatenteDeComercio(opcionPatente.isSelected());
+        this.setOpcionesDeEscenario();
         
         if (this.escenarioNormal.ivaCalculado())
             this.escenarioNormal.setDatosNetos(opcionDatosNetos.isSelected());
@@ -197,7 +213,7 @@ public class FlujoCajaView extends FrameView {
             this.escenarioNormal.setEmpresaIndividual(opcionEmpresaIndividual.isSelected());
             
             if (this.escenarioNormal.ISOcalculado()){
-                if (ISOaISR.isSelected())
+                if (opcionISOaISR.isSelected())
                     this.escenarioNormal.getModeloISO().setAcreditacion(ISO.ISO_ACREDITABLE_ISR);
                 else
                     this.escenarioNormal.getModeloISO().setAcreditacion(ISO.ISR_ACREDITABLE_ISO);
@@ -337,6 +353,7 @@ public class FlujoCajaView extends FrameView {
         calcularVAN = new javax.swing.JButton();
         calcularTodo = new javax.swing.JButton();
         botonTMAR1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         panelCaracteristicas = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         opcionDatosNetos = new javax.swing.JRadioButton();
@@ -345,14 +362,14 @@ public class FlujoCajaView extends FrameView {
         opcionEmpresaIndividual = new javax.swing.JRadioButton();
         opcionEmpresaJuridica = new javax.swing.JRadioButton();
         panelEmpresaNueva = new javax.swing.JPanel();
-        empresaNueva = new javax.swing.JRadioButton();
-        empresaNoNueva = new javax.swing.JRadioButton();
+        opcionEmpresaNueva = new javax.swing.JRadioButton();
+        opcionEmpresaNoNueva = new javax.swing.JRadioButton();
         panelPatente = new javax.swing.JPanel();
         opcionPatente = new javax.swing.JRadioButton();
         opcionSinPatente = new javax.swing.JRadioButton();
         panelISO = new javax.swing.JPanel();
-        ISOaISR = new javax.swing.JRadioButton();
-        ISRaISO = new javax.swing.JRadioButton();
+        opcionISOaISR = new javax.swing.JRadioButton();
+        opcionISRaISO = new javax.swing.JRadioButton();
         panelDetalles = new javax.swing.JPanel();
         verDetalles = new javax.swing.JRadioButton();
         noVerDetalles = new javax.swing.JRadioButton();
@@ -365,10 +382,10 @@ public class FlujoCajaView extends FrameView {
         activosAnteriores = new javax.swing.JTextField();
         cargarDetalles = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        inversionMasActivos = new javax.swing.JRadioButton();
-        soloInversion = new javax.swing.JRadioButton();
-        soloActivos = new javax.swing.JRadioButton();
-        manual = new javax.swing.JRadioButton();
+        opcionInversionMasActivos = new javax.swing.JRadioButton();
+        opcionSoloInversion = new javax.swing.JRadioButton();
+        opcionSoloActivos = new javax.swing.JRadioButton();
+        opcionManual = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         inversionInicial = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
@@ -387,11 +404,13 @@ public class FlujoCajaView extends FrameView {
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         establecerPeriodo = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        menuAbrir = new javax.swing.JMenuItem();
+        menuGuardar = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         menuOperaciones = new javax.swing.JMenu();
         menuCalcularTodo = new javax.swing.JMenuItem();
         menuCantidadesExactas = new javax.swing.JMenuItem();
+        menuRecargar = new javax.swing.JMenuItem();
         menuTMAR = new javax.swing.JMenu();
         calcularTMAR = new javax.swing.JMenuItem();
         menuVariables = new javax.swing.JMenu();
@@ -587,6 +606,14 @@ public class FlujoCajaView extends FrameView {
             }
         });
 
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelAccionesLayout = new javax.swing.GroupLayout(panelAcciones);
         panelAcciones.setLayout(panelAccionesLayout);
         panelAccionesLayout.setHorizontalGroup(
@@ -594,6 +621,7 @@ public class FlujoCajaView extends FrameView {
             .addGroup(panelAccionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botonTMAR1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularVAN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(utilidadNeta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -607,7 +635,7 @@ public class FlujoCajaView extends FrameView {
                     .addComponent(calcularISR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularUtilidaBruta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(flujoEfectivoNeto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calcularTodo, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(calcularTodo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         panelAccionesLayout.setVerticalGroup(
@@ -641,7 +669,9 @@ public class FlujoCajaView extends FrameView {
                 .addComponent(calcularVAN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularTodo)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         panelPrincipal.addTab(resourceMap.getString("panelAcciones.TabConstraints.tabTitle"), panelAcciones); // NOI18N
@@ -748,22 +778,22 @@ public class FlujoCajaView extends FrameView {
         panelEmpresaNueva.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelEmpresaNueva.border.title"))); // NOI18N
         panelEmpresaNueva.setName("panelEmpresaNueva"); // NOI18N
 
-        buttonGroup3.add(empresaNueva);
-        empresaNueva.setSelected(true);
-        empresaNueva.setText(resourceMap.getString("empresaNueva.text")); // NOI18N
-        empresaNueva.setName("empresaNueva"); // NOI18N
-        empresaNueva.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup3.add(opcionEmpresaNueva);
+        opcionEmpresaNueva.setSelected(true);
+        opcionEmpresaNueva.setText(resourceMap.getString("opcionEmpresaNueva.text")); // NOI18N
+        opcionEmpresaNueva.setName("opcionEmpresaNueva"); // NOI18N
+        opcionEmpresaNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empresaNuevaActionPerformed(evt);
+                opcionEmpresaNuevaActionPerformed(evt);
             }
         });
 
-        buttonGroup3.add(empresaNoNueva);
-        empresaNoNueva.setText(resourceMap.getString("empresaNoNueva.text")); // NOI18N
-        empresaNoNueva.setName("empresaNoNueva"); // NOI18N
-        empresaNoNueva.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup3.add(opcionEmpresaNoNueva);
+        opcionEmpresaNoNueva.setText(resourceMap.getString("opcionEmpresaNoNueva.text")); // NOI18N
+        opcionEmpresaNoNueva.setName("opcionEmpresaNoNueva"); // NOI18N
+        opcionEmpresaNoNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empresaNoNuevaActionPerformed(evt);
+                opcionEmpresaNoNuevaActionPerformed(evt);
             }
         });
 
@@ -773,16 +803,16 @@ public class FlujoCajaView extends FrameView {
             panelEmpresaNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEmpresaNuevaLayout.createSequentialGroup()
                 .addGroup(panelEmpresaNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(empresaNueva)
-                    .addComponent(empresaNoNueva))
+                    .addComponent(opcionEmpresaNueva)
+                    .addComponent(opcionEmpresaNoNueva))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         panelEmpresaNuevaLayout.setVerticalGroup(
             panelEmpresaNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEmpresaNuevaLayout.createSequentialGroup()
-                .addComponent(empresaNueva)
+                .addComponent(opcionEmpresaNueva)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(empresaNoNueva)
+                .addComponent(opcionEmpresaNoNueva)
                 .addContainerGap())
         );
 
@@ -830,22 +860,22 @@ public class FlujoCajaView extends FrameView {
         panelISO.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelISO.border.title"))); // NOI18N
         panelISO.setName("panelISO"); // NOI18N
 
-        buttonGroup5.add(ISOaISR);
-        ISOaISR.setSelected(true);
-        ISOaISR.setText(resourceMap.getString("ISOaISR.text")); // NOI18N
-        ISOaISR.setName("ISOaISR"); // NOI18N
-        ISOaISR.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup5.add(opcionISOaISR);
+        opcionISOaISR.setSelected(true);
+        opcionISOaISR.setText(resourceMap.getString("opcionISOaISR.text")); // NOI18N
+        opcionISOaISR.setName("opcionISOaISR"); // NOI18N
+        opcionISOaISR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ISOaISRActionPerformed(evt);
+                opcionISOaISRActionPerformed(evt);
             }
         });
 
-        buttonGroup5.add(ISRaISO);
-        ISRaISO.setText(resourceMap.getString("ISRaISO.text")); // NOI18N
-        ISRaISO.setName("ISRaISO"); // NOI18N
-        ISRaISO.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup5.add(opcionISRaISO);
+        opcionISRaISO.setText(resourceMap.getString("opcionISRaISO.text")); // NOI18N
+        opcionISRaISO.setName("opcionISRaISO"); // NOI18N
+        opcionISRaISO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ISRaISOActionPerformed(evt);
+                opcionISRaISOActionPerformed(evt);
             }
         });
 
@@ -853,15 +883,15 @@ public class FlujoCajaView extends FrameView {
         panelISO.setLayout(panelISOLayout);
         panelISOLayout.setHorizontalGroup(
             panelISOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ISRaISO)
-            .addComponent(ISOaISR)
+            .addComponent(opcionISRaISO)
+            .addComponent(opcionISOaISR)
         );
         panelISOLayout.setVerticalGroup(
             panelISOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelISOLayout.createSequentialGroup()
-                .addComponent(ISOaISR)
+                .addComponent(opcionISOaISR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ISRaISO))
+                .addComponent(opcionISRaISO))
         );
 
         panelDetalles.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelDetalles.border.title"))); // NOI18N
@@ -964,40 +994,40 @@ public class FlujoCajaView extends FrameView {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
         jPanel4.setName("jPanel4"); // NOI18N
 
-        buttonGroup7.add(inversionMasActivos);
-        inversionMasActivos.setSelected(true);
-        inversionMasActivos.setText(resourceMap.getString("inversionMasActivos.text")); // NOI18N
-        inversionMasActivos.setName("inversionMasActivos"); // NOI18N
-        inversionMasActivos.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup7.add(opcionInversionMasActivos);
+        opcionInversionMasActivos.setSelected(true);
+        opcionInversionMasActivos.setText(resourceMap.getString("opcionInversionMasActivos.text")); // NOI18N
+        opcionInversionMasActivos.setName("opcionInversionMasActivos"); // NOI18N
+        opcionInversionMasActivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inversionMasActivosActionPerformed(evt);
+                opcionInversionMasActivosActionPerformed(evt);
             }
         });
 
-        buttonGroup7.add(soloInversion);
-        soloInversion.setText(resourceMap.getString("soloInversion.text")); // NOI18N
-        soloInversion.setName("soloInversion"); // NOI18N
-        soloInversion.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup7.add(opcionSoloInversion);
+        opcionSoloInversion.setText(resourceMap.getString("opcionSoloInversion.text")); // NOI18N
+        opcionSoloInversion.setName("opcionSoloInversion"); // NOI18N
+        opcionSoloInversion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                soloInversionActionPerformed(evt);
+                opcionSoloInversionActionPerformed(evt);
             }
         });
 
-        buttonGroup7.add(soloActivos);
-        soloActivos.setText(resourceMap.getString("soloActivos.text")); // NOI18N
-        soloActivos.setName("soloActivos"); // NOI18N
-        soloActivos.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup7.add(opcionSoloActivos);
+        opcionSoloActivos.setText(resourceMap.getString("opcionSoloActivos.text")); // NOI18N
+        opcionSoloActivos.setName("opcionSoloActivos"); // NOI18N
+        opcionSoloActivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                soloActivosActionPerformed(evt);
+                opcionSoloActivosActionPerformed(evt);
             }
         });
 
-        buttonGroup7.add(manual);
-        manual.setText(resourceMap.getString("manual.text")); // NOI18N
-        manual.setName("manual"); // NOI18N
-        manual.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup7.add(opcionManual);
+        opcionManual.setText(resourceMap.getString("opcionManual.text")); // NOI18N
+        opcionManual.setName("opcionManual"); // NOI18N
+        opcionManual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manualActionPerformed(evt);
+                opcionManualActionPerformed(evt);
             }
         });
 
@@ -1014,10 +1044,10 @@ public class FlujoCajaView extends FrameView {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inversionMasActivos)
-                    .addComponent(soloInversion)
-                    .addComponent(soloActivos)
-                    .addComponent(manual)
+                    .addComponent(opcionInversionMasActivos)
+                    .addComponent(opcionSoloInversion)
+                    .addComponent(opcionSoloActivos)
+                    .addComponent(opcionManual)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1027,13 +1057,13 @@ public class FlujoCajaView extends FrameView {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(inversionMasActivos)
+                .addComponent(opcionInversionMasActivos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(soloInversion)
+                .addComponent(opcionSoloInversion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(soloActivos)
+                .addComponent(opcionSoloActivos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(manual)
+                .addComponent(opcionManual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -1253,14 +1283,25 @@ public class FlujoCajaView extends FrameView {
         });
         fileMenu.add(establecerPeriodo);
 
-        jMenuItem9.setText(resourceMap.getString("jMenuItem9.text")); // NOI18N
-        jMenuItem9.setName("jMenuItem9"); // NOI18N
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        menuAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        menuAbrir.setText(resourceMap.getString("menuAbrir.text")); // NOI18N
+        menuAbrir.setName("menuAbrir"); // NOI18N
+        menuAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                menuAbrirActionPerformed(evt);
             }
         });
-        fileMenu.add(jMenuItem9);
+        fileMenu.add(menuAbrir);
+
+        menuGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        menuGuardar.setText(resourceMap.getString("menuGuardar.text")); // NOI18N
+        menuGuardar.setName("menuGuardar"); // NOI18N
+        menuGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGuardarActionPerformed(evt);
+            }
+        });
+        fileMenu.add(menuGuardar);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(flujocaja.FlujoCajaApp.class).getContext().getActionMap(FlujoCajaView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
@@ -1292,6 +1333,16 @@ public class FlujoCajaView extends FrameView {
             }
         });
         menuOperaciones.add(menuCantidadesExactas);
+
+        menuRecargar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        menuRecargar.setText(resourceMap.getString("menuRecargar.text")); // NOI18N
+        menuRecargar.setName("menuRecargar"); // NOI18N
+        menuRecargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRecargarActionPerformed(evt);
+            }
+        });
+        menuOperaciones.add(menuRecargar);
 
         menuBar.add(menuOperaciones);
 
@@ -1664,25 +1715,14 @@ public class FlujoCajaView extends FrameView {
         // TODO add your handling code here:
         DeterminarPeriodo ventanaPeriodo = new DeterminarPeriodo(null, true);
         ventanaPeriodo.establecerDatos(escenarioNormal);
-        int [] anios = escenarioNormal.getListaAnios();
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Concepto");
-        modelo.addColumn("Factura");
-        for (int i=0; i<anios.length; i++){
-            modelo.addColumn(anios[i]);
+        if (escenarioNormal!=null){
+            this.mostrarModelo();
+
+            this.activosNuevos.setText(Double.toString(this.escenarioNormal.getActivos()));
+            this.activosAnteriores.setText(Double.toString(this.escenarioNormal.getActivosAnteriores()));
+            this.escala.setText(Double.toString(this.escenarioNormal.getEscala()));
+            this.inversionInicial.setText(Double.toString(ModeloPorcentual.redondearCifra(this.escenarioNormal.getInversionInicial())));
         }
-        this.tablaPrincipal.setModel(modelo);
-        menuTMAR.setVisible(true);
-        menuVariables.setVisible(true);
-        menuImpuestos.setVisible(true);
-        panelTabs.setVisible(true);
-        menuOperaciones.setVisible(true);
-        menuHerramientas.setVisible(true);
-        
-        this.activosNuevos.setText(Double.toString(this.escenarioNormal.getActivos()));
-        this.activosAnteriores.setText(Double.toString(this.escenarioNormal.getActivosAnteriores()));
-        this.escala.setText(Double.toString(this.escenarioNormal.getEscala()));
-        this.inversionInicial.setText(Double.toString(ModeloPorcentual.redondearCifra(this.escenarioNormal.getInversionInicial())));
         
         
     }//GEN-LAST:event_establecerPeriodoActionPerformed
@@ -1714,6 +1754,7 @@ public class FlujoCajaView extends FrameView {
 
     private void calcularIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularIVAActionPerformed
         // TODO add your handling code here:
+        this.setOpcionesDeEscenario();
         this.calculoIVA();
 }//GEN-LAST:event_calcularIVAActionPerformed
 
@@ -1730,7 +1771,8 @@ public class FlujoCajaView extends FrameView {
 }//GEN-LAST:event_calcularUtilidaBrutaActionPerformed
 
     private void calcularISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularISRActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here: 
+        this.setOpcionesDeEscenario();
         this.calculoISR();
         //this.insertarFilaTablaPrincipal("ISR por pagar", modeloISR.getISRporPagar());
     }//GEN-LAST:event_calcularISRActionPerformed
@@ -1829,18 +1871,19 @@ public class FlujoCajaView extends FrameView {
 
     private void isoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isoActionPerformed
         // TODO add your handling code here:
+        this.setOpcionesDeEscenario();
         this.calculoISO();
     }//GEN-LAST:event_isoActionPerformed
 
-    private void ISRaISOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ISRaISOActionPerformed
+    private void opcionISRaISOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionISRaISOActionPerformed
         // TODO add your handling code here:
         this.recargarDatos();
-    }//GEN-LAST:event_ISRaISOActionPerformed
+    }//GEN-LAST:event_opcionISRaISOActionPerformed
 
-    private void ISOaISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ISOaISRActionPerformed
+    private void opcionISOaISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionISOaISRActionPerformed
         // TODO add your handling code here:
         this.recargarDatos();
-    }//GEN-LAST:event_ISOaISRActionPerformed
+    }//GEN-LAST:event_opcionISOaISRActionPerformed
 
     private void opcionSinPatenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionSinPatenteActionPerformed
         // TODO add your handling code here:
@@ -1852,15 +1895,15 @@ public class FlujoCajaView extends FrameView {
         this.recargarDatos();
     }//GEN-LAST:event_opcionPatenteActionPerformed
 
-    private void empresaNoNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empresaNoNuevaActionPerformed
+    private void opcionEmpresaNoNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEmpresaNoNuevaActionPerformed
         // TODO add your handling code here:
         this.recargarDatos();
-    }//GEN-LAST:event_empresaNoNuevaActionPerformed
+    }//GEN-LAST:event_opcionEmpresaNoNuevaActionPerformed
 
-    private void empresaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empresaNuevaActionPerformed
+    private void opcionEmpresaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEmpresaNuevaActionPerformed
         // TODO add your handling code here:
         this.recargarDatos();
-    }//GEN-LAST:event_empresaNuevaActionPerformed
+    }//GEN-LAST:event_opcionEmpresaNuevaActionPerformed
 
     private void botonInteresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInteresActionPerformed
         // TODO add your handling code here:
@@ -1897,6 +1940,7 @@ public class FlujoCajaView extends FrameView {
 
     private void calcularTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularTodoActionPerformed
         // TODO add your handling code here:
+        this.setOpcionesDeEscenario();
         this.calcularTodo();
     }//GEN-LAST:event_calcularTodoActionPerformed
 
@@ -2027,32 +2071,32 @@ public class FlujoCajaView extends FrameView {
         this.calculoTMAR();
     }//GEN-LAST:event_botonTMAR2ActionPerformed
 
-    private void inversionMasActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inversionMasActivosActionPerformed
+    private void opcionInversionMasActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInversionMasActivosActionPerformed
         // TODO add your handling code here:
         this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_ACTIVOS_MAS_PRESTAMOS);
         this.recargarDatos();
-    }//GEN-LAST:event_inversionMasActivosActionPerformed
+    }//GEN-LAST:event_opcionInversionMasActivosActionPerformed
 
-    private void soloInversionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soloInversionActionPerformed
+    private void opcionSoloInversionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionSoloInversionActionPerformed
         // TODO add your handling code here:
         this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_SOLO_PRESTAMOS);
         this.recargarDatos();
-    }//GEN-LAST:event_soloInversionActionPerformed
+    }//GEN-LAST:event_opcionSoloInversionActionPerformed
 
-    private void soloActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soloActivosActionPerformed
+    private void opcionSoloActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionSoloActivosActionPerformed
         // TODO add your handling code here:
         this.escenarioNormal.setTipoInversionInicial(Escenario.INVERSION_INICIAL_SOLO_ACTIVOS);
         this.recargarDatos();
-    }//GEN-LAST:event_soloActivosActionPerformed
+    }//GEN-LAST:event_opcionSoloActivosActionPerformed
 
-    private void manualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualActionPerformed
+    private void opcionManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionManualActionPerformed
         // TODO add your handling code here:
         String inv = JOptionPane.showInputDialog("Ingrese la inversión inicial (si se deja en blanco se tomará como la suma de activos + inversiones)");
         if (inv!=null){
             this.escenarioNormal.setInversionInicial(Double.parseDouble(inv));
             this.recargarDatos();
         }
-    }//GEN-LAST:event_manualActionPerformed
+    }//GEN-LAST:event_opcionManualActionPerformed
 
     private void eliminarVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarVariableActionPerformed
         // TODO add your handling code here:
@@ -2085,10 +2129,22 @@ public class FlujoCajaView extends FrameView {
         }
     }//GEN-LAST:event_eliminarVariableActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void menuAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAbrirActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+        JFileChooser selector = new JFileChooser();
+        int resultado = selector.showOpenDialog(null);
+        if (resultado==JFileChooser.APPROVE_OPTION){
+            this.escenarioNormal = Escenario.deserializarDeXML(selector.getSelectedFile().getAbsolutePath());
+            /*
+             * setear las opciones primero, antes de recargar los datos
+             */
+            this.cargarOpcionesEscenario();
+            this.mapa = new HashMap<Integer, String>();
+            this.mostrarModelo();
+            this.recargarDatos();
+            this.mostrarTMAR();
+        }       
+    }//GEN-LAST:event_menuAbrirActionPerformed
 
     private void insertarGastoPorcentualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarGastoPorcentualActionPerformed
         // TODO add your handling code here:
@@ -2116,9 +2172,26 @@ public class FlujoCajaView extends FrameView {
         te.estimarEscenarios(escenarioNormal);
     }//GEN-LAST:event_menuEscenariosActionPerformed
 
+    private void menuRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRecargarActionPerformed
+        // TODO add your handling code here:
+        this.recargarDatos();
+    }//GEN-LAST:event_menuRecargarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.recargarDatos();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void menuGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarActionPerformed
+        // TODO add your handling code here:
+        JFileChooser selector = new JFileChooser();
+        int resultado = selector.showSaveDialog(null);
+        if (resultado==JFileChooser.APPROVE_OPTION){
+            this.escenarioNormal.serializarAXML(selector.getSelectedFile().getAbsolutePath());
+        }    
+    }//GEN-LAST:event_menuGuardarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton ISOaISR;
-    private javax.swing.JRadioButton ISRaISO;
     private javax.swing.JMenu Pronosticos;
     private javax.swing.JTextField activosAnteriores;
     private javax.swing.JTextField activosNuevos;
@@ -2148,8 +2221,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenuItem costosModeloPronosticacion;
     private javax.swing.JMenuItem costosPorcentaje;
     private javax.swing.JMenuItem eliminarVariable;
-    private javax.swing.JRadioButton empresaNoNueva;
-    private javax.swing.JRadioButton empresaNueva;
     private javax.swing.JTextField escala;
     private javax.swing.JMenuItem establecerPeriodo;
     private javax.swing.JMenuItem extraISO;
@@ -2168,11 +2239,11 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenuItem insertarGastoPorcentual;
     private javax.swing.JMenuItem insertarIngresos;
     private javax.swing.JTextField inversionInicial;
-    private javax.swing.JRadioButton inversionMasActivos;
     private javax.swing.JButton iso;
     private javax.swing.JMenuItem itemISO;
     private javax.swing.JMenuItem itemISR;
     private javax.swing.JMenuItem itemIVA;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -2186,7 +2257,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -2199,15 +2269,17 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JRadioButton manual;
+    private javax.swing.JMenuItem menuAbrir;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuCalcularTodo;
     private javax.swing.JMenuItem menuCantidadesExactas;
     private javax.swing.JMenuItem menuEscenarios;
     private javax.swing.JMenu menuExtrasImpuestos;
+    private javax.swing.JMenuItem menuGuardar;
     private javax.swing.JMenu menuHerramientas;
     private javax.swing.JMenu menuImpuestos;
     private javax.swing.JMenu menuOperaciones;
+    private javax.swing.JMenuItem menuRecargar;
     private javax.swing.JMenu menuTMAR;
     private javax.swing.JMenu menuVariables;
     private javax.swing.JMenuItem modeloPorcentual;
@@ -2217,8 +2289,16 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JRadioButton opcionDatosNetos;
     private javax.swing.JRadioButton opcionEmpresaIndividual;
     private javax.swing.JRadioButton opcionEmpresaJuridica;
+    private javax.swing.JRadioButton opcionEmpresaNoNueva;
+    private javax.swing.JRadioButton opcionEmpresaNueva;
+    private javax.swing.JRadioButton opcionISOaISR;
+    private javax.swing.JRadioButton opcionISRaISO;
+    private javax.swing.JRadioButton opcionInversionMasActivos;
+    private javax.swing.JRadioButton opcionManual;
     private javax.swing.JRadioButton opcionPatente;
     private javax.swing.JRadioButton opcionSinPatente;
+    private javax.swing.JRadioButton opcionSoloActivos;
+    private javax.swing.JRadioButton opcionSoloInversion;
     private javax.swing.JPanel panelAcciones;
     private javax.swing.JPanel panelCaracteristicas;
     private javax.swing.JPanel panelDatosExactos;
@@ -2231,8 +2311,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JTabbedPane panelTabs;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem pronosticarModelo;
-    private javax.swing.JRadioButton soloActivos;
-    private javax.swing.JRadioButton soloInversion;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
@@ -2266,10 +2344,6 @@ public class FlujoCajaView extends FrameView {
     }
     
     private void llenarDetalles(){
-        double tir = 0;
-        String sTir;
-        
-        String payback;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Total de inversion");
         modelo.addColumn("TMAR");
@@ -2470,6 +2544,8 @@ public class FlujoCajaView extends FrameView {
     }
     
     private void calculoISR(){
+        this.escenarioNormal.setDatosNetos(this.opcionDatosNetos.isSelected());
+        escenarioNormal.setEmpresaIndividual(opcionEmpresaIndividual.isSelected());
         escenarioNormal.calcularISR(opcionEmpresaIndividual.isSelected());
         //this.insertarFilaTablaPrincipal("Regimen", modeloISR.getRegimen());
         this.insertarFilaTablaPrincipal("ISR temporal", escenarioNormal.getModeloISR().getISRPorPagarTemporal());
@@ -2480,10 +2556,11 @@ public class FlujoCajaView extends FrameView {
     }
     
     private void calculoISO(){
-        this.escenarioNormal.setEmpresaNueva(empresaNueva.isSelected());
+        this.escenarioNormal.setDatosNetos(this.opcionDatosNetos.isSelected());
+        this.escenarioNormal.setEmpresaNueva(opcionEmpresaNueva.isSelected());
         this.escenarioNormal.setPatenteDeComercio(opcionPatente.isSelected());
         if (this.escenarioNormal.getModeloISO()!=null){
-            if (ISOaISR.isSelected())
+            if (opcionISOaISR.isSelected())
                 this.escenarioNormal.getModeloISO().setAcreditacion(ISO.ISO_ACREDITABLE_ISR);
             else
                 this.escenarioNormal.getModeloISO().setAcreditacion(ISO.ISR_ACREDITABLE_ISO);
@@ -2494,7 +2571,7 @@ public class FlujoCajaView extends FrameView {
         }
         else{
             ISO modelo = new ISO();
-            if (ISOaISR.isSelected())
+            if (opcionISOaISR.isSelected())
                 modelo.setAcreditacion(ISO.ISO_ACREDITABLE_ISR);
             else
                 modelo.setAcreditacion(ISO.ISR_ACREDITABLE_ISO);
@@ -2607,11 +2684,36 @@ public class FlujoCajaView extends FrameView {
 
     private void calculoTMAR() {
         IngresarInversionistas frmIngresarInversionistas = new IngresarInversionistas(null, true);
-        this.escenarioNormal.setTmar(frmIngresarInversionistas.insertarInversionistas());
+        Inversionistas inv = frmIngresarInversionistas.insertarInversionistas();        
         
-        if (this.escenarioNormal.getTmar()!=null)
+        if (inv!=null)
         {
-            DefaultTableModel modeloTabla = new DefaultTableModel();
+            this.escenarioNormal.setTmar(inv);
+            this.mostrarTMAR();
+            inv.setPadre(escenarioNormal);
+            //this.escenarioNormal.setListaInversionistas(inv);
+        }
+    }
+
+    private void mostrarModelo() {
+        int [] anios = escenarioNormal.getListaAnios();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Concepto");
+        modelo.addColumn("Factura");
+        for (int i=0; i<anios.length; i++){
+            modelo.addColumn(anios[i]);
+        }
+        this.tablaPrincipal.setModel(modelo);
+        menuTMAR.setVisible(true);
+        menuVariables.setVisible(true);
+        menuImpuestos.setVisible(true);
+        panelTabs.setVisible(true);
+        menuOperaciones.setVisible(true);
+        menuHerramientas.setVisible(true);
+    }
+
+    private void mostrarTMAR() {
+        DefaultTableModel modeloTabla = new DefaultTableModel();
             modeloTabla.addColumn("Inversionista");
             modeloTabla.addColumn("% Riesgo");
             modeloTabla.addColumn("% Participación");
@@ -2633,6 +2735,46 @@ public class FlujoCajaView extends FrameView {
             }
             tablaTmar.setModel(modeloTabla);
             tmarPonderada.setText(this.escenarioNormal.getTMARFormateada());
-        }
+    }
+
+    private void cargarOpcionesEscenario() {
+        if (this.escenarioNormal.getDatosNetos())
+                this.opcionDatosNetos.setSelected(true);
+            else
+                this.opcionDatosBrutos.setSelected(true);
+            
+            if (this.escenarioNormal.getEmpresaIndividual())
+                this.opcionEmpresaIndividual.setSelected(true);
+            else
+                this.opcionEmpresaJuridica.setSelected(true);
+            if (this.escenarioNormal.getEmpresaNueva())
+                this.opcionEmpresaNueva.setSelected(true);
+            else
+                this.opcionEmpresaNoNueva.setSelected(true);
+            if (this.escenarioNormal.getPatenteDeComercio())
+                this.opcionPatente.setSelected(true);
+            else
+                this.opcionSinPatente.setSelected(true);
+            
+            if (this.escenarioNormal.getModeloISO()!=null){
+                if (this.escenarioNormal.getModeloISO().getAcreditacion()==ISO.ISO_ACREDITABLE_ISR)
+                    this.opcionISOaISR.setSelected(true);
+                else
+                    this.opcionISRaISO.setSelected(true);
+            }
+            this.escala.setText(Double.toString(this.escenarioNormal.getEscala()));
+            this.activosNuevos.setText(Double.toString(this.escenarioNormal.getActivos()));
+            this.activosAnteriores.setText(Double.toString(this.escenarioNormal.getActivosAnteriores()));
+            this.inversionInicial.setText(Double.toString(this.escenarioNormal.getInversionInicial()));
+            
+            int tipoInversionInicial = this.escenarioNormal.getTipoInversionInicial();
+            if (tipoInversionInicial==Escenario.INVERSION_INICIAL_ACTIVOS_MAS_PRESTAMOS)
+                this.opcionInversionMasActivos.setSelected(true);
+            else if (tipoInversionInicial==Escenario.INVERSION_INICIAL_SOLO_PRESTAMOS)
+                this.opcionSoloInversion.setSelected(true);
+            else if (tipoInversionInicial==Escenario.INVERSION_INICIAL_SOLO_ACTIVOS)
+                this.opcionSoloActivos.setSelected(true);
+            else if (tipoInversionInicial==Escenario.INVERSION_INICIAL_MANUAL)
+                this.opcionManual.setSelected(true);
     }
 }

@@ -1,15 +1,13 @@
 package Clases;
 
 import controlador.Escenario;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class Ingresos {
     
     public static int INGRESO_MODELO_PRONOSTICACION = 0;
     public static int INGRESO_MANUAL = 1;
     
-    public int tipoIngreso;
+    private int tipoIngreso;
 
     private Escenario padre;
 
