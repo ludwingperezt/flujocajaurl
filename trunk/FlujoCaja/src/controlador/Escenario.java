@@ -778,7 +778,7 @@ public class Escenario {
     }
     
     /**
-     * Obtiene y calcula la TIR en double
+     * Obtiene y calcula la TIR en double, sin multiplicar por 100
      * @return 
      */
     public double getTIR(){
