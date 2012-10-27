@@ -6,17 +6,12 @@ package controlador;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 
 /**
@@ -35,10 +30,39 @@ public class EscenarioModificado extends Escenario implements Cloneable {
     private double tasaDisminucionIngresos;
     private double tasaDisminucionCostos;
     private int tipoEscenario;
+    private double probabilidad;
+    private double tirPonderada;
+
+    public double getTirPonderada() {
+        return tirPonderada;
+    }
+
+    public void setTirPonderada(double tirPonderada) {
+        this.tirPonderada = tirPonderada;
+    }
+
+    public double getVanPonderada() {
+        return vanPonderada;
+    }
+
+    public void setVanPonderada(double vanPonderada) {
+        this.vanPonderada = vanPonderada;
+    }
+    private double vanPonderada;
+
+    
     
     public EscenarioModificado(Escenario base){
         super(base);
         this.crearGastosEInversiones(base);
+    }
+    
+    public double getProbabilidad() {
+        return probabilidad;
+    }
+
+    public void setProbabilidad(double probabilidad) {
+        this.probabilidad = probabilidad;
     }
     
     public EscenarioModificado(EscenarioModificado base){
@@ -86,27 +110,29 @@ public class EscenarioModificado extends Escenario implements Cloneable {
     }
 
     public void plantearEscenario() {
-        if (this.tipoEscenario==EscenarioModificado.ESCENARIO_OPTIMISTA){
+        if (this.tipoEscenario!=ESCENARIO_NORMAL){
             double [] ingresos = this.modeloIngresos.getIngresosActuales();
             double [] costos = this.modeloCostos.getCostosActuales();
-            for (int i=0; i<ingresos.length; i++){
-                ingresos[i] = ingresos[i] + (ingresos[i] * this.tasaIncrementoIngresos);
-                costos[i] = costos[i] - (costos[i]*this.tasaDisminucionCostos);
+            if (this.tipoEscenario==EscenarioModificado.ESCENARIO_OPTIMISTA){
+                for (int i=0; i<ingresos.length; i++){
+                    ingresos[i] = ingresos[i] + (ingresos[i] * this.tasaIncrementoIngresos);
+                    costos[i] = costos[i] - (costos[i]*this.tasaDisminucionCostos);
+                }
+
+            }
+            else if (this.tipoEscenario==EscenarioModificado.ESCENARIO_PESIMISTA){
+
+                for (int i=0; i<ingresos.length; i++){
+                    ingresos[i] = ingresos[i] - (ingresos[i] * this.tasaDisminucionIngresos);
+                    costos[i] = costos[i] + (costos[i]*this.tasaIncrementoCostos);
+                }
             }
             this.modeloIngresos.setListaIngresosManualmente(ingresos);
             this.modeloCostos.setCostos(costos);
+            this.recalcularTodo();
         }
-        else if (this.tipoEscenario==EscenarioModificado.ESCENARIO_PESIMISTA){
-            double [] ingresos = this.modeloIngresos.getIngresosActuales();
-            double [] costos = this.modeloCostos.getCostosActuales();
-            for (int i=0; i<ingresos.length; i++){
-                ingresos[i] = ingresos[i] - (ingresos[i] * this.tasaDisminucionIngresos);
-                costos[i] = costos[i] + (costos[i]*this.tasaIncrementoCostos);
-            }
-            this.modeloIngresos.setListaIngresosManualmente(ingresos);
-            this.modeloCostos.setCostos(costos);
-        }
-        this.recalcularTodo();
+        this.tirPonderada = (this.getTIR()) * this.probabilidad;
+        this.vanPonderada = this.getSumatoriaVAN() * this.probabilidad;        
     }
     
     

@@ -17,6 +17,7 @@ import controlador.Escenario;
 import controlador.EscenarioModificado;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +26,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TeoriaEscenarios extends javax.swing.JDialog {
     
-    private Escenario escenarioNormal;
+    //private Escenario escenarioNormal;
+    private EscenarioModificado escenarioPuntual;
     private EscenarioModificado escenarioPesimista;
     private EscenarioModificado escenarioOptimista;
 
@@ -36,7 +38,8 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     }
     
     public void estimarEscenarios(Escenario normal){
-        this.escenarioNormal = normal;
+        this.escenarioPuntual = new EscenarioModificado(normal);
+        this.escenarioPuntual.setTipoEscenario(EscenarioModificado.ESCENARIO_NORMAL);
         this.escenarioPesimista = new EscenarioModificado(normal);
         this.escenarioPesimista.setTipoEscenario(EscenarioModificado.ESCENARIO_PESIMISTA);
         this.escenarioOptimista = new EscenarioModificado(normal);
@@ -59,24 +62,41 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         modelo.addColumn("Payback");
         modelo.addColumn("VAN");
         modelo.addColumn("TIR");
+        modelo.addColumn("Probabilidad");
+        modelo.addColumn("VAN ponderada");
+        modelo.addColumn("TIR ponderada");
         
         tablaResultados.setModel(modelo);
         
-        modelo.addRow(new Object[]{"Puntual",this.escenarioNormal.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioNormal.getInversionInicial()),this.escenarioNormal.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioNormal.getSumatoriaVAN()),this.escenarioNormal.getTIR_string()});
-        modelo.addRow(new Object[]{"Optimista",this.escenarioOptimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getInversionInicial()),this.escenarioOptimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getSumatoriaVAN()),this.escenarioOptimista.getTIR_string()});
-        modelo.addRow(new Object[]{"Pesimista",this.escenarioPesimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getInversionInicial()),this.escenarioPesimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getSumatoriaVAN()),this.escenarioPesimista.getTIR_string()});
+        modelo.addRow(new Object[]{"Puntual",this.escenarioPuntual.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioPuntual.getInversionInicial()),this.escenarioPuntual.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioPuntual.getSumatoriaVAN()),this.escenarioPuntual.getTIR_string()+"%",ModeloPorcentual.redondearCifra(this.escenarioPuntual.getProbabilidad()*100)+"%",ModeloPorcentual.redondearCifra(this.escenarioPuntual.getVanPonderada()),ModeloPorcentual.redondearCifra(this.escenarioPuntual.getTirPonderada()*100)+"%"});
+        modelo.addRow(new Object[]{"Optimista",this.escenarioOptimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getInversionInicial()),this.escenarioOptimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getSumatoriaVAN()),this.escenarioOptimista.getTIR_string()+"%",ModeloPorcentual.redondearCifra(this.escenarioOptimista.getProbabilidad()*100)+"%",ModeloPorcentual.redondearCifra(this.escenarioOptimista.getVanPonderada()),ModeloPorcentual.redondearCifra(this.escenarioOptimista.getTirPonderada()*100)+"%"});
+        modelo.addRow(new Object[]{"Pesimista",this.escenarioPesimista.getTMARFormateada(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getInversionInicial()),this.escenarioPesimista.getPayback_string(),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getSumatoriaVAN()),this.escenarioPesimista.getTIR_string()+"%",ModeloPorcentual.redondearCifra(this.escenarioPesimista.getProbabilidad()*100)+"%",ModeloPorcentual.redondearCifra(this.escenarioPesimista.getVanPonderada()),ModeloPorcentual.redondearCifra(this.escenarioPesimista.getTirPonderada()*100)+"%"});
         
-        double tirPonderada = (this.escenarioOptimista.getTIR()-this.escenarioPesimista.getTIR())*100;
+        double intervaloTir = (this.escenarioOptimista.getTIR() + this.escenarioPesimista.getTIR());
+        double intervaloVan = this.escenarioOptimista.getSumatoriaVAN() + this.escenarioPesimista.getSumatoriaVAN();
+        
+        double sumaTirPonderada = this.escenarioOptimista.getTirPonderada()+this.escenarioPesimista.getTirPonderada()+this.escenarioPuntual.getTirPonderada();
+        double sumaVanPonderada = this.escenarioOptimista.getVanPonderada()+this.escenarioPesimista.getVanPonderada()+this.escenarioPuntual.getVanPonderada();
+        double sumaPorcentajes = this.escenarioOptimista.getProbabilidad()+this.escenarioPesimista.getProbabilidad()+this.escenarioPuntual.getProbabilidad();
         String tir = "Err";
+        String van = "Err";
+        String tirPonderada = "";
+        String vanPonderada = "";
+        String porcentaje = "";
         try{
             NumberFormat mf = NumberFormat.getInstance();
             mf.setMaximumFractionDigits(2);
-            tir = mf.format(tirPonderada)+"%";
+            tir = mf.format(intervaloTir*100)+"%";
+            van = mf.format(intervaloVan);
+            tirPonderada = mf.format(sumaTirPonderada*100)+"%";
+            vanPonderada = mf.format(sumaVanPonderada);
+            porcentaje = mf.format(sumaPorcentajes*100)+"%";
         }catch(Exception ex){
             
         }
-        modelo.addRow(new Object[]{null,null,null,null,null,null});
-        modelo.addRow(new Object[]{"TIR ponderada",null,null,null,null,tir});
+        this.intervaloTIR.setText(tir);
+        this.intervaloVAN.setText(van);
+        modelo.addRow(new Object[]{"Totales",null,null,null,null,null,porcentaje,vanPonderada,tirPonderada});
         
         
     }
@@ -276,13 +296,19 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         porcentajeAumentoIngresos = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         porcentajeDisminucionCostos = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        probablilidadOptimista = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         porcentajeDisminucionIngresos = new javax.swing.JTextField();
         porcentajeAumentoCostos = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        probabilidadPesimista = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         calcular = new javax.swing.JButton();
+        probablilidadPuntual = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         panelDatosOptimistas = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDatosOptimistas = new javax.swing.JTable();
@@ -292,6 +318,10 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         panelResultados = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
+        intervaloTIR = new javax.swing.JTextField();
+        intervaloVAN = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuImpuestos = new javax.swing.JMenu();
@@ -327,6 +357,12 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         porcentajeDisminucionCostos.setText(resourceMap.getString("porcentajeDisminucionCostos.text")); // NOI18N
         porcentajeDisminucionCostos.setName("porcentajeDisminucionCostos"); // NOI18N
 
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        probablilidadOptimista.setText(resourceMap.getString("probablilidadOptimista.text")); // NOI18N
+        probablilidadOptimista.setName("probablilidadOptimista"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -334,12 +370,14 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(porcentajeDisminucionCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(porcentajeAumentoIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(porcentajeAumentoIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(probablilidadOptimista, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,7 +389,11 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(porcentajeDisminucionCostos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(probablilidadOptimista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
@@ -369,6 +411,12 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         porcentajeAumentoCostos.setText(resourceMap.getString("porcentajeAumentoCostos.text")); // NOI18N
         porcentajeAumentoCostos.setName("porcentajeAumentoCostos"); // NOI18N
 
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        probabilidadPesimista.setText(resourceMap.getString("probabilidadPesimista.text")); // NOI18N
+        probabilidadPesimista.setName("probabilidadPesimista"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -376,11 +424,15 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(porcentajeAumentoCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(porcentajeDisminucionIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(porcentajeDisminucionIngresos, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .addComponent(probabilidadPesimista, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -393,6 +445,10 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(porcentajeAumentoCostos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(probabilidadPesimista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -407,7 +463,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 53, Short.MAX_VALUE)
         );
 
         calcular.setText(resourceMap.getString("calcular.text")); // NOI18N
@@ -418,38 +474,48 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             }
         });
 
+        probablilidadPuntual.setText(resourceMap.getString("probablilidadPuntual.text")); // NOI18N
+        probablilidadPuntual.setName("probablilidadPuntual"); // NOI18N
+
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+
         javax.swing.GroupLayout panelCaracteristicasLayout = new javax.swing.GroupLayout(panelCaracteristicas);
         panelCaracteristicas.setLayout(panelCaracteristicasLayout);
         panelCaracteristicasLayout.setHorizontalGroup(
             panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCaracteristicasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(calcular)
+                        .addGroup(panelCaracteristicasLayout.createSequentialGroup()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelCaracteristicasLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelCaracteristicasLayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(calcular)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addComponent(probablilidadPuntual, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         panelCaracteristicasLayout.setVerticalGroup(
             panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCaracteristicasLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCaracteristicasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCaracteristicasLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcular)
-                        .addGap(163, 163, 163))
-                    .addGroup(panelCaracteristicasLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(59, Short.MAX_VALUE))))
+                .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(probablilidadPuntual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcular)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
 
         panelPrincipal.addTab(resourceMap.getString("panelCaracteristicas.TabConstraints.tabTitle"), panelCaracteristicas); // NOI18N
@@ -482,7 +548,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             panelDatosOptimistasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosOptimistasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -516,7 +582,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             panelPesimistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPesimistaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -537,20 +603,49 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         tablaResultados.setName("tablaResultados"); // NOI18N
         jScrollPane3.setViewportView(tablaResultados);
 
+        intervaloTIR.setText(resourceMap.getString("intervaloTIR.text")); // NOI18N
+        intervaloTIR.setName("intervaloTIR"); // NOI18N
+
+        intervaloVAN.setText(resourceMap.getString("intervaloVAN.text")); // NOI18N
+        intervaloVAN.setName("intervaloVAN"); // NOI18N
+
+        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
+        jLabel8.setName("jLabel8"); // NOI18N
+
+        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
+        jLabel9.setName("jLabel9"); // NOI18N
+
         javax.swing.GroupLayout panelResultadosLayout = new javax.swing.GroupLayout(panelResultados);
         panelResultados.setLayout(panelResultadosLayout);
         panelResultadosLayout.setHorizontalGroup(
             panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelResultadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addGroup(panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                    .addGroup(panelResultadosLayout.createSequentialGroup()
+                        .addGroup(panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(intervaloVAN, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(intervaloTIR, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         panelResultadosLayout.setVerticalGroup(
             panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelResultadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addGroup(panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(intervaloTIR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(intervaloVAN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -609,13 +704,13 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelPrincipal)
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(panelPrincipal)
                 .addContainerGap())
         );
 
@@ -630,9 +725,25 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         this.escenarioPesimista.setTasaDisminucionIngresos(ModeloPorcentual.formatearPorcentaje(porcentajeDisminucionIngresos.getText(), false));
         this.escenarioPesimista.setTasaIncrementoCostos(ModeloPorcentual.formatearPorcentaje(porcentajeAumentoCostos.getText(), false));
         
-        this.escenarioOptimista.plantearEscenario();
-        this.escenarioPesimista.plantearEscenario();
-        this.llenarDatos();
+        double pPuntual =ModeloPorcentual.formatearPorcentaje(probablilidadPuntual.getText(),false);
+        double pOptimista = ModeloPorcentual.formatearPorcentaje(probablilidadOptimista.getText(),false);
+        double pPesimista = ModeloPorcentual.formatearPorcentaje(probabilidadPesimista.getText(),false);
+        double sum = pPuntual + pOptimista + pPesimista;
+        if (sum==1){
+            this.escenarioPuntual.setProbabilidad(pPuntual);
+            this.escenarioOptimista.setProbabilidad(pOptimista);
+            this.escenarioPesimista.setProbabilidad(pPesimista);
+
+            this.escenarioOptimista.plantearEscenario();
+            this.escenarioPesimista.plantearEscenario();
+            this.escenarioPuntual.plantearEscenario();
+            this.llenarDatos();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Las probabilidades de los escenarios no suman 100%", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_calcularActionPerformed
 
     /**
@@ -680,10 +791,17 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calcular;
+    private javax.swing.JTextField intervaloTIR;
+    private javax.swing.JTextField intervaloVAN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -710,6 +828,9 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     private javax.swing.JTextField porcentajeAumentoIngresos;
     private javax.swing.JTextField porcentajeDisminucionCostos;
     private javax.swing.JTextField porcentajeDisminucionIngresos;
+    private javax.swing.JTextField probabilidadPesimista;
+    private javax.swing.JTextField probablilidadOptimista;
+    private javax.swing.JTextField probablilidadPuntual;
     private javax.swing.JTable tablaDatosOptimistas;
     private javax.swing.JTable tablaDatosPesimistas;
     private javax.swing.JTable tablaResultados;
