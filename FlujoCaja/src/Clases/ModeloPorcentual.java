@@ -140,8 +140,33 @@ public class ModeloPorcentual {
      */
     public static double formatearPorcentaje(String val, boolean redondear){
         String cadena = val.replaceFirst("%", "");
-        cadena = val.replaceAll(",", "");
+        cadena = cadena.replaceAll(",", "");
+        cadena = cadena.replaceAll("-", "");
         double ret = Double.parseDouble(cadena);
+        ret = ret/100;        
+        if (redondear)
+            return ModeloPorcentual.redondearCifra(ret);
+        else
+            return ret;
+    }
+    /**
+     * Función que formatea una cadena que representa un porcentaje a un double de porcentaje (entre 0 y 1) redondeado a 2 cifras decimales.
+     * La cadena puede o no tener el simbolo %
+     * La cadena deberá estar en representación natural (entre 0 y 100) porque será dividida dentro de 100
+     * La cadena puede tener el signo -
+     * 
+     * @param val
+     * @param redondear
+     * @param valorNegativo: si es true, el resultado requerido de la función se devolverá negativo, de lo contrario, siempre será devuelto un valor positivo
+     * @return 
+     */
+    public static double formatearPorcentaje(String val, boolean redondear, boolean valorNegativo){
+        String cadena = val.replaceFirst("%", "");
+        cadena = cadena.replaceAll(",", "");
+        cadena = cadena.replaceAll("-", "");
+        double ret = Double.parseDouble(cadena);
+        if (valorNegativo)
+            ret = ret * -1;
         ret = ret/100;        
         if (redondear)
             return ModeloPorcentual.redondearCifra(ret);
