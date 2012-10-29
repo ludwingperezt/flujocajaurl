@@ -397,9 +397,6 @@ public class FlujoCajaView extends FrameView {
         panelSalida = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
-        panelDatosExactos = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tablaDatosExactos = new javax.swing.JTable();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
@@ -1212,40 +1209,6 @@ public class FlujoCajaView extends FrameView {
 
         panelTabs.addTab(resourceMap.getString("panelSalida.TabConstraints.tabTitle"), panelSalida); // NOI18N
 
-        panelDatosExactos.setName("panelDatosExactos"); // NOI18N
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        tablaDatosExactos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tablaDatosExactos.setName("tablaDatosExactos"); // NOI18N
-        jScrollPane3.setViewportView(tablaDatosExactos);
-
-        javax.swing.GroupLayout panelDatosExactosLayout = new javax.swing.GroupLayout(panelDatosExactos);
-        panelDatosExactos.setLayout(panelDatosExactosLayout);
-        panelDatosExactosLayout.setHorizontalGroup(
-            panelDatosExactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelDatosExactosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelDatosExactosLayout.setVerticalGroup(
-            panelDatosExactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelDatosExactosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        panelTabs.addTab(resourceMap.getString("panelDatosExactos.TabConstraints.tabTitle"), panelDatosExactos); // NOI18N
-
         filler2.setName("filler2"); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -1952,7 +1915,11 @@ public class FlujoCajaView extends FrameView {
     private void menuCantidadesExactasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCantidadesExactasActionPerformed
         // TODO add your handling code here:
         //this.insertarFilaTablaPrincipal("Ingresos", this.escenarioNormal.ingresosActuales());
-         double [] iterador;
+        
+        FormularioDatosExactos fde = new FormularioDatosExactos(null, false);
+        fde.mostrarDatosExactos(escenarioNormal);
+        /*
+        double [] iterador;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Concepto");
         modelo.addColumn("Factura");
@@ -2028,7 +1995,7 @@ public class FlujoCajaView extends FrameView {
         if (this.escenarioNormal.getVAN()!=null){
             this.insertarFilaTablaDatosExactos("VAN", this.escenarioNormal.getVAN());
         }
-        ////// FIN DE LA PARTE DE MOSTRADO DE DATOS
+        ////// FIN DE LA PARTE DE MOSTRADO DE DATOS*/
     }//GEN-LAST:event_menuCantidadesExactasActionPerformed
 
     private void menuCalcularTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCalcularTodoActionPerformed
@@ -2266,7 +2233,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem menuAbrir;
@@ -2301,7 +2267,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JRadioButton opcionSoloInversion;
     private javax.swing.JPanel panelAcciones;
     private javax.swing.JPanel panelCaracteristicas;
-    private javax.swing.JPanel panelDatosExactos;
     private javax.swing.JPanel panelDetalles;
     private javax.swing.JPanel panelEmpresaNueva;
     private javax.swing.JPanel panelISO;
@@ -2314,7 +2279,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
-    private javax.swing.JTable tablaDatosExactos;
     private javax.swing.JTable tablaPrincipal;
     private javax.swing.JTable tablaResultados;
     private javax.swing.JTable tablaTmar;
@@ -2588,7 +2552,7 @@ public class FlujoCajaView extends FrameView {
             dt.verDetallesCalculoISO(this.escenarioNormal);
         }
     }
-    
+    /*
     private void insertarFilaTablaDatosExactos(String nombre,boolean factura,double [] valores){
         Object [] fila = new Object[valores.length+2];
         fila[0] = nombre;
@@ -2640,7 +2604,7 @@ public class FlujoCajaView extends FrameView {
         DefaultTableModel modelo = (DefaultTableModel) this.tablaDatosExactos.getModel();
         modelo.addRow(fila);
     }
-
+*/
     private void costosManual() {
         Manual m = new Manual(null, true);
         double [] costos = m.insertarDatosManuales(this.escenarioNormal.getListaAnios());
