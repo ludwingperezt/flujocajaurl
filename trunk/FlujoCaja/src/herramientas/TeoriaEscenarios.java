@@ -13,10 +13,14 @@ package herramientas;
 import Clases.Gasto;
 import Clases.Intereses;
 import Clases.ModeloPorcentual;
+import Intermedias.Detalles;
 import controlador.Escenario;
 import controlador.EscenarioModificado;
+import controlador.ModeloEscenarios;
+import flujocaja.FormularioDatosExactos;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -352,15 +356,25 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
+        itemAbrirEscenarioOptimista = new javax.swing.JMenuItem();
+        Guardar = new javax.swing.JMenuItem();
+        menuHerramientas = new javax.swing.JMenu();
+        itemDetallesOptimista = new javax.swing.JMenuItem();
+        itemDetallesPuntual = new javax.swing.JMenuItem();
+        itemDetallesPesimista = new javax.swing.JMenuItem();
         menuImpuestos = new javax.swing.JMenu();
         menuDetalleImpuestosOptimista = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        itemOptimistaIVA = new javax.swing.JMenuItem();
+        itemOptimistaISR = new javax.swing.JMenuItem();
+        itemOptimistaISO = new javax.swing.JMenuItem();
+        menuDetallesImpuestosPuntual = new javax.swing.JMenu();
+        itemPuntualIVA = new javax.swing.JMenuItem();
+        itemPuntualISR = new javax.swing.JMenuItem();
+        itemPuntualISO = new javax.swing.JMenuItem();
         menuDetalleImpuestosPesimista = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        itemPesimistaIVA = new javax.swing.JMenuItem();
+        itemPesimistaISR = new javax.swing.JMenuItem();
+        itemPesimistaISO = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -766,7 +780,58 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
 
         menuArchivo.setText(resourceMap.getString("menuArchivo.text")); // NOI18N
         menuArchivo.setName("menuArchivo"); // NOI18N
+
+        itemAbrirEscenarioOptimista.setText(resourceMap.getString("itemAbrirEscenarioOptimista.text")); // NOI18N
+        itemAbrirEscenarioOptimista.setName("itemAbrirEscenarioOptimista"); // NOI18N
+        itemAbrirEscenarioOptimista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAbrirEscenarioOptimistaActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(itemAbrirEscenarioOptimista);
+
+        Guardar.setText(resourceMap.getString("Guardar.text")); // NOI18N
+        Guardar.setName("Guardar"); // NOI18N
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(Guardar);
+
         jMenuBar1.add(menuArchivo);
+
+        menuHerramientas.setText(resourceMap.getString("menuHerramientas.text")); // NOI18N
+        menuHerramientas.setName("menuHerramientas"); // NOI18N
+
+        itemDetallesOptimista.setText(resourceMap.getString("itemDetallesOptimista.text")); // NOI18N
+        itemDetallesOptimista.setName("itemDetallesOptimista"); // NOI18N
+        itemDetallesOptimista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDetallesOptimistaActionPerformed(evt);
+            }
+        });
+        menuHerramientas.add(itemDetallesOptimista);
+
+        itemDetallesPuntual.setText(resourceMap.getString("itemDetallesPuntual.text")); // NOI18N
+        itemDetallesPuntual.setName("itemDetallesPuntual"); // NOI18N
+        itemDetallesPuntual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDetallesPuntualActionPerformed(evt);
+            }
+        });
+        menuHerramientas.add(itemDetallesPuntual);
+
+        itemDetallesPesimista.setText(resourceMap.getString("itemDetallesPesimista.text")); // NOI18N
+        itemDetallesPesimista.setName("itemDetallesPesimista"); // NOI18N
+        itemDetallesPesimista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDetallesPesimistaActionPerformed(evt);
+            }
+        });
+        menuHerramientas.add(itemDetallesPesimista);
+
+        jMenuBar1.add(menuHerramientas);
 
         menuImpuestos.setText(resourceMap.getString("menuImpuestos.text")); // NOI18N
         menuImpuestos.setName("menuImpuestos"); // NOI18N
@@ -774,34 +839,96 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         menuDetalleImpuestosOptimista.setText(resourceMap.getString("menuDetalleImpuestosOptimista.text")); // NOI18N
         menuDetalleImpuestosOptimista.setName("menuDetalleImpuestosOptimista"); // NOI18N
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        menuDetalleImpuestosOptimista.add(jMenuItem1);
+        itemOptimistaIVA.setText(resourceMap.getString("itemOptimistaIVA.text")); // NOI18N
+        itemOptimistaIVA.setName("itemOptimistaIVA"); // NOI18N
+        itemOptimistaIVA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemOptimistaIVAActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosOptimista.add(itemOptimistaIVA);
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        menuDetalleImpuestosOptimista.add(jMenuItem2);
+        itemOptimistaISR.setText(resourceMap.getString("itemOptimistaISR.text")); // NOI18N
+        itemOptimistaISR.setName("itemOptimistaISR"); // NOI18N
+        itemOptimistaISR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemOptimistaISRActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosOptimista.add(itemOptimistaISR);
 
-        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        menuDetalleImpuestosOptimista.add(jMenuItem3);
+        itemOptimistaISO.setText(resourceMap.getString("itemOptimistaISO.text")); // NOI18N
+        itemOptimistaISO.setName("itemOptimistaISO"); // NOI18N
+        itemOptimistaISO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemOptimistaISOActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosOptimista.add(itemOptimistaISO);
 
         menuImpuestos.add(menuDetalleImpuestosOptimista);
+
+        menuDetallesImpuestosPuntual.setText(resourceMap.getString("menuDetallesImpuestosPuntual.text")); // NOI18N
+        menuDetallesImpuestosPuntual.setName("menuDetallesImpuestosPuntual"); // NOI18N
+
+        itemPuntualIVA.setText(resourceMap.getString("itemPuntualIVA.text")); // NOI18N
+        itemPuntualIVA.setName("itemPuntualIVA"); // NOI18N
+        itemPuntualIVA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPuntualIVAActionPerformed(evt);
+            }
+        });
+        menuDetallesImpuestosPuntual.add(itemPuntualIVA);
+
+        itemPuntualISR.setText(resourceMap.getString("itemPuntualISR.text")); // NOI18N
+        itemPuntualISR.setName("itemPuntualISR"); // NOI18N
+        itemPuntualISR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPuntualISRActionPerformed(evt);
+            }
+        });
+        menuDetallesImpuestosPuntual.add(itemPuntualISR);
+
+        itemPuntualISO.setText(resourceMap.getString("itemPuntualISO.text")); // NOI18N
+        itemPuntualISO.setName("itemPuntualISO"); // NOI18N
+        itemPuntualISO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPuntualISOActionPerformed(evt);
+            }
+        });
+        menuDetallesImpuestosPuntual.add(itemPuntualISO);
+
+        menuImpuestos.add(menuDetallesImpuestosPuntual);
 
         menuDetalleImpuestosPesimista.setText(resourceMap.getString("menuDetalleImpuestosPesimista.text")); // NOI18N
         menuDetalleImpuestosPesimista.setName("menuDetalleImpuestosPesimista"); // NOI18N
 
-        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        menuDetalleImpuestosPesimista.add(jMenuItem4);
+        itemPesimistaIVA.setText(resourceMap.getString("itemPesimistaIVA.text")); // NOI18N
+        itemPesimistaIVA.setName("itemPesimistaIVA"); // NOI18N
+        itemPesimistaIVA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesimistaIVAActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosPesimista.add(itemPesimistaIVA);
 
-        jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
-        jMenuItem5.setName("jMenuItem5"); // NOI18N
-        menuDetalleImpuestosPesimista.add(jMenuItem5);
+        itemPesimistaISR.setText(resourceMap.getString("itemPesimistaISR.text")); // NOI18N
+        itemPesimistaISR.setName("itemPesimistaISR"); // NOI18N
+        itemPesimistaISR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesimistaISRActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosPesimista.add(itemPesimistaISR);
 
-        jMenuItem6.setText(resourceMap.getString("jMenuItem6.text")); // NOI18N
-        jMenuItem6.setName("jMenuItem6"); // NOI18N
-        menuDetalleImpuestosPesimista.add(jMenuItem6);
+        itemPesimistaISO.setText(resourceMap.getString("itemPesimistaISO.text")); // NOI18N
+        itemPesimistaISO.setName("itemPesimistaISO"); // NOI18N
+        itemPesimistaISO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesimistaISOActionPerformed(evt);
+            }
+        });
+        menuDetalleImpuestosPesimista.add(itemPesimistaISO);
 
         menuImpuestos.add(menuDetalleImpuestosPesimista);
 
@@ -874,6 +1001,117 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         this.probabilidadPesimista.selectAll();
     }//GEN-LAST:event_porcentajeAumentoCostosFocusLost
 
+    private void itemDetallesOptimistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDetallesOptimistaActionPerformed
+        // TODO add your handling code here:
+        FormularioDatosExactos fde = new FormularioDatosExactos(null, false);
+        fde.mostrarDatosExactos((Escenario)escenarioOptimista);
+    }//GEN-LAST:event_itemDetallesOptimistaActionPerformed
+
+    private void itemDetallesPuntualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDetallesPuntualActionPerformed
+        // TODO add your handling code here:
+        FormularioDatosExactos fde = new FormularioDatosExactos(null, false);
+        fde.mostrarDatosExactos((Escenario)escenarioPuntual);
+    }//GEN-LAST:event_itemDetallesPuntualActionPerformed
+
+    private void itemDetallesPesimistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDetallesPesimistaActionPerformed
+        // TODO add your handling code here:
+        FormularioDatosExactos fde = new FormularioDatosExactos(null, false);
+        fde.mostrarDatosExactos((Escenario)escenarioPesimista);
+    }//GEN-LAST:event_itemDetallesPesimistaActionPerformed
+
+    private void itemOptimistaIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOptimistaIVAActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoIVA((Escenario)escenarioOptimista);
+    }//GEN-LAST:event_itemOptimistaIVAActionPerformed
+
+    private void itemOptimistaISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOptimistaISRActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISR((Escenario)escenarioOptimista);
+    }//GEN-LAST:event_itemOptimistaISRActionPerformed
+
+    private void itemOptimistaISOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOptimistaISOActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISO((Escenario)escenarioOptimista);
+    }//GEN-LAST:event_itemOptimistaISOActionPerformed
+
+    private void itemPesimistaIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesimistaIVAActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoIVA((Escenario)escenarioPesimista);
+    }//GEN-LAST:event_itemPesimistaIVAActionPerformed
+
+    private void itemPesimistaISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesimistaISRActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISR((Escenario)escenarioPesimista);
+    }//GEN-LAST:event_itemPesimistaISRActionPerformed
+
+    private void itemPesimistaISOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesimistaISOActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISO((Escenario)escenarioPesimista);
+    }//GEN-LAST:event_itemPesimistaISOActionPerformed
+
+    private void itemPuntualIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPuntualIVAActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoIVA((Escenario)escenarioPuntual);
+    }//GEN-LAST:event_itemPuntualIVAActionPerformed
+
+    private void itemPuntualISRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPuntualISRActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISR((Escenario)escenarioPuntual);
+    }//GEN-LAST:event_itemPuntualISRActionPerformed
+
+    private void itemPuntualISOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPuntualISOActionPerformed
+        // TODO add your handling code here:
+        Detalles d = new Detalles(null, false);
+        d.verDetallesCalculoISO((Escenario)escenarioPuntual);
+    }//GEN-LAST:event_itemPuntualISOActionPerformed
+
+    private void itemAbrirEscenarioOptimistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAbrirEscenarioOptimistaActionPerformed
+        // TODO add your handling code here:        
+                
+        JFileChooser selector = new JFileChooser();
+        int resultado = selector.showOpenDialog(null);
+        if (resultado==JFileChooser.APPROVE_OPTION){
+            ModeloEscenarios me = ModeloEscenarios.deserializarDeXML(selector.getSelectedFile().getAbsolutePath());
+            /*
+             * setear las opciones primero, antes de recargar los datos
+             */
+            this.escenarioOptimista = me.getOptimista();
+            this.escenarioPesimista = me.getPesimista();
+            this.escenarioPuntual = me.getPuntual();
+            
+            this.probablilidadPuntual.setText(Double.toString(this.escenarioPuntual.getProbabilidad()));
+            
+            this.probablilidadOptimista.setText(Double.toString(this.escenarioOptimista.getProbabilidad()));
+            this.porcentajeAumentoIngresos.setText(Double.toString(this.escenarioOptimista.getTasaIncrementoIngresos()));
+            this.porcentajeDisminucionCostos.setText(Double.toString(this.escenarioOptimista.getTasaDisminucionCostos()));
+            
+            this.probabilidadPesimista.setText(Double.toString(this.escenarioPesimista.getProbabilidad()));
+            this.porcentajeDisminucionIngresos.setText(Double.toString(this.escenarioPesimista.getTasaDisminucionIngresos()));
+            this.porcentajeAumentoCostos.setText(Double.toString(this.escenarioPesimista.getTasaIncrementoCostos()));
+        }       
+    }//GEN-LAST:event_itemAbrirEscenarioOptimistaActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        // TODO add your handling code here:
+        JFileChooser selector = new JFileChooser();
+        int resultado = selector.showSaveDialog(null);
+        if (resultado==JFileChooser.APPROVE_OPTION){
+            ModeloEscenarios me = new ModeloEscenarios();
+            me.setOptimista(escenarioOptimista);
+            me.setPesimista(escenarioPesimista);
+            me.setPuntual(escenarioPuntual);
+            me.serializarAXML(selector.getSelectedFile().getAbsolutePath());
+        }    
+    }//GEN-LAST:event_GuardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -918,10 +1156,24 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Guardar;
     private javax.swing.JButton calcular;
     private javax.swing.JTextField intervaloTIR;
     private javax.swing.JTextField intervaloVAN;
     private javax.swing.JTextField inversionInicial;
+    private javax.swing.JMenuItem itemAbrirEscenarioOptimista;
+    private javax.swing.JMenuItem itemDetallesOptimista;
+    private javax.swing.JMenuItem itemDetallesPesimista;
+    private javax.swing.JMenuItem itemDetallesPuntual;
+    private javax.swing.JMenuItem itemOptimistaISO;
+    private javax.swing.JMenuItem itemOptimistaISR;
+    private javax.swing.JMenuItem itemOptimistaIVA;
+    private javax.swing.JMenuItem itemPesimistaISO;
+    private javax.swing.JMenuItem itemPesimistaISR;
+    private javax.swing.JMenuItem itemPesimistaIVA;
+    private javax.swing.JMenuItem itemPuntualISO;
+    private javax.swing.JMenuItem itemPuntualISR;
+    private javax.swing.JMenuItem itemPuntualIVA;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -934,12 +1186,6 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -949,6 +1195,8 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuDetalleImpuestosOptimista;
     private javax.swing.JMenu menuDetalleImpuestosPesimista;
+    private javax.swing.JMenu menuDetallesImpuestosPuntual;
+    private javax.swing.JMenu menuHerramientas;
     private javax.swing.JMenu menuImpuestos;
     private javax.swing.JPanel panelArbol;
     private javax.swing.JPanel panelCaracteristicas;

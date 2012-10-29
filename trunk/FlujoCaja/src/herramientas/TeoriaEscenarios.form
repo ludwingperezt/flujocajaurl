@@ -12,6 +12,61 @@
             <Property name="text" type="java.lang.String" resourceKey="menuArchivo.text"/>
             <Property name="name" type="java.lang.String" value="menuArchivo" noResource="true"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemAbrirEscenarioOptimista">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="itemAbrirEscenarioOptimista.text"/>
+                <Property name="name" type="java.lang.String" value="itemAbrirEscenarioOptimista" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemAbrirEscenarioOptimistaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="Guardar">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="Guardar.text"/>
+                <Property name="name" type="java.lang.String" value="Guardar" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuHerramientas">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="menuHerramientas.text"/>
+            <Property name="name" type="java.lang.String" value="menuHerramientas" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemDetallesOptimista">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="itemDetallesOptimista.text"/>
+                <Property name="name" type="java.lang.String" value="itemDetallesOptimista" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemDetallesOptimistaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemDetallesPuntual">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="itemDetallesPuntual.text"/>
+                <Property name="name" type="java.lang.String" value="itemDetallesPuntual" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemDetallesPuntualActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemDetallesPesimista">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="itemDetallesPesimista.text"/>
+                <Property name="name" type="java.lang.String" value="itemDetallesPesimista" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemDetallesPesimistaActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuImpuestos">
           <Properties>
@@ -25,23 +80,67 @@
                 <Property name="name" type="java.lang.String" value="menuDetalleImpuestosOptimista" noResource="true"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+                <MenuItem class="javax.swing.JMenuItem" name="itemOptimistaIVA">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemOptimistaIVA.text"/>
+                    <Property name="name" type="java.lang.String" value="itemOptimistaIVA" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemOptimistaIVAActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+                <MenuItem class="javax.swing.JMenuItem" name="itemOptimistaISR">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem2.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem2" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemOptimistaISR.text"/>
+                    <Property name="name" type="java.lang.String" value="itemOptimistaISR" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemOptimistaISRActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+                <MenuItem class="javax.swing.JMenuItem" name="itemOptimistaISO">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem3.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemOptimistaISO.text"/>
+                    <Property name="name" type="java.lang.String" value="itemOptimistaISO" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemOptimistaISOActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="menuDetallesImpuestosPuntual">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="menuDetallesImpuestosPuntual.text"/>
+                <Property name="name" type="java.lang.String" value="menuDetallesImpuestosPuntual" noResource="true"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="itemPuntualIVA">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPuntualIVA.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPuntualIVA" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPuntualIVAActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="itemPuntualISR">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPuntualISR.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPuntualISR" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPuntualISRActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="itemPuntualISO">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPuntualISO.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPuntualISO" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPuntualISOActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -51,23 +150,32 @@
                 <Property name="name" type="java.lang.String" value="menuDetalleImpuestosPesimista" noResource="true"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+                <MenuItem class="javax.swing.JMenuItem" name="itemPesimistaIVA">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem4.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem4" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPesimistaIVA.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPesimistaIVA" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPesimistaIVAActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+                <MenuItem class="javax.swing.JMenuItem" name="itemPesimistaISR">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem5.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem5" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPesimistaISR.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPesimistaISR" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPesimistaISRActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+                <MenuItem class="javax.swing.JMenuItem" name="itemPesimistaISO">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem6.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem6" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="itemPesimistaISO.text"/>
+                    <Property name="name" type="java.lang.String" value="itemPesimistaISO" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemPesimistaISOActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
