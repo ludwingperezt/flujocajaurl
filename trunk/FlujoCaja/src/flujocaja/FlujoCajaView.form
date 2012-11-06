@@ -1493,10 +1493,16 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuEscenariosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="menuSensibilidad">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="menuSensibilidad.text"/>
+                <Property name="name" type="java.lang.String" value="menuSensibilidad" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuSimulacion">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="menuSimulacion.text"/>
+                <Property name="name" type="java.lang.String" value="menuSimulacion" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
