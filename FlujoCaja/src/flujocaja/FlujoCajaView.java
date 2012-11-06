@@ -266,7 +266,7 @@ public class FlujoCajaView extends FrameView {
             for (Intereses i:listaIntereses){
                 iterador = i.getListaCuotasAnuales();
                 if (iterador!=null)
-                    this.insertarFilaTablaPrincipal("Intereses", false, i.getListaCuotasAnuales());
+                    this.insertarInteresTablaPrincipal(i.getNombre(), false, iterador);
             }
         }
         //"UAI"
@@ -432,7 +432,8 @@ public class FlujoCajaView extends FrameView {
         itemISO = new javax.swing.JMenuItem();
         menuHerramientas = new javax.swing.JMenu();
         menuEscenarios = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuSensibilidad = new javax.swing.JMenuItem();
+        menuSimulacion = new javax.swing.JMenuItem();
         Pronosticos = new javax.swing.JMenu();
         pronosticarModelo = new javax.swing.JMenuItem();
         modeloPorcentual = new javax.swing.JMenuItem();
@@ -1496,9 +1497,13 @@ public class FlujoCajaView extends FrameView {
         });
         menuHerramientas.add(menuEscenarios);
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        menuHerramientas.add(jMenuItem1);
+        menuSensibilidad.setText(resourceMap.getString("menuSensibilidad.text")); // NOI18N
+        menuSensibilidad.setName("menuSensibilidad"); // NOI18N
+        menuHerramientas.add(menuSensibilidad);
+
+        menuSimulacion.setText(resourceMap.getString("menuSimulacion.text")); // NOI18N
+        menuSimulacion.setName("menuSimulacion"); // NOI18N
+        menuHerramientas.add(menuSimulacion);
 
         menuBar.add(menuHerramientas);
 
@@ -2223,7 +2228,6 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -2246,6 +2250,8 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenu menuImpuestos;
     private javax.swing.JMenu menuOperaciones;
     private javax.swing.JMenuItem menuRecargar;
+    private javax.swing.JMenuItem menuSensibilidad;
+    private javax.swing.JMenuItem menuSimulacion;
     private javax.swing.JMenu menuTMAR;
     private javax.swing.JMenu menuVariables;
     private javax.swing.JMenuItem modeloPorcentual;
@@ -2688,11 +2694,11 @@ public class FlujoCajaView extends FrameView {
             for (Inversionista i: lstInversionistas){
                 Object []fila = new Object[5];
 
-                fila[0]=i.getNombre();
-                fila[1]=i.getRiesgo()*100;
-                fila[2]=i.getParticipacion()*100;
-                fila[3]=i.getTmar()*100;
-                fila[4]=i.getTmarPonderada()*100;
+                fila[0]=i.getNombre();                
+                fila[1]=ModeloPorcentual.redondearCifra(i.getRiesgo()*100);
+                fila[2]=ModeloPorcentual.redondearCifra(i.getParticipacion()*100);
+                fila[3]=ModeloPorcentual.redondearCifra(i.getTmar()*100);
+                fila[4]=ModeloPorcentual.redondearCifra(i.getTmarPonderada()*100);
 
                 modeloTabla.addRow(fila);
 
