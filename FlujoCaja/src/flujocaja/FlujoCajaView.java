@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import javax.swing.JFrame;
 import controlador.Escenario;
+import herramientas.AnalisisSensibilidad;
+import herramientas.AnalisisSimulacion;
 import herramientas.TeoriaEscenarios;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -1499,10 +1501,20 @@ public class FlujoCajaView extends FrameView {
 
         menuSensibilidad.setText(resourceMap.getString("menuSensibilidad.text")); // NOI18N
         menuSensibilidad.setName("menuSensibilidad"); // NOI18N
+        menuSensibilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSensibilidadActionPerformed(evt);
+            }
+        });
         menuHerramientas.add(menuSensibilidad);
 
         menuSimulacion.setText(resourceMap.getString("menuSimulacion.text")); // NOI18N
         menuSimulacion.setName("menuSimulacion"); // NOI18N
+        menuSimulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSimulacionActionPerformed(evt);
+            }
+        });
         menuHerramientas.add(menuSimulacion);
 
         menuBar.add(menuHerramientas);
@@ -2162,6 +2174,18 @@ public class FlujoCajaView extends FrameView {
             this.escenarioNormal.serializarAXML(selector.getSelectedFile().getAbsolutePath());
         }    
     }//GEN-LAST:event_menuGuardarActionPerformed
+
+    private void menuSensibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSensibilidadActionPerformed
+        // TODO add your handling code here:
+        AnalisisSensibilidad as = new AnalisisSensibilidad(null, false);
+        as.analisisSensibilidad(escenarioNormal);
+    }//GEN-LAST:event_menuSensibilidadActionPerformed
+
+    private void menuSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSimulacionActionPerformed
+        // TODO add your handling code here:
+        AnalisisSimulacion as = new AnalisisSimulacion(null, false);
+        as.analisisSimulacion(escenarioNormal);
+    }//GEN-LAST:event_menuSimulacionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Pronosticos;
