@@ -190,7 +190,10 @@ public class ISR {
         this.egresosDeducibles97 = new double[periodos];
         this.porcentajeUtilidad = new double[periodos];
         this.regimen = new double[periodos];
-        this.ingresos = this.padre.getModeloIngresos().getCalcularIngresos();
+        /////////////////////////////////////////////////////////////////////////////
+        this.ingresos = this.padre.getModeloIngresos().getCalcularIngresos().clone();
+        /////////////////////////////////////////////////////////////////////////////
+        //this.ingresos = this.padre.getModeloIngresos().getCalcularIngresos();
         
         calcularDeducibles();
         calcularUAI();
