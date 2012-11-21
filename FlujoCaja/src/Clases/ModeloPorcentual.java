@@ -135,6 +135,7 @@ public class ModeloPorcentual {
      * Función que formatea una cadena que representa un porcentaje a un double de porcentaje (entre 0 y 1) redondeado a 2 cifras decimales.
      * La cadena puede o no tener el simbolo %
      * La cadena deberá estar en representación natural (entre 0 y 100) porque será dividida dentro de 100
+     * Si redondear = true, se redondea la cifra a solo dos posiciones decimales
      * @param val
      * @return 
      */

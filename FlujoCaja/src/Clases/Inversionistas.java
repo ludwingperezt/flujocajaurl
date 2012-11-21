@@ -55,12 +55,12 @@ public class Inversionistas {
     {
         return this.listaInversionistas.size();
     }
-    public void insertarInversionista(String nombre, double participacion, double riesgo)
+    /*public void insertarInversionista(String nombre, double participacion, double riesgo)
     {
         Inversionista temp = new Inversionista();
         temp.calcularDatos(nombre, participacion/100, riesgo/100);
         this.listaInversionistas.add(temp);
-    }
+    }*/
     public double obtenerSumaTmarPonderada()
     {
         if (this.getCantidadInversionistas()==1)

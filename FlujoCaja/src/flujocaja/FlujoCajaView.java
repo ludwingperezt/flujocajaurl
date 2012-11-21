@@ -1686,8 +1686,8 @@ public class FlujoCajaView extends FrameView {
 
     private void costosModeloPronosticacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_costosModeloPronosticacionActionPerformed
         // TODO add your handling code here:
-        //int opc = JOptionPane.showConfirmDialog(mainPanel, "¿Los costos tienen factura?", "Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        //si opc = 0 entonces los costos tienen factura
+        //int opc = JOptionPane.showConfirmDialog(mainPanel, "¿Los porcentajes tienen factura?", "Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        //si opc = 0 entonces los porcentajes tienen factura
         this.costosPorModeloPronostico();
     }//GEN-LAST:event_costosModeloPronosticacionActionPerformed
 
@@ -1823,6 +1823,8 @@ public class FlujoCajaView extends FrameView {
             this.costosPorModeloPronostico();
         else if (ipc == 2)
             this.costosManual();
+        else if (ipc==3)
+            this.costosPorcentajesManuales();
     }//GEN-LAST:event_botonCostosActionPerformed
 
     private void botonGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGastosActionPerformed
@@ -2643,6 +2645,19 @@ public class FlujoCajaView extends FrameView {
             temporal.setPadre(escenarioNormal);
             temporal.setFactura(true);
             temporal.setCostos(costos);
+            this.escenarioNormal.setModeloCostos(temporal);
+            this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getPronosticarCostos());
+        }
+    }
+    
+    private void costosPorcentajesManuales() {
+        Manual m = new Manual(null, true);
+        double [] porcentajes = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+        if (porcentajes!=null){        
+            Costos temporal = new Costos();
+            temporal.setPadre(escenarioNormal);
+            temporal.setFactura(true);
+            temporal.setListaPorcentajes(porcentajes);
             this.escenarioNormal.setModeloCostos(temporal);
             this.insertarFilaTablaPrincipal("Costos",temporal.getFactura(), temporal.getPronosticarCostos());
         }

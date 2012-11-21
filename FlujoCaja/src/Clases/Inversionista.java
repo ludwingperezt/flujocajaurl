@@ -3,7 +3,7 @@ package Clases;
 
 public class Inversionista {
 
-    protected static double inflacion = 0.09;
+    //protected static double inflacion = 0.09;
 
     private String nombre;
 
@@ -27,9 +27,9 @@ public class Inversionista {
         this.tmar = base.tmar;
         this.tmarPonderada = base.tmarPonderada;
         this.tasaInflacion = base.tasaInflacion;
-        Inversionista.inflacion = base.tasaInflacion;
+        //Inversionista.inflacion = base.tasaInflacion;
     }
-
+/*
     public static double getInflacion () {
         return Inversionista.inflacion;
     }
@@ -37,7 +37,7 @@ public class Inversionista {
     public static void setInflacion (double val) {
         Inversionista.inflacion = val;
     }
-
+*/
     public String getNombre () {
         return nombre;
     }
@@ -83,13 +83,12 @@ public class Inversionista {
         this.setNombre(nombre);
         this.setParticipacion(participacion);
         this.setRiesgo(riesgo);
-        this.tmar = riesgo + Inversionista.inflacion + (riesgo*Inversionista.inflacion);
+        this.tmar = riesgo + this.tasaInflacion + (riesgo*this.tasaInflacion);
         this.tmarPonderada = tmar * participacion;
     }
 
     public void setTasaInflacion(double inflacion) {
         this.tasaInflacion = inflacion;
-        Inversionista.inflacion = inflacion;
     }
     
     public double getTasaInflacion(){
