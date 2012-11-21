@@ -10,6 +10,7 @@
  */
 package flujocaja;
 
+import Clases.ModeloPorcentual;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +30,8 @@ public class Manual extends javax.swing.JDialog {
     
     private double [] datos;
 
+    private boolean porcentajes = false;
+    
     /** Creates new form Manual */
     public Manual(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -36,6 +39,8 @@ public class Manual extends javax.swing.JDialog {
     }
     
     public double [] insertarDatosManuales(int [] anios){
+        this.porcentajes = false;
+        this.panelRedondear.setVisible(false);
         DefaultTableModel modelo = new DefaultTableModel();
         Object [] fila = new Object[anios.length];
         for (int i=0; i<anios.length; i++){
@@ -49,12 +54,47 @@ public class Manual extends javax.swing.JDialog {
     }
 
     public double [] editarDatosManuales(int [] anios, double [] valoresAnteriores){
+        this.porcentajes = false;
+        this.panelRedondear.setVisible(false);
         DefaultTableModel modelo = new DefaultTableModel();
         Object [] fila = new Object[valoresAnteriores.length];
         
         for (int i=0; i<anios.length; i++){
             modelo.addColumn(anios[i]);
             fila[i] = valoresAnteriores[i];
+        }
+        modelo.addRow(fila);
+        this.jTable1.setModel(modelo);
+        
+        this.setVisible(true);
+        return this.datos;        
+    }
+    
+    public double [] insertarPorcentajes(int [] anios)
+    {
+        this.porcentajes = true;
+        this.panelRedondear.setVisible(true);
+        DefaultTableModel modelo = new DefaultTableModel();
+        Object [] fila = new Object[anios.length];
+        for (int i=0; i<anios.length; i++){
+            modelo.addColumn(anios[i]);
+        }
+        modelo.addRow(fila);
+        this.jTable1.setModel(modelo);
+        
+        this.setVisible(true);
+        return this.datos; 
+    }
+    
+    public double [] editarPorcentajesManuales(int [] anios, double [] valoresAnteriores){
+        this.porcentajes = true;
+        this.panelRedondear.setVisible(true);
+        DefaultTableModel modelo = new DefaultTableModel();
+        Object [] fila = new Object[valoresAnteriores.length];
+        
+        for (int i=0; i<anios.length; i++){
+            modelo.addColumn(anios[i]);
+            fila[i] = ModeloPorcentual.redondearCifra(valoresAnteriores[i]*100)+"%";
         }
         modelo.addRow(fila);
         this.jTable1.setModel(modelo);
@@ -72,10 +112,14 @@ public class Manual extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         aceptar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        panelRedondear = new javax.swing.JPanel();
+        redondear = new javax.swing.JRadioButton();
+        noRedondear = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         datosArchivo = new javax.swing.JMenuItem();
@@ -113,6 +157,37 @@ public class Manual extends javax.swing.JDialog {
         jTable1.setName("jTable1"); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
+        panelRedondear.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelRedondear.border.title"))); // NOI18N
+        panelRedondear.setName("panelRedondear"); // NOI18N
+
+        buttonGroup1.add(redondear);
+        redondear.setText(resourceMap.getString("redondear.text")); // NOI18N
+        redondear.setName("redondear"); // NOI18N
+
+        buttonGroup1.add(noRedondear);
+        noRedondear.setSelected(true);
+        noRedondear.setText(resourceMap.getString("noRedondear.text")); // NOI18N
+        noRedondear.setName("noRedondear"); // NOI18N
+
+        javax.swing.GroupLayout panelRedondearLayout = new javax.swing.GroupLayout(panelRedondear);
+        panelRedondear.setLayout(panelRedondearLayout);
+        panelRedondearLayout.setHorizontalGroup(
+            panelRedondearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondearLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRedondearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(noRedondear)
+                    .addComponent(redondear))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRedondearLayout.setVerticalGroup(
+            panelRedondearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondearLayout.createSequentialGroup()
+                .addComponent(noRedondear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(redondear))
+        );
+
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
         jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
@@ -136,11 +211,12 @@ public class Manual extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(panelRedondear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(cancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(aceptar)))
@@ -150,7 +226,9 @@ public class Manual extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(panelRedondear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
@@ -181,7 +259,10 @@ public class Manual extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
         this.datos = new double[size];
         for (int i=0; i<size; i++){
-            datos[i] = Double.parseDouble(modelo.getValueAt(0, i).toString());
+            if (!this.porcentajes)
+                datos[i] = Double.parseDouble(modelo.getValueAt(0, i).toString());
+            else
+                datos[i] = ModeloPorcentual.formatearPorcentaje(modelo.getValueAt(0, i).toString(), redondear.isSelected());
         }
         this.dispose();
     }//GEN-LAST:event_aceptarActionPerformed
@@ -231,12 +312,16 @@ public class Manual extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelar;
     private javax.swing.JMenuItem datosArchivo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton noRedondear;
+    private javax.swing.JPanel panelRedondear;
+    private javax.swing.JRadioButton redondear;
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatosHistoricos(String direccion) {

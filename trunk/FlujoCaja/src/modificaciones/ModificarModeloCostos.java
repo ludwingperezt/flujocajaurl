@@ -85,9 +85,11 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
         menuDatos = new javax.swing.JMenu();
         editarManualmente = new javax.swing.JMenuItem();
         nuevoModeloPorcentual = new javax.swing.JMenuItem();
+        listaPorcentajesManual = new javax.swing.JMenuItem();
         nuevoModeloPronosticacion = new javax.swing.JMenuItem();
         menuPorcentaje = new javax.swing.JMenu();
         cambiarPorcentajeAMano = new javax.swing.JMenuItem();
+        menuPorcentajesManual = new javax.swing.JMenuItem();
         cambiarModeloAPronosticacion = new javax.swing.JMenuItem();
         menuPronosticacion = new javax.swing.JMenu();
         redefinirModeloPronosticacion = new javax.swing.JMenuItem();
@@ -180,6 +182,15 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
         });
         menuDatos.add(nuevoModeloPorcentual);
 
+        listaPorcentajesManual.setText(resourceMap.getString("listaPorcentajesManual.text")); // NOI18N
+        listaPorcentajesManual.setName("listaPorcentajesManual"); // NOI18N
+        listaPorcentajesManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaPorcentajesManualActionPerformed(evt);
+            }
+        });
+        menuDatos.add(listaPorcentajesManual);
+
         nuevoModeloPronosticacion.setText(resourceMap.getString("nuevoModeloPronosticacion.text")); // NOI18N
         nuevoModeloPronosticacion.setName("nuevoModeloPronosticacion"); // NOI18N
         nuevoModeloPronosticacion.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +204,11 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
 
         menuPorcentaje.setText(resourceMap.getString("menuPorcentaje.text")); // NOI18N
         menuPorcentaje.setName("menuPorcentaje"); // NOI18N
+        menuPorcentaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPorcentajeActionPerformed(evt);
+            }
+        });
 
         cambiarPorcentajeAMano.setText(resourceMap.getString("cambiarPorcentajeAMano.text")); // NOI18N
         cambiarPorcentajeAMano.setName("cambiarPorcentajeAMano"); // NOI18N
@@ -202,6 +218,10 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
             }
         });
         menuPorcentaje.add(cambiarPorcentajeAMano);
+
+        menuPorcentajesManual.setText(resourceMap.getString("menuPorcentajesManual.text")); // NOI18N
+        menuPorcentajesManual.setName("menuPorcentajesManual"); // NOI18N
+        menuPorcentaje.add(menuPorcentajesManual);
 
         cambiarModeloAPronosticacion.setText(resourceMap.getString("cambiarModeloAPronosticacion.text")); // NOI18N
         cambiarModeloAPronosticacion.setName("cambiarModeloAPronosticacion"); // NOI18N
@@ -322,6 +342,16 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
         this.nuevoModeloPronosticacion();
     }//GEN-LAST:event_redefinirModeloPronosticacionActionPerformed
 
+    private void listaPorcentajesManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaPorcentajesManualActionPerformed
+        // TODO add your handling code here:
+        this.establecerListaPorcentajes();
+    }//GEN-LAST:event_listaPorcentajesManualActionPerformed
+
+    private void menuPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPorcentajeActionPerformed
+        // TODO add your handling code here:
+        this.editarPorcentajesManualmente();
+    }//GEN-LAST:event_menuPorcentajeActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -351,8 +381,10 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JMenuItem listaPorcentajesManual;
     private javax.swing.JMenu menuDatos;
     private javax.swing.JMenu menuPorcentaje;
+    private javax.swing.JMenuItem menuPorcentajesManual;
     private javax.swing.JMenu menuPronosticacion;
     private javax.swing.JMenuItem nuevoModeloPorcentual;
     private javax.swing.JMenuItem nuevoModeloPronosticacion;
@@ -383,6 +415,24 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
         ModeloPorcentual mPorcentual = epc.estimarPorcentaje("Costos");
         if (mPorcentual!=null){
             mCostos.setModeloPorcentual(mPorcentual);
+            this.dispose();
+        }
+    }
+    
+    private void establecerListaPorcentajes(){
+        Manual m = new Manual(null, true);
+        double [] lista = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+        if (lista!=null){
+            mCostos.setListaPorcentajes(lista);
+            this.dispose();
+        }
+    }
+    
+    private void editarPorcentajesManualmente(){
+        Manual m = new Manual(null, true);
+        double [] lista = m.editarPorcentajesManuales(this.escenarioNormal.getListaAnios(),mCostos.getListaPorcentajes());
+        if (lista!=null){
+            mCostos.setListaPorcentajes(lista);
             this.dispose();
         }
     }

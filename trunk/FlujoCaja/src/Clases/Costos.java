@@ -18,6 +18,7 @@ public class Costos {
     public static int COSTO_PORCENTUAL = 0;
     public static int COSTO_MODELO = 1;
     public static int COSTO_MANUAL = 2;
+    public static int COSTO_PORCENTAJES_MANUALES = 3;
     
     private Escenario padre;
 
@@ -31,7 +32,7 @@ public class Costos {
     
     private int tipoCosto; //
 
-
+    private double [] listaPorcentajes;
 
     public Costos () {
     }
@@ -47,9 +48,20 @@ public class Costos {
         if (base.modeloPronosticacion!=null)
             this.modeloPronosticacion = new Modelo(base.getModeloPronosticacion());
         
+        if (base.listaPorcentajes !=null)
+            this.listaPorcentajes = base.listaPorcentajes.clone();
         
     }
 
+    public void setListaPorcentajes(double[] lista){
+        this.tipoCosto = Costos.COSTO_PORCENTAJES_MANUALES;
+        this.listaPorcentajes = lista;
+    }
+    
+    public double [] getListaPorcentajes(){
+        return this.listaPorcentajes;
+    }
+    
     public void setModeloPorcentual(ModeloPorcentual val){
         this.tipoCosto = Costos.COSTO_PORCENTUAL;
         this.modeloPorcentual = val;
@@ -136,6 +148,9 @@ public class Costos {
         else if (this.tipoCosto==Costos.COSTO_PORCENTUAL){
             this.costos = this.modeloPorcentual.estimarValores(this.padre.ingresos());
         }
+        else if (this.tipoCosto==Costos.COSTO_PORCENTAJES_MANUALES){
+            this.costos = this.calcularCostosPorcentajesManuales(this.padre.ingresos());
+        }
     }
 
     /**
@@ -165,6 +180,14 @@ public class Costos {
         this.setTipoCosto(Costos.COSTO_MANUAL);
     }
     public double [] getCostos(){
+        return this.costos;
+    }
+
+    private double[] calcularCostosPorcentajesManuales(double[] ingresos) {
+        this.costos = new double[ingresos.length];
+        for (int i=0; i<ingresos.length; i++){
+            this.costos[i] = ingresos[i]*this.listaPorcentajes[i];
+        }
         return this.costos;
     }
 }

@@ -31,6 +31,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nuevoModeloPorcentualActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="listaPorcentajesManual">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="listaPorcentajesManual.text"/>
+                <Property name="name" type="java.lang.String" value="listaPorcentajesManual" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listaPorcentajesManualActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="nuevoModeloPronosticacion">
               <Properties>
                 <Property name="text" type="java.lang.String" resourceKey="nuevoModeloPronosticacion.text"/>
@@ -47,6 +56,9 @@
             <Property name="text" type="java.lang.String" resourceKey="menuPorcentaje.text"/>
             <Property name="name" type="java.lang.String" value="menuPorcentaje" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuPorcentajeActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="cambiarPorcentajeAMano">
               <Properties>
@@ -56,6 +68,12 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cambiarPorcentajeAManoActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuPorcentajesManual">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="menuPorcentajesManual.text"/>
+                <Property name="name" type="java.lang.String" value="menuPorcentajesManual" noResource="true"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="cambiarModeloAPronosticacion">
               <Properties>
