@@ -27,6 +27,8 @@ public class Costos {
     private ModeloPorcentual modeloPorcentual = null; //
     
     private double [] costos;
+    
+    private double [] costosHistoricos;
 
     private boolean factura;
     
@@ -51,6 +53,34 @@ public class Costos {
         if (base.listaPorcentajes !=null)
             this.listaPorcentajes = base.listaPorcentajes.clone();
         
+        if (base.costosHistoricos!=null)
+            this.listaPorcentajes = base.costosHistoricos.clone();
+        
+    }
+    
+    public double[] getCostosHistoricos() {
+        return costosHistoricos;
+    }
+
+    public void setCostosHistoricos(double[] costosHistoricos) {
+        this.costosHistoricos = costosHistoricos;
+    }
+    
+    public void establecerCostosHistoricos(){
+        if (this.tipoCosto==Costos.COSTO_PORCENTUAL){
+            if (this.modeloPorcentual!=null){
+                if (this.modeloPorcentual.getY()!=null){
+                    this.costosHistoricos = this.modeloPorcentual.getY();
+                }
+            }
+        }
+        else if (this.tipoCosto==Costos.COSTO_MODELO){
+            if (this.modeloPronosticacion!=null){
+                if (this.modeloPronosticacion.getY()!=null){
+                    this.costosHistoricos = this.modeloPronosticacion.getY();
+                }
+            }
+        }
     }
 
     public void setListaPorcentajes(double[] lista){

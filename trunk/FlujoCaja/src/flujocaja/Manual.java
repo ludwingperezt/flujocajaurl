@@ -39,6 +39,7 @@ public class Manual extends javax.swing.JDialog {
     }
     
     public double [] insertarDatosManuales(int [] anios){
+        this.setTitle("Insertar datos manuales");
         this.porcentajes = false;
         this.panelRedondear.setVisible(false);
         DefaultTableModel modelo = new DefaultTableModel();
@@ -54,6 +55,7 @@ public class Manual extends javax.swing.JDialog {
     }
 
     public double [] editarDatosManuales(int [] anios, double [] valoresAnteriores){
+        this.setTitle("Editar datos manuales");
         this.porcentajes = false;
         this.panelRedondear.setVisible(false);
         DefaultTableModel modelo = new DefaultTableModel();
@@ -72,6 +74,7 @@ public class Manual extends javax.swing.JDialog {
     
     public double [] insertarPorcentajes(int [] anios)
     {
+        this.setTitle("Lista de porcentajes manuales");
         this.porcentajes = true;
         this.panelRedondear.setVisible(true);
         DefaultTableModel modelo = new DefaultTableModel();
@@ -87,6 +90,7 @@ public class Manual extends javax.swing.JDialog {
     }
     
     public double [] editarPorcentajesManuales(int [] anios, double [] valoresAnteriores){
+        this.setTitle("Editar lista de porcentajes manuales");
         this.porcentajes = true;
         this.panelRedondear.setVisible(true);
         DefaultTableModel modelo = new DefaultTableModel();

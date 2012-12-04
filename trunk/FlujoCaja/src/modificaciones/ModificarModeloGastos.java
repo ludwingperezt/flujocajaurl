@@ -37,6 +37,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     }
     
     public void modificarGasto(Escenario escenarioNormal, Gasto modificado){
+        this.setTitle("Modificar gasto: "+modificado.getNombreGasto());
         this.escenarioNormal = escenarioNormal;
         this.modificado = modificado;
         cargarDatos();
@@ -64,6 +65,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoFijo.setVisible(false);
             panelGastoVariable.setVisible(false);
             panelGastoModelo.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             escalonadoBase.setText(Double.toString(modificado.getBase()));
             escalonadoAnioBase.setText(Integer.toString(modificado.getAnioBase()));
             escalonadoTasaIncremento.setText(Double.toString(modificado.getTasaIncremento()*100));
@@ -73,6 +75,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoVariable.setVisible(false);
             panelGastoModelo.setVisible(false);
             panelGastoEscalonado.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             fijoCuota.setText(Double.toString(modificado.getBase()));
             fijoPeriodos.setText(Integer.toString(modificado.getCantidadPeriodos()));
         }else if (tipoGasto == Gasto.GASTO_SEGUN_COSTOS){
@@ -80,6 +83,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoModelo.setVisible(false);
             panelGastoEscalonado.setVisible(false);
             panelGastoFijo.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             porcentajeAnterior.setText(Double.toHexString(modificado.getModeloPorcentual().getPromedio()*100)+"%");
             variablePeriodos.setText(Integer.toString(modificado.getCantidadPeriodos()));
             costos.setSelected(true);
@@ -88,6 +92,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoModelo.setVisible(false);
             panelGastoEscalonado.setVisible(false);
             panelGastoFijo.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             porcentajeAnterior.setText(Double.toHexString(modificado.getModeloPorcentual().getPromedio()*100)+"%");
             variablePeriodos.setText(Integer.toString(modificado.getCantidadPeriodos()));
             ingresos.setSelected(true);
@@ -96,12 +101,14 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoEscalonado.setVisible(false);
             panelGastoFijo.setVisible(false);
             panelGastoVariable.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             modeloPeriodos.setText(Integer.toString(modificado.getCantidadPeriodos()));
         }else if (tipoGasto == Gasto.GASTO_DEPRECIACION){
             panelGastoEscalonado.setVisible(false);
             panelGastoFijo.setVisible(false);
             panelGastoVariable.setVisible(false);
             panelGastoModelo.setVisible(false);
+            panelPorcentajesManuales.setVisible(false);
             depreciacionInicial.setText(Double.toString(modificado.getBase()));
             depreciacionPeriodos.setText(Integer.toString(modificado.getCantidadPeriodos()));
             depreciacionPorcentaje.setText(Double.toString(modificado.getTasaIncremento()*100));
@@ -112,9 +119,51 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             panelGastoVariable.setVisible(false);
             panelGastoModelo.setVisible(false);
             panelGastoDepreciacion.setVisible(false);
-        }       
+            panelPorcentajesManuales.setVisible(false);
+        }else if (tipoGasto == Gasto.GASTO_SEGUN_COSTOS_PORCENTAJES_MANUALES){//||())||)||){
+            panelGastoEscalonado.setVisible(false);
+            panelGastoFijo.setVisible(false);
+            panelGastoVariable.setVisible(false);
+            panelGastoModelo.setVisible(false);
+            panelGastoDepreciacion.setVisible(false);
+            this.jTextField1.setText("Porcentual a costos");
+            this.cargarPorcentajes();
+        }else if (tipoGasto == Gasto.GASTO_SEGUN_INGRESOS_PORCENTAJES_MANUALES){
+            panelGastoEscalonado.setVisible(false);
+            panelGastoFijo.setVisible(false);
+            panelGastoVariable.setVisible(false);
+            panelGastoModelo.setVisible(false);
+            panelGastoDepreciacion.setVisible(false);
+            this.jTextField1.setText("Porcentual a ingresos");
+            this.cargarPorcentajes();
+        }else if (tipoGasto == Gasto.GASTO_SEGUN_INVERSION_PORCENTAJES_MANUALES){
+            panelGastoEscalonado.setVisible(false);
+            panelGastoFijo.setVisible(false);
+            panelGastoVariable.setVisible(false);
+            panelGastoModelo.setVisible(false);
+            panelGastoDepreciacion.setVisible(false);
+            this.jTextField1.setText("Porcentual a inversión");
+            this.cargarPorcentajes();
+        }else if (tipoGasto == Gasto.GASTO_SEGUN_GASTO_PORCENTAJES_MANUALES){
+            panelGastoEscalonado.setVisible(false);
+            panelGastoFijo.setVisible(false);
+            panelGastoVariable.setVisible(false);
+            panelGastoModelo.setVisible(false);
+            panelGastoDepreciacion.setVisible(false);
+            this.jTextField1.setText("Porcentual a "+modificado.getGastoBase().getNombreGasto());
+            this.cargarPorcentajes();
+        }
     }
-    
+    private void cargarPorcentajes(){
+        DefaultTableModel m = new DefaultTableModel();
+        Object [] fila = new Object[this.escenarioNormal.getListaAnios().length];
+        for (int i=0; i<this.escenarioNormal.getListaAnios().length; i++){
+            m.addColumn(this.escenarioNormal.getListaAnios()[i]);
+            fila[i] = Double.toString(ModeloPorcentual.redondearCifra(this.modificado.getModeloPorcentual().getPorcentajesManuales()[i]*100))+"%";
+        }
+        m.addRow(fila);
+        this.jTable1.setModel(m);
+    }
     private void cargarTablaDatos(){
         DefaultTableModel modelo = new DefaultTableModel();
         double [] lista = modificado.getListaGastos();
@@ -184,6 +233,13 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         depreciacionInicial = new javax.swing.JTextField();
+        panelPorcentajesManuales = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        botonCambiarPorcentajes = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         factura = new javax.swing.JRadioButton();
         sinFactura = new javax.swing.JRadioButton();
@@ -231,7 +287,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
                     .addComponent(editar))
                 .addContainerGap())
         );
@@ -240,7 +296,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addComponent(editar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -285,7 +341,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                     .addComponent(escalonadoBase, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(escalonadoTasaIncremento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(escalonadoPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addContainerGap(473, Short.MAX_VALUE))
         );
         panelGastoEscalonadoLayout.setVerticalGroup(
             panelGastoEscalonadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +362,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoEscalonadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(escalonadoPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         panel.addTab(resourceMap.getString("panelGastoEscalonado.TabConstraints.tabTitle"), panelGastoEscalonado); // NOI18N
@@ -336,7 +392,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoFijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fijoPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fijoCuota, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(477, Short.MAX_VALUE))
+                .addContainerGap(540, Short.MAX_VALUE))
         );
         panelGastoFijoLayout.setVerticalGroup(
             panelGastoFijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +405,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoFijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fijoPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         panel.addTab(resourceMap.getString("panelGastoFijo.TabConstraints.tabTitle"), panelGastoFijo); // NOI18N
@@ -431,7 +487,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                         .addGroup(panelGastoVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(porcentajeAnterior)
                             .addComponent(variablePeriodos, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                        .addContainerGap(466, Short.MAX_VALUE))
+                        .addContainerGap(529, Short.MAX_VALUE))
                     .addGroup(panelGastoVariableLayout.createSequentialGroup()
                         .addGroup(panelGastoVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelGastoVariableLayout.createSequentialGroup()
@@ -439,7 +495,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(variableCambiarAModelo))
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(400, 400, 400))))
+                        .addGap(463, 463, 463))))
         );
         panelGastoVariableLayout.setVerticalGroup(
             panelGastoVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,7 +514,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(variableCambiarPorcentaje)
                     .addComponent(variableCambiarAModelo))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         panel.addTab(resourceMap.getString("panelGastoVariable.TabConstraints.tabTitle"), panelGastoVariable); // NOI18N
@@ -501,7 +557,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                         .addComponent(modeloCambiarModelo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(modeloCambiarAPorcentaje)))
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addContainerGap(463, Short.MAX_VALUE))
         );
         panelGastoModeloLayout.setVerticalGroup(
             panelGastoModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,7 +570,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(modeloCambiarModelo)
                     .addComponent(modeloCambiarAPorcentaje))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         panel.addTab(resourceMap.getString("panelGastoModelo.TabConstraints.tabTitle"), panelGastoModelo); // NOI18N
@@ -554,7 +610,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                         .addGroup(panelGastoDepreciacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(depreciacionPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(depreciacionPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(432, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
         panelGastoDepreciacionLayout.setVerticalGroup(
             panelGastoDepreciacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,10 +627,75 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 .addGroup(panelGastoDepreciacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(depreciacionPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         panel.addTab(resourceMap.getString("panelGastoDepreciacion.TabConstraints.tabTitle"), panelGastoDepreciacion); // NOI18N
+
+        panelPorcentajesManuales.setName("panelPorcentajesManuales"); // NOI18N
+
+        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
+        jLabel14.setName("jLabel14"); // NOI18N
+
+        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
+        jTextField1.setName("jTextField1"); // NOI18N
+
+        jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
+        jLabel15.setName("jLabel15"); // NOI18N
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setName("jTable1"); // NOI18N
+        jScrollPane2.setViewportView(jTable1);
+
+        botonCambiarPorcentajes.setText(resourceMap.getString("botonCambiarPorcentajes.text")); // NOI18N
+        botonCambiarPorcentajes.setName("botonCambiarPorcentajes"); // NOI18N
+        botonCambiarPorcentajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCambiarPorcentajesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelPorcentajesManualesLayout = new javax.swing.GroupLayout(panelPorcentajesManuales);
+        panelPorcentajesManuales.setLayout(panelPorcentajesManualesLayout);
+        panelPorcentajesManualesLayout.setHorizontalGroup(
+            panelPorcentajesManualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPorcentajesManualesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelPorcentajesManualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+                    .addGroup(panelPorcentajesManualesLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel15)
+                    .addComponent(botonCambiarPorcentajes, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        panelPorcentajesManualesLayout.setVerticalGroup(
+            panelPorcentajesManualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPorcentajesManualesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelPorcentajesManualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCambiarPorcentajes))
+        );
+
+        panel.addTab(resourceMap.getString("panelPorcentajesManuales.TabConstraints.tabTitle"), panelPorcentajesManuales); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
         jPanel4.setName("jPanel4"); // NOI18N
@@ -670,7 +791,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+                    .addComponent(panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                     .addComponent(aceptarManual)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -680,7 +801,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(panelEscudoFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
                         .addComponent(cambiarTipoGasto3)))
                 .addContainerGap())
         );
@@ -699,7 +820,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(cambiarTipoGasto3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addGap(11, 11, 11)
                 .addComponent(aceptarManual))
         );
@@ -728,10 +849,12 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
+        modificado.setFactura(factura.isSelected());
+        modificado.setEscudoFiscal(escudoFiscal.isSelected());
         tipoGasto = Gasto.GASTO_MANUAL;
         Manual m = new Manual(null, true);
         double [] datos = m.editarDatosManuales(this.escenarioNormal.getListaAnios(),modificado.getListaGastos());
-        if (datos!=null){
+        if (datos!=null){            
             modificado.setTipoGasto(Gasto.GASTO_MANUAL);
             modificado.setGastosManualmente(datos);
             this.dispose();
@@ -841,6 +964,13 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
         
     }//GEN-LAST:event_modeloCambiarAPorcentajeActionPerformed
 
+    private void botonCambiarPorcentajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCambiarPorcentajesActionPerformed
+        // TODO add your handling code here:
+        modificado.setFactura(factura.isSelected());
+        modificado.setEscudoFiscal(escudoFiscal.isSelected());
+        this.editarPorcentajesManualmente();
+    }//GEN-LAST:event_botonCambiarPorcentajesActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -860,6 +990,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarManual;
+    private javax.swing.JButton botonCambiarPorcentajes;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -883,6 +1014,8 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -894,6 +1027,9 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton modeloCambiarAPorcentaje;
     private javax.swing.JButton modeloCambiarModelo;
     private javax.swing.JTextField modeloPeriodos;
@@ -907,6 +1043,7 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
     private javax.swing.JPanel panelGastoFijo;
     private javax.swing.JPanel panelGastoModelo;
     private javax.swing.JPanel panelGastoVariable;
+    private javax.swing.JPanel panelPorcentajesManuales;
     private javax.swing.JTextField porcentajeAnterior;
     private javax.swing.JRadioButton sinFactura;
     private javax.swing.JTable tablaDatos;
@@ -1011,6 +1148,15 @@ public class ModificarModeloGastos extends javax.swing.JDialog {
                 this.escenarioNormal.removerGasto(modificado);
                 this.escenarioNormal.insertarGasto(temporal);
             }
+        }
+    }
+    
+    private void editarPorcentajesManualmente(){
+        Manual m = new Manual(null, true);
+        double [] lista = m.editarPorcentajesManuales(this.escenarioNormal.getListaAnios(),modificado.getModeloPorcentual().getPorcentajesManuales());
+        if (lista!=null){
+            this.modificado.getModeloPorcentual().setPorcentajesManuales(lista);
+            this.dispose();
         }
     }
 }

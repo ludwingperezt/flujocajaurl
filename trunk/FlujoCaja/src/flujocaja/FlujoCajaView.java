@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import controlador.Escenario;
 import herramientas.AnalisisSensibilidad;
 import herramientas.AnalisisSimulacion;
+import herramientas.SimulacionAlterno;
 import herramientas.TeoriaEscenarios;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -436,6 +437,7 @@ public class FlujoCajaView extends FrameView {
         menuEscenarios = new javax.swing.JMenuItem();
         menuSensibilidad = new javax.swing.JMenuItem();
         menuSimulacion = new javax.swing.JMenuItem();
+        sensibilidadAlterno = new javax.swing.JMenuItem();
         Pronosticos = new javax.swing.JMenu();
         pronosticarModelo = new javax.swing.JMenuItem();
         modeloPorcentual = new javax.swing.JMenuItem();
@@ -455,6 +457,7 @@ public class FlujoCajaView extends FrameView {
         modificarVariable = new javax.swing.JMenuItem();
         eliminarVariable = new javax.swing.JMenuItem();
         insertarGastoPorcentual = new javax.swing.JMenuItem();
+        menuGastoSegunVariablePorcentajesManuales = new javax.swing.JMenuItem();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -1517,6 +1520,15 @@ public class FlujoCajaView extends FrameView {
         });
         menuHerramientas.add(menuSimulacion);
 
+        sensibilidadAlterno.setText(resourceMap.getString("sensibilidadAlterno.text")); // NOI18N
+        sensibilidadAlterno.setName("sensibilidadAlterno"); // NOI18N
+        sensibilidadAlterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sensibilidadAlternoActionPerformed(evt);
+            }
+        });
+        menuHerramientas.add(sensibilidadAlterno);
+
         menuBar.add(menuHerramientas);
 
         Pronosticos.setText(resourceMap.getString("Pronosticos.text")); // NOI18N
@@ -1641,6 +1653,15 @@ public class FlujoCajaView extends FrameView {
             }
         });
         jPopupMenu1.add(insertarGastoPorcentual);
+
+        menuGastoSegunVariablePorcentajesManuales.setText(resourceMap.getString("menuGastoSegunVariablePorcentajesManuales.text")); // NOI18N
+        menuGastoSegunVariablePorcentajesManuales.setName("menuGastoSegunVariablePorcentajesManuales"); // NOI18N
+        menuGastoSegunVariablePorcentajesManuales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGastoSegunVariablePorcentajesManualesActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(menuGastoSegunVariablePorcentajesManuales);
 
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
@@ -2189,6 +2210,32 @@ public class FlujoCajaView extends FrameView {
         as.analisisSimulacion(escenarioNormal);
     }//GEN-LAST:event_menuSimulacionActionPerformed
 
+    private void menuGastoSegunVariablePorcentajesManualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGastoSegunVariablePorcentajesManualesActionPerformed
+        // TODO add your handling code here:
+        int index = tablaPrincipal.getSelectedRow();
+        String nombre = mapa.get(index);
+        if (nombre.equals("Ingresos")){
+            this.gastoSegunIngresosPorcentajesManuales(this.escenarioNormal.getNumeroPeriodos(),Gasto.GASTO_SEGUN_INGRESOS);
+        }
+        else if (nombre.equals("Costos")){  
+            this.gastoSegunCostosPorcentajesManuales(this.escenarioNormal.getNumeroPeriodos(),Gasto.GASTO_SEGUN_COSTOS);
+        }
+        else if (this.escenarioNormal.gastoValido(nombre)){ 
+            Gasto t = this.escenarioNormal.obtenerGasto(nombre);
+            this.gastoSegunGastoPorcentajesManuales(t);
+        }
+        else if (this.escenarioNormal.interesValido(nombre)){
+            Intereses i = this.escenarioNormal.obtenerInteres(nombre);
+            this.gastoSegunInversionPorcentajesManuales(i);
+        }
+    }//GEN-LAST:event_menuGastoSegunVariablePorcentajesManualesActionPerformed
+
+    private void sensibilidadAlternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sensibilidadAlternoActionPerformed
+        // TODO add your handling code here
+        SimulacionAlterno sa = new SimulacionAlterno(null, false);
+        sa.analisisSimulacion(escenarioNormal);
+    }//GEN-LAST:event_sensibilidadAlternoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Pronosticos;
     private javax.swing.JTextField activosAnteriores;
@@ -2271,6 +2318,7 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenuItem menuCantidadesExactas;
     private javax.swing.JMenuItem menuEscenarios;
     private javax.swing.JMenu menuExtrasImpuestos;
+    private javax.swing.JMenuItem menuGastoSegunVariablePorcentajesManuales;
     private javax.swing.JMenuItem menuGuardar;
     private javax.swing.JMenu menuHerramientas;
     private javax.swing.JMenu menuImpuestos;
@@ -2308,6 +2356,7 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JTabbedPane panelTabs;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem pronosticarModelo;
+    private javax.swing.JMenuItem sensibilidadAlterno;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
@@ -2430,6 +2479,84 @@ public class FlujoCajaView extends FrameView {
             temporal.calcularGastos();
             this.escenarioNormal.insertarGasto(temporal);
             this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
+        }
+    }
+    
+    private void gastoSegunIngresosPorcentajesManuales(int periodos, int tipoVariable){
+        ModuloGastosSegunVariable ventanaGasto = new ModuloGastosSegunVariable(null, true);
+        Gasto temporal = ventanaGasto.obtenerNuevoModeloGastoPorcentajesManuales(periodos,tipoVariable);
+        if (temporal!=null){
+            Manual m = new Manual(null, true);
+            double [] porcentajes = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+            if (porcentajes!=null){
+                ModeloPorcentual mp = new ModeloPorcentual();
+                mp.setPorcentajesManuales(porcentajes);
+                temporal.setPadre(escenarioNormal);
+                temporal.setModeloPorcentual(mp);
+                temporal.setTipoGasto(Gasto.GASTO_SEGUN_INGRESOS_PORCENTAJES_MANUALES);
+                temporal.calcularGastos();
+                this.escenarioNormal.insertarGasto(temporal);
+                this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
+            }
+        }
+    }
+    
+    private void gastoSegunCostosPorcentajesManuales(int periodos, int tipoVariable){
+        ModuloGastosSegunVariable ventanaGasto = new ModuloGastosSegunVariable(null, true);
+        Gasto temporal = ventanaGasto.obtenerNuevoModeloGastoPorcentajesManuales(periodos,tipoVariable);
+        if (temporal!=null){
+            Manual m = new Manual(null, true);
+            double [] porcentajes = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+            if (porcentajes!=null){
+                ModeloPorcentual mp = new ModeloPorcentual();
+                mp.setPorcentajesManuales(porcentajes);
+                temporal.setPadre(escenarioNormal);
+                temporal.setModeloPorcentual(mp);
+                temporal.setTipoGasto(Gasto.GASTO_SEGUN_COSTOS_PORCENTAJES_MANUALES);
+                temporal.calcularGastos();
+                this.escenarioNormal.insertarGasto(temporal);
+                this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
+            }
+        }
+    }
+    
+    private void gastoSegunGastoPorcentajesManuales(Gasto gasto) {
+        ModuloGastosSegunVariable ventanaGasto = new ModuloGastosSegunVariable(null, true);
+        Gasto temporal = ventanaGasto.obtenerNuevoModeloGastoPorcentajesManuales(gasto.getCantidadPeriodos(),Gasto.GASTO_SEGUN_GASTO);
+        if (temporal!=null){
+            Manual m = new Manual(null, true);
+            double [] porcentajes = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+            if (porcentajes!=null){
+                ModeloPorcentual mp = new ModeloPorcentual();
+                mp.setPorcentajesManuales(porcentajes);
+                temporal.setModeloPorcentual(mp);
+                temporal.setGastoBase(gasto);
+                temporal.setPadre(escenarioNormal);
+                temporal.setTipoGasto(Gasto.GASTO_SEGUN_GASTO_PORCENTAJES_MANUALES);
+                temporal.calcularGastos();
+                this.escenarioNormal.insertarGasto(temporal);
+                this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
+            }            
+        }
+    }
+    
+    private void gastoSegunInversionPorcentajesManuales(Intereses intereses) {
+        ModuloGastosSegunVariable ventanaGasto = new ModuloGastosSegunVariable(null, true);
+        Gasto temporal = ventanaGasto.obtenerNuevoModeloGastoPorcentajesManuales(intereses.getListaCuotasAnuales().length,Gasto.GASTO_SEGUN_INVERSION);
+        if (temporal!=null){
+            Manual m = new Manual(null, true);
+            double [] porcentajes = m.insertarPorcentajes(this.escenarioNormal.getListaAnios());
+            if (porcentajes!=null){
+                ModeloPorcentual mp = new ModeloPorcentual();
+                mp.setPorcentajesManuales(porcentajes);
+                temporal.setModeloPorcentual(mp);
+                temporal.setInteresesBase(intereses);
+                temporal.setPadre(escenarioNormal);
+                temporal.setTipoGasto(Gasto.GASTO_SEGUN_INVERSION_PORCENTAJES_MANUALES);
+                temporal.calcularGastos();
+                this.escenarioNormal.insertarGasto(temporal);
+                this.insertarFilaTablaPrincipal(temporal.getNombreGasto(), temporal.getFactura(), temporal.getListaGastos());
+            }            
         }
     }
     
@@ -2584,59 +2711,7 @@ public class FlujoCajaView extends FrameView {
             dt.verDetallesCalculoISO(this.escenarioNormal);
         }
     }
-    /*
-    private void insertarFilaTablaDatosExactos(String nombre,boolean factura,double [] valores){
-        Object [] fila = new Object[valores.length+2];
-        fila[0] = nombre;
-        if (factura)
-            fila[1] = "S";
-        else
-            fila[1] = "N";
-        //System.arraycopy(valores, 0, fila, 1, valores.length);
-        for (int i=0; i<valores.length; i++){
-            fila[i+2] = valores[i];
-        }
-        DefaultTableModel modelo = (DefaultTableModel) this.tablaDatosExactos.getModel();
-        modelo.addRow(fila);
-    }
-
-    private void insertarFilaTablaDatosExactos(String nombre,double [] valores){
-        Object [] fila = new Object[valores.length+2];
-        fila[0] = nombre;
-        fila[1] = null;
-        //System.arraycopy(valores, 0, fila, 1, valores.length);
-        for (int i=0; i<valores.length; i++){
-            fila[i+2] = valores[i];
-        }
-        DefaultTableModel modelo = (DefaultTableModel) this.tablaDatosExactos.getModel();
-        modelo.addRow(fila);
-    }
     
-    private void insertarFilaTablaDatosExactos(String nombre,String valor){
-        DefaultTableModel modelo = (DefaultTableModel) this.tablaDatosExactos.getModel();
-        Object [] fila = new Object[this.tablaDatosExactos.getColumnCount()+2];
-        fila[0] = nombre;
-        fila[1] = null;
-        //System.arraycopy(valores, 0, fila, 1, valores.length);
-        for (int i=2; i<fila.length; i++){
-            fila[i] = valor;
-        }
-        
-        modelo.addRow(fila);
-    }
-    
-    private void insertarInteresTablaDatosExactos(String nombre,boolean val,double [] valores){
-        Object [] fila = new Object[valores.length+2];
-        fila[0] = "Intereses";
-        fila[1] = val;
-        //System.arraycopy(valores, 0, fila, 1, valores.length);
-        for (int i=0; i<valores.length; i++){
-            fila[i+2] = valores[i];
-        }
-        DefaultTableModel modelo = (DefaultTableModel) this.tablaDatosExactos.getModel();
-        modelo.addRow(fila);
-    }
-*/
     private void costosManual() {
         Manual m = new Manual(null, true);
         double [] costos = m.insertarDatosManuales(this.escenarioNormal.getListaAnios());
@@ -2786,4 +2861,8 @@ public class FlujoCajaView extends FrameView {
             else if (tipoInversionInicial==Escenario.INVERSION_INICIAL_MANUAL)
                 this.opcionManual.setSelected(true);
     }
+
+    
+
+    
 }

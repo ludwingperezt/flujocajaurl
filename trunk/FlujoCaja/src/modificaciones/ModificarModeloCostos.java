@@ -14,6 +14,7 @@ package modificaciones;
 import Clases.Costos;
 import Clases.Modelo;
 import Clases.ModeloPorcentual;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import controlador.Escenario;
 import flujocaja.EstimacionPorcentual;
 import flujocaja.Manual;
@@ -221,6 +222,11 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
 
         menuPorcentajesManual.setText(resourceMap.getString("menuPorcentajesManual.text")); // NOI18N
         menuPorcentajesManual.setName("menuPorcentajesManual"); // NOI18N
+        menuPorcentajesManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPorcentajesManualActionPerformed(evt);
+            }
+        });
         menuPorcentaje.add(menuPorcentajesManual);
 
         cambiarModeloAPronosticacion.setText(resourceMap.getString("cambiarModeloAPronosticacion.text")); // NOI18N
@@ -351,6 +357,11 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.editarPorcentajesManualmente();
     }//GEN-LAST:event_menuPorcentajeActionPerformed
+
+    private void menuPorcentajesManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPorcentajesManualActionPerformed
+        // TODO add your handling code here:
+        this.editarPorcentajesManualmente();
+    }//GEN-LAST:event_menuPorcentajesManualActionPerformed
 
     /**
     * @param args the command line arguments

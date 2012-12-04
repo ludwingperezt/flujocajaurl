@@ -1511,6 +1511,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuSimulacionActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="sensibilidadAlterno">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="sensibilidadAlterno.text"/>
+                <Property name="name" type="java.lang.String" value="sensibilidadAlterno" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sensibilidadAlternoActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Pronosticos">
@@ -1712,6 +1721,15 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertarGastoPorcentualActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="menuGastoSegunVariablePorcentajesManuales">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="menuGastoSegunVariablePorcentajesManuales.text"/>
+            <Property name="name" type="java.lang.String" value="menuGastoSegunVariablePorcentajesManuales" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuGastoSegunVariablePorcentajesManualesActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
