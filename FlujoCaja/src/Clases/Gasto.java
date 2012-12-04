@@ -13,6 +13,10 @@ public class Gasto {
     public static int GASTO_MANUAL = 6;
     public static int GASTO_SEGUN_GASTO = 7;
     public static int GASTO_SEGUN_INVERSION = 8;
+    public static int GASTO_SEGUN_GASTO_PORCENTAJES_MANUALES = 9;
+    public static int GASTO_SEGUN_INVERSION_PORCENTAJES_MANUALES = 10;
+    public static int GASTO_SEGUN_INGRESOS_PORCENTAJES_MANUALES = 11;
+    public static int GASTO_SEGUN_COSTOS_PORCENTAJES_MANUALES = 12;
     
     private Escenario padre;
 
@@ -272,49 +276,29 @@ public class Gasto {
     }
     
     private void calcularGastoSegunGasto(){
-//        double [] lista = this.gastoBase.listaGastos;
-//        this.listaGastos = new double[this.cantidadPeriodos];
-//        double [] temp = this.modeloPorcentual.estimarValores(lista);
-//        for (int i=0; i<this.cantidadPeriodos; i++){
-//            listaGastos[i] = temp[i];
-//        }
         this.listaGastos = this.modeloPorcentual.estimarValores(this.gastoBase.listaGastos);
     }
-    private void calcularGastoSegunInversion(){
-//        double [] lista = this.interesesBase.getListaCuotasAnuales();
-//        this.listaGastos = new double[this.cantidadPeriodos];
-//        double [] temp = this.modeloPorcentual.estimarValores(lista);
-//        for (int i=0; i<this.cantidadPeriodos; i++){
-//            listaGastos[i] = temp[i];
-//        }        
+    private void calcularGastoSegunInversion(){       
         this.listaGastos = this.modeloPorcentual.estimarValores(this.interesesBase.getListaCuotasAnuales());
     }
-    /**
-     * Función que calcula los gastos y luego los retorna.
-     * @return 
-     */
-    private double [] calcularListaGastos(){
-        if (this.tipoGasto==Gasto.GASTO_DEPRECIACION){
-            this.calcularGastoComoDepreciacion();
-        }else if (this.tipoGasto == Gasto.GASTO_ESCALONADO){
-            this.calcularGastosEscalonados();
-        }else if (this.tipoGasto == Gasto.GASTO_FIJO){
-            this.calcularGastosCuotaFija();
-        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_COSTOS){
-            this.calcularGastosProporcionalesACostos();
-        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_INGRESOS){
-            this.calcularGastosProporcionalesAIngresos();
-        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_MODELO){
-            this.calcularGastosSegunModeloPronosticacion();
-        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_GASTO){
-            this.calcularGastoSegunGasto();
-        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_INVERSION){
-            this.calcularGastoSegunInversion();
-        }else if (this.tipoGasto == Gasto.GASTO_MANUAL){
-            //g.getListaGastos();
-        }
-        return this.listaGastos;
+    
+    private void calcularGastoSegunGastoPorcentajesManuales(){
+        this.listaGastos = this.modeloPorcentual.estimarValoresPorcentajesManuales(this.gastoBase.listaGastos);
     }
+    private void calcularGastoSegunInversionPorcentajesManuales(){
+        this.listaGastos = this.modeloPorcentual.estimarValoresPorcentajesManuales(this.interesesBase.getListaCuotasAnuales());
+    }    
+    private void calcularGastosProporcionalesACostosPorcentajesManuales()
+    {
+        double [] listaCostos = this.padre.costosActuales();
+        this.listaGastos = this.modeloPorcentual.estimarValoresPorcentajesManuales(listaCostos);
+    }
+    private void calcularGastosProporcionalesAIngresosPorcentajesManuales()
+    {
+        double [] listaIngresos = this.padre.ingresosActuales();
+        this.listaGastos = this.modeloPorcentual.estimarValoresPorcentajesManuales(listaIngresos);
+    }
+    
     public void calcularGastos(){
         if (this.tipoGasto==Gasto.GASTO_DEPRECIACION){
             this.calcularGastoComoDepreciacion();
@@ -332,6 +316,14 @@ public class Gasto {
             this.calcularGastoSegunGasto();
         }else if (this.tipoGasto == Gasto.GASTO_SEGUN_INVERSION){
             this.calcularGastoSegunInversion();
+        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_GASTO_PORCENTAJES_MANUALES){
+            this.calcularGastoSegunGastoPorcentajesManuales();
+        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_INVERSION_PORCENTAJES_MANUALES){
+            this.calcularGastoSegunInversionPorcentajesManuales();
+        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_INGRESOS_PORCENTAJES_MANUALES){
+            this.calcularGastosProporcionalesAIngresosPorcentajesManuales();
+        }else if (this.tipoGasto == Gasto.GASTO_SEGUN_COSTOS_PORCENTAJES_MANUALES){
+            this.calcularGastosProporcionalesACostosPorcentajesManuales();
         }else if (this.tipoGasto == Gasto.GASTO_MANUAL){
             //g.getListaGastos();
         }

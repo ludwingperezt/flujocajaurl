@@ -160,7 +160,7 @@ public class Escenario {
         
         if (this.listaGastos!=null){
             for (Gasto g:this.listaGastos){
-                if (g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO){
+                if ((g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO)||(g.getTipoGasto()==Gasto.GASTO_SEGUN_GASTO_PORCENTAJES_MANUALES)){
                 //if (g.getGastoBase()!=null){
                     String nombre = g.getGastoBase().getNombreGasto();
                     Gasto t = null;
@@ -171,7 +171,7 @@ public class Escenario {
                         }
                     }
                     g.setGastoBase(t);
-                }else if (g.getTipoGasto()==Gasto.GASTO_SEGUN_INVERSION){
+                }else if ((g.getTipoGasto()==Gasto.GASTO_SEGUN_INVERSION)||(g.getTipoGasto()==Gasto.GASTO_SEGUN_INVERSION_PORCENTAJES_MANUALES)){
                     String nombre = g.getInteresesBase().getNombre();
                     Intereses i = null;
                     for (Intereses n:this.listaIntereses){
@@ -872,6 +872,16 @@ public class Escenario {
                 Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
             }
         return escenario;
+    }
+
+    public void funcionOcultaCambioManualGastos() {
+        this.modeloIngresos.setTipoIngreso(Ingresos.INGRESO_MANUAL);
+        this.modeloCostos.setTipoCosto(Costos.COSTO_MANUAL);
+        if (this.listaGastos!=null){
+            for (Gasto g:this.listaGastos){
+                g.setTipoGasto(Gasto.GASTO_MANUAL);
+            }
+        }
     }
 }
 

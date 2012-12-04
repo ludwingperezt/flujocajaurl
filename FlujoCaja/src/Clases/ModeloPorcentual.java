@@ -13,6 +13,8 @@ public class ModeloPorcentual {
     private double promedio;
 
     private boolean ingresoManual; //identifica si el porcentaje que tiene el objeto fue calculado o se estableció de forma arbitraria de manera manual
+    
+    private double [] porcentajesManuales;
 
     public ModeloPorcentual () {
     }
@@ -23,13 +25,23 @@ public class ModeloPorcentual {
         if (base.y!=null)
             this.y = base.y.clone();
         if (base.listaPorcentajes!=null)
-            this.listaPorcentajes = base.listaPorcentajes.clone();
+            this.listaPorcentajes = base.listaPorcentajes.clone();        
+        if (base.porcentajesManuales!=null)
+            this.porcentajesManuales = base.porcentajesManuales.clone();
         this.promedio = base.promedio;
         this.ingresoManual = base.ingresoManual;
     }
 
     public boolean getIngresoManual () {
         return ingresoManual;
+    }
+    
+    public double[] getPorcentajesManuales(){
+        return this.porcentajesManuales;
+    }
+    
+    public void setPorcentajesManuales(double [] lista){
+        this.porcentajesManuales = lista;
     }
 
     public void setIngresoManual (boolean val) {
@@ -89,6 +101,14 @@ public class ModeloPorcentual {
         for (int i=0; i<valores.length; i++){
             estimados[i]=valores[i]*this.promedio;
         }        
+        return estimados;
+    }
+    
+    public double[] estimarValoresPorcentajesManuales(double[]valores){
+        double [] estimados = new double[valores.length];
+        for (int i=0; i<valores.length; i++){
+            estimados[i] = valores[i] * this.porcentajesManuales[i];
+        }
         return estimados;
     }
     /**

@@ -30,6 +30,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
     }
 
     public Gasto modificarModeloGasto(int numeroPeriodos, String nombre, boolean porcentualIngresos, boolean factura, boolean escudoFiscal) {
+        this.setTitle("Modificar gasto porcentual");
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);
         this.periodos.setText(Integer.toString(numeroPeriodos));
@@ -53,6 +54,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
     }
     
     public Gasto obtenerNuevoModeloGasto(int numeroPeriodos) {
+        this.setTitle("Nuevo gasto porcentual");
         this.periodos.setText(Integer.toString(numeroPeriodos));
         //this.periodos.setVisible(false);
         //this.jLabel3.setVisible(false);
@@ -70,6 +72,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
     }
     
     public Gasto obtenerNuevoModeloGasto(int numeroPeriodos, int tipoVariable) {
+        this.setTitle("Nuevo gasto porcentual");
         this.periodos.setText(Integer.toString(numeroPeriodos));        
         this.panelVariable.setVisible(false);
         //this.periodos.setVisible(false);
@@ -89,7 +92,20 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
         return this.modeloGasto;
     }
     
+    public Gasto obtenerNuevoModeloGastoPorcentajesManuales(int numeroPeriodos, int tipoVariable) {
+        this.setTitle("Nuevo gasto porcentual");
+        this.periodos.setText(Integer.toString(numeroPeriodos));        
+        this.panelVariable.setVisible(false);
+        this.setVisible(true);    
+        
+        if (this.modeloGasto!=null)
+            this.modeloGasto.setTipoGasto(tipoVariable);
+        
+        return this.modeloGasto;
+    }
+    
     public Gasto obtenerNuevoModeloGastoManual(int numeroPeriodos) {
+        this.setTitle("Nuevo modelo de gasto manual");
         this.periodos.setText(Integer.toString(numeroPeriodos));
         //this.periodos.setVisible(false);
         //this.jLabel3.setVisible(false);
@@ -99,6 +115,7 @@ public class ModuloGastosSegunVariable extends javax.swing.JDialog {
     }
     
     public Gasto modificarModeloGastoManual(int numeroPeriodos, String nombre, boolean porcentualIngresos, boolean factura, boolean escudoFiscal) {
+        this.setTitle("Nuevo modelo de gasto manual");
         this.panelVariable.setVisible(false);
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);        
