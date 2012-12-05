@@ -38,6 +38,7 @@ public class EstimacionValoresPorcentuales extends javax.swing.JDialog {
     }
     
     public void estimarValoresPorcentuales(ModeloPorcentual modelo){
+        this.setTitle("Estimar valores porcentuales");
         this.modeloPorcentual = modelo;        
         this.setVisible(true);
     }

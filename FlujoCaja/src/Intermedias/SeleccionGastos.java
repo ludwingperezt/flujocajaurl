@@ -28,6 +28,7 @@ public class SeleccionGastos extends javax.swing.JDialog {
     }
     
     public int seleccionarGasto() {
+        this.setTitle("Seleccionar tipo de gasto");
         this.setVisible(true);
         return this.seleccion;
     }

@@ -25,6 +25,7 @@ public class SeleccionCostos extends javax.swing.JDialog {
     }
 
     public int seleccionarCostos(){
+        this.setTitle("Establecer tipo");
         this.setVisible(true);
         return this.seleccion;
     }

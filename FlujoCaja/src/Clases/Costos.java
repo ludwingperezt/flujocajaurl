@@ -54,7 +54,7 @@ public class Costos {
             this.listaPorcentajes = base.listaPorcentajes.clone();
         
         if (base.costosHistoricos!=null)
-            this.listaPorcentajes = base.costosHistoricos.clone();
+            this.costosHistoricos = base.costosHistoricos.clone();
         
     }
     
@@ -70,14 +70,14 @@ public class Costos {
         if (this.tipoCosto==Costos.COSTO_PORCENTUAL){
             if (this.modeloPorcentual!=null){
                 if (this.modeloPorcentual.getY()!=null){
-                    this.costosHistoricos = this.modeloPorcentual.getY();
+                    this.costosHistoricos = this.modeloPorcentual.getY().clone();
                 }
             }
         }
         else if (this.tipoCosto==Costos.COSTO_MODELO){
             if (this.modeloPronosticacion!=null){
                 if (this.modeloPronosticacion.getY()!=null){
-                    this.costosHistoricos = this.modeloPronosticacion.getY();
+                    this.costosHistoricos = this.modeloPronosticacion.getY().clone();
                 }
             }
         }
@@ -95,6 +95,7 @@ public class Costos {
     public void setModeloPorcentual(ModeloPorcentual val){
         this.tipoCosto = Costos.COSTO_PORCENTUAL;
         this.modeloPorcentual = val;
+        this.establecerCostosHistoricos();
     }
     
     public ModeloPorcentual getModeloPorcentual(){
@@ -133,8 +134,9 @@ public class Costos {
     public void setModeloPronosticacion(Modelo val){
         this.modeloPronosticacion = val;
         this.setTipoCosto(Costos.COSTO_MODELO);
+        this.establecerCostosHistoricos();
     }
-
+    /*
     public void setDatosHistcos(double [] val){
         this.modeloPorcentual.setY(val);
     }
@@ -149,7 +151,7 @@ public class Costos {
     
     public double [] getIngresosHistoricos(){
         return this.modeloPorcentual.getX();
-    }
+    }*/
 
     /**
      * Solo retorna la lista de costos calculados actuales para el valor central, si no hay datos, retorna null o los datos que ya estaban establecidos.

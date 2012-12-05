@@ -23,6 +23,7 @@ public class SeleccionVariable extends javax.swing.JDialog {
     }
     
     public boolean porcentualAIngresos(){
+        this.setTitle("Seleccionar variable");
         this.setVisible(true);
         return this.jRadioButton1.isSelected();
     }

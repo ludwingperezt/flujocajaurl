@@ -28,6 +28,7 @@ public class ModuloGastosPorcentuales extends javax.swing.JDialog {
     }
     
     public Gasto obtenerModeloGasto(int numeroPeriodos, String nombre) {
+        this.setTitle("Gasto porcentual");
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);
         this.jTextField4.setText(Integer.toString(numeroPeriodos));
@@ -36,6 +37,7 @@ public class ModuloGastosPorcentuales extends javax.swing.JDialog {
     }
     
     public Gasto obtenerModeloGasto(int numeroPeriodos) {
+        this.setTitle("Gasto porcentual");
         this.jTextField4.setText(Integer.toString(numeroPeriodos));
         this.setVisible(true);
         return this.modeloGasto;

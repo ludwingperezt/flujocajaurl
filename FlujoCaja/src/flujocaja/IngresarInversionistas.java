@@ -34,6 +34,7 @@ public class IngresarInversionistas extends javax.swing.JDialog {
     }
     public Inversionistas insertarInversionistas()
     {
+        this.setTitle("TMAR");
         this.setVisible(true);
         return this.listaInversionistas;
     }

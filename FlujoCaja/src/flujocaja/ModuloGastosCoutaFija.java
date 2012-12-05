@@ -28,12 +28,14 @@ public class ModuloGastosCoutaFija extends javax.swing.JDialog {
     }
 
     public Gasto obtenerModeloGasto(int periodos){
+        this.setTitle("Gasto de cuota fija");
         this.jTextField3.setText(Integer.toString(periodos));
         this.setVisible(true);
         return this.modeloGasto;
     }
     
     public Gasto obtenerModeloGasto(int periodos, String nombre) {
+        this.setTitle("Gasto de cuota fija");
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);
         this.jTextField3.setText(Integer.toString(periodos));
