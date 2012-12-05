@@ -37,6 +37,7 @@ public class EstimacionValoresFuturos extends javax.swing.JDialog {
 
     public void estimarValores(Modelo modeloPronosticacion)
     {
+        this.setTitle("Estimar valores futuros");
         this.modeloUsar = modeloPronosticacion;
         this.jTextField1.setText(modeloPronosticacion.getNombreModelo());
         this.jTextField2.setText(modeloPronosticacion.getEcuacion());
@@ -46,6 +47,7 @@ public class EstimacionValoresFuturos extends javax.swing.JDialog {
 
     public double [] estimarVariable(Modelo modeloPronosticacion, int periodos)
     {
+        this.setTitle("Estimar valores futuros");
         this.modeloUsar = modeloPronosticacion;
         this.jTextField1.setText(modeloPronosticacion.getNombreModelo());
         this.jTextField2.setText(modeloPronosticacion.getEcuacion());
@@ -54,7 +56,7 @@ public class EstimacionValoresFuturos extends javax.swing.JDialog {
         return this.retorno;
     }
     
-    public void calcular()
+    private void calcular()
     {
         double nc = Double.parseDouble(jComboBox1.getSelectedItem().toString().replaceFirst("%", ""));
         x = this.modeloUsar.obtenerSerieValoresFuturosX(Integer.parseInt(jTextField3.getText()));

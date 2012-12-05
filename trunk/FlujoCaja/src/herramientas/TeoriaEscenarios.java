@@ -42,6 +42,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
     }
     
     public void estimarEscenarios(Escenario normal){
+        this.setTitle("Escenarios - árbol de decisión");
         this.escenarioPuntual = new EscenarioModificado(normal);
         this.escenarioPuntual.setTipoEscenario(EscenarioModificado.ESCENARIO_NORMAL);
         this.escenarioPesimista = new EscenarioModificado(normal);
@@ -124,6 +125,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         
         
     }
+    
     private void llenarDatosEscenarioOptimista(){
         
         double [] iterador;
@@ -204,6 +206,7 @@ public class TeoriaEscenarios extends javax.swing.JDialog {
         ////// FIN DE LA PARTE DE MOSTRADO DE DATOS
         
     }
+    
     private void llenarDatosEscenarioPesimista(){
         double [] iterador;
         DefaultTableModel modelo = new DefaultTableModel();

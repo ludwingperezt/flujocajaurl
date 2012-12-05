@@ -28,6 +28,7 @@ public class ModuloGastosEscalonados extends javax.swing.JDialog {
     }
 
     public Gasto obtenerModeloGasto(int periodos){
+        this.setTitle("Gasto escalonado");
         this.jTextField5.setText(Integer.toString(periodos));
         this.jTextField5.setVisible(false);
         this.jLabel4.setVisible(false);
@@ -36,6 +37,7 @@ public class ModuloGastosEscalonados extends javax.swing.JDialog {
     }
     
     public Gasto obtenerModeloGasto(int periodos, String nombre) {
+        this.setTitle("Gasto escalonado");
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);
         this.jTextField5.setText(Integer.toString(periodos));

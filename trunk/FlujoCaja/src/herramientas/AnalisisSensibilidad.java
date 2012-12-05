@@ -37,6 +37,7 @@ public class AnalisisSensibilidad extends javax.swing.JDialog {
     }
     
     public void analisisSensibilidad(Escenario padre){
+        this.setTitle("Análisis de sensibilidad");
         this.escenario = new Escenario(padre);
         this.escenario.crearGastosEInversiones(padre);
         this.ingresos = padre.ingresosActuales();        

@@ -30,6 +30,7 @@ public class FormularioDatosExactos extends javax.swing.JDialog {
     }
     
     public void mostrarDatosExactos(Escenario e){
+        this.setTitle("Datos exactos");
         this.escenarioNormal = e;
         this.escribirDatos();
         this.setVisible(true);

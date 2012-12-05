@@ -156,6 +156,7 @@ public class EstimacionPorcentual extends javax.swing.JDialog {
     }
     
     public void standalone(){
+        this.setTitle("Estimación porcentual");
         this.standalone = true;
         this.estimar.setVisible(true);
         this.setVisible(true);

@@ -134,10 +134,13 @@ public class ISO {
             this.isoPorPagarDefinitivo = new double[this.padre.getNumeroPeriodos()];
             this.isoPorPagarTemporal = new double[this.padre.getNumeroPeriodos()];
             
-            this.porcentajeUtilidadBruta = new double[ub.length];
+            //this.porcentajeUtilidadBruta = new double[ub.length];
+            /////////////////////////////
+            this.porcentajeUtilidadBruta = this.calcularPorcentajeUtilidadBruta(ub, ingresos);
+            /////////////////////////////
 
             for (int i=0; i<ub.length;i++){
-                this.porcentajeUtilidadBruta[i] = ub[i]/ingresos[i];
+                //this.porcentajeUtilidadBruta[i] = ub[i]/ingresos[i];
                 calcularCantidadesISO(this.porcentajeUtilidadBruta[i],i);
             }
             this.acreditar();
@@ -154,6 +157,28 @@ public class ISO {
             this.padre.getModeloISR().setISRporPagar(this.padre.getModeloISR().getISRPorPagarTemporal());
         }
         
+    }
+    
+    private double [] calcularPorcentajeUtilidadBruta(double [] utilidadBruta,double [] lstIngresos){
+        double [] ub = new double[utilidadBruta.length+1];
+        
+        if ((this.padre.getModeloIngresos().getIngresosHistoricos()!=null)&&(this.padre.getModeloCostos().getCostosHistoricos()!=null)){
+            double ingresos, costos, ubruta;
+            ingresos = this.padre.getModeloIngresos().getIngresosHistoricos()[this.padre.getModeloIngresos().getIngresosHistoricos().length-1];
+            costos = this.padre.getModeloCostos().getCostosHistoricos()[this.padre.getModeloCostos().getCostosHistoricos().length-1];
+            ubruta = ingresos - costos;
+            ub[0] = ubruta / ingresos;
+            for (int i=0; i<utilidadBruta.length; i++){
+                ub[i+1] = utilidadBruta[i] / lstIngresos[i];
+            }
+        }
+        else{
+            ub[0] = 0;
+            for (int i=0; i<utilidadBruta.length; i++){
+                ub[i+1] = utilidadBruta[i] / lstIngresos[i];
+            }
+        }
+        return ub;
     }
     private void calcularCantidadesISO(double utilidadBruta,int i){
         ISR modelo = this.padre.getModeloISR();

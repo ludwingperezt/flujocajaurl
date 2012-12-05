@@ -30,6 +30,7 @@ public class ModificarModeloIntereses extends javax.swing.JDialog {
     }
     
     public void cambiarPrestamo(Escenario escenario, Intereses interes){
+        this.setTitle("Modificar préstamo");
         this.escenarioNormal = escenario;
         this.modificado = interes;
         this.cargarDatos();

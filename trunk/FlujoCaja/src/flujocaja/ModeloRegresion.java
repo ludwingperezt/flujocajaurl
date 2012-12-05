@@ -74,11 +74,13 @@ public class ModeloRegresion extends javax.swing.JDialog {
 
     public Modelos determinarModelos()
     {
+        this.setTitle("Modelo de pronosticación");
         this.setVisible(true);
         return this.modelosPronosticacion;
     }
     
     public Modelo determinarModeloOptimo(String titulo){
+        this.setTitle("Modelo de pronosticación");
         this.setTitle(titulo);
         this.setVisible(true);
         return this.mejorModelo;
@@ -195,6 +197,7 @@ public class ModeloRegresion extends javax.swing.JDialog {
     
     
     public void standalone(){
+        this.setTitle("Modelo de pronosticación");
         estimarConModeloSeleccionado.setVisible(true);
         estimarMejorModelo.setVisible(true);
         this.setVisible(true);

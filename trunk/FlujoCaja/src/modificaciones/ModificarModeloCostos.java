@@ -14,13 +14,11 @@ package modificaciones;
 import Clases.Costos;
 import Clases.Modelo;
 import Clases.ModeloPorcentual;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import controlador.Escenario;
 import flujocaja.EstimacionPorcentual;
 import flujocaja.Manual;
 import flujocaja.ModeloRegresion;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,6 +37,7 @@ public class ModificarModeloCostos extends javax.swing.JDialog {
     }
     
     public void modificar(Escenario escenario){
+        this.setTitle("Modificar costos");
         this.escenarioNormal = escenario;
         this.tipoModeloCostos = escenario.getModeloCostos().getTipoCosto();
         this.mCostos = escenario.getModeloCostos();

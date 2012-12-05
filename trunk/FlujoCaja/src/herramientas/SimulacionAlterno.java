@@ -42,7 +42,7 @@ public class SimulacionAlterno extends javax.swing.JDialog {
     }
     
     public void analisisSimulacion(Escenario base){
-        this.setTitle("Simulación");
+        this.setTitle("Simulación - alterna");
         this.escenario = new Escenario(base);
         this.escenario.crearGastosEInversiones(base);
         

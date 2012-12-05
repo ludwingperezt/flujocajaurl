@@ -28,12 +28,14 @@ public class ModuloGastosPorModelo extends javax.swing.JDialog {
     }
 
     public Gasto obtenerModeloGasto(int numeroPeriodos) {
+        this.setTitle("Gasto por modelo de pronosticación");
         this.jTextField2.setText(Integer.toString(numeroPeriodos));
         this.setVisible(true);
         return this.modeloGasto;
     }
     
     public Gasto obtenerModeloGasto(int numeroPeriodos, String nombre) {
+        this.setTitle("Gasto por modelo de pronosticación");
         this.jTextField1.setText(nombre);
         this.jTextField1.setEditable(false);
         this.jTextField2.setText(Integer.toString(numeroPeriodos));

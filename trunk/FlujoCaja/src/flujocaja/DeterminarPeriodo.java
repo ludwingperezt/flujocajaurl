@@ -42,11 +42,13 @@ public class DeterminarPeriodo extends javax.swing.JDialog {
 
     public int [] calcularPeriodo()
     {
+        this.setTitle("Establecer escenario");
         this.setVisible(true);
         return this.anios;
     }
 
     public void establecerDatos(Escenario esc){
+        this.setTitle("Establecer escenario");
         this.setVisible(true);
         esc.setListaAnios(anios);
         esc.setEscala(escala);

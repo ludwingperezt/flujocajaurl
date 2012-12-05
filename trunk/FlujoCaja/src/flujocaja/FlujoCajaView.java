@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import controlador.Escenario;
 import herramientas.AnalisisSensibilidad;
 import herramientas.AnalisisSimulacion;
+import herramientas.IngresoDatosHistoricos;
 import herramientas.SimulacionAlterno;
 import herramientas.TeoriaEscenarios;
 import java.text.NumberFormat;
@@ -311,7 +312,9 @@ public class FlujoCajaView extends FrameView {
             this.insertarFilaTablaPrincipal("VAN", this.escenarioNormal.getVAN());
             this.llenarDetalles();
         }
+        this.mostrarEscudosFiscales();
         ////// FIN DE LA PARTE DE MOSTRADO DE DATOS
+        
         
     }
 
@@ -400,6 +403,14 @@ public class FlujoCajaView extends FrameView {
         panelSalida = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
+        panelEscudosFiscales = new javax.swing.JPanel();
+        refrescar2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaEscudosFiscales = new javax.swing.JTable();
+        panelHistoricos = new javax.swing.JPanel();
+        refrescar1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaDatosHistoricos = new javax.swing.JTable();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
@@ -417,10 +428,12 @@ public class FlujoCajaView extends FrameView {
         jMenu1 = new javax.swing.JMenu();
         insertarIngresos = new javax.swing.JMenuItem();
         ingresosManual = new javax.swing.JMenuItem();
+        ingresosHistoricos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         costosPorcentaje = new javax.swing.JMenuItem();
         costosModeloPronosticacion = new javax.swing.JMenuItem();
         costosManual = new javax.swing.JMenuItem();
+        ingresoCostosHistoricosManualemente = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         gastosEscalonados = new javax.swing.JMenuItem();
         gastosCoutaFija = new javax.swing.JMenuItem();
@@ -674,7 +687,7 @@ public class FlujoCajaView extends FrameView {
                 .addComponent(calcularTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelPrincipal.addTab(resourceMap.getString("panelAcciones.TabConstraints.tabTitle"), panelAcciones); // NOI18N
@@ -686,12 +699,12 @@ public class FlujoCajaView extends FrameView {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
         );
 
         panelTabs.addTab(resourceMap.getString("jPanel8.TabConstraints.tabTitle"), jPanel8); // NOI18N
@@ -998,7 +1011,6 @@ public class FlujoCajaView extends FrameView {
         jPanel4.setName("jPanel4"); // NOI18N
 
         buttonGroup7.add(opcionInversionMasActivos);
-        opcionInversionMasActivos.setSelected(true);
         opcionInversionMasActivos.setText(resourceMap.getString("opcionInversionMasActivos.text")); // NOI18N
         opcionInversionMasActivos.setName("opcionInversionMasActivos"); // NOI18N
         opcionInversionMasActivos.addActionListener(new java.awt.event.ActionListener() {
@@ -1008,6 +1020,7 @@ public class FlujoCajaView extends FrameView {
         });
 
         buttonGroup7.add(opcionSoloInversion);
+        opcionSoloInversion.setSelected(true);
         opcionSoloInversion.setText(resourceMap.getString("opcionSoloInversion.text")); // NOI18N
         opcionSoloInversion.setName("opcionSoloInversion"); // NOI18N
         opcionSoloInversion.addActionListener(new java.awt.event.ActionListener() {
@@ -1091,7 +1104,7 @@ public class FlujoCajaView extends FrameView {
                     .addGroup(panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(panelISO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 353, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
                 .addComponent(panelDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1114,7 +1127,7 @@ public class FlujoCajaView extends FrameView {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCaracteristicasLayout.createSequentialGroup()
                 .addGap(214, 214, 214)
                 .addComponent(panelDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1165,7 +1178,7 @@ public class FlujoCajaView extends FrameView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tmarPonderada, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(711, 711, 711))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1176,7 +1189,7 @@ public class FlujoCajaView extends FrameView {
                     .addComponent(jLabel5)
                     .addComponent(tmarPonderada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
         );
 
         panelTabs.addTab(resourceMap.getString("jPanel7.TabConstraints.tabTitle"), jPanel7); // NOI18N
@@ -1203,17 +1216,109 @@ public class FlujoCajaView extends FrameView {
             .addGroup(panelSalidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(387, Short.MAX_VALUE))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
         panelSalidaLayout.setVerticalGroup(
             panelSalidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSalidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         panelTabs.addTab(resourceMap.getString("panelSalida.TabConstraints.tabTitle"), panelSalida); // NOI18N
+
+        panelEscudosFiscales.setName("panelEscudosFiscales"); // NOI18N
+
+        refrescar2.setText(resourceMap.getString("refrescar2.text")); // NOI18N
+        refrescar2.setName("refrescar2"); // NOI18N
+        refrescar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refrescar2ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+        tablaEscudosFiscales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tablaEscudosFiscales.setName("tablaEscudosFiscales"); // NOI18N
+        jScrollPane4.setViewportView(tablaEscudosFiscales);
+
+        javax.swing.GroupLayout panelEscudosFiscalesLayout = new javax.swing.GroupLayout(panelEscudosFiscales);
+        panelEscudosFiscales.setLayout(panelEscudosFiscalesLayout);
+        panelEscudosFiscalesLayout.setHorizontalGroup(
+            panelEscudosFiscalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEscudosFiscalesLayout.createSequentialGroup()
+                .addGroup(panelEscudosFiscalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(refrescar2)
+                    .addGroup(panelEscudosFiscalesLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelEscudosFiscalesLayout.setVerticalGroup(
+            panelEscudosFiscalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEscudosFiscalesLayout.createSequentialGroup()
+                .addComponent(refrescar2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelTabs.addTab(resourceMap.getString("panelEscudosFiscales.TabConstraints.tabTitle"), panelEscudosFiscales); // NOI18N
+
+        panelHistoricos.setName("panelHistoricos"); // NOI18N
+
+        refrescar1.setText(resourceMap.getString("refrescar1.text")); // NOI18N
+        refrescar1.setName("refrescar1"); // NOI18N
+        refrescar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refrescar1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        tablaDatosHistoricos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tablaDatosHistoricos.setName("tablaDatosHistoricos"); // NOI18N
+        jScrollPane3.setViewportView(tablaDatosHistoricos);
+
+        javax.swing.GroupLayout panelHistoricosLayout = new javax.swing.GroupLayout(panelHistoricos);
+        panelHistoricos.setLayout(panelHistoricosLayout);
+        panelHistoricosLayout.setHorizontalGroup(
+            panelHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHistoricosLayout.createSequentialGroup()
+                .addGroup(panelHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(refrescar1)
+                    .addGroup(panelHistoricosLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelHistoricosLayout.setVerticalGroup(
+            panelHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHistoricosLayout.createSequentialGroup()
+                .addComponent(refrescar1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelTabs.addTab(resourceMap.getString("panelHistoricos.TabConstraints.tabTitle"), panelHistoricos); // NOI18N
 
         filler2.setName("filler2"); // NOI18N
 
@@ -1222,13 +1327,13 @@ public class FlujoCajaView extends FrameView {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(panelTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 854, Short.MAX_VALUE)
+                .addComponent(panelTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 847, Short.MAX_VALUE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(panelTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(panelTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1356,6 +1461,15 @@ public class FlujoCajaView extends FrameView {
         });
         jMenu1.add(ingresosManual);
 
+        ingresosHistoricos.setText(resourceMap.getString("ingresosHistoricos.text")); // NOI18N
+        ingresosHistoricos.setName("ingresosHistoricos"); // NOI18N
+        ingresosHistoricos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresosHistoricosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ingresosHistoricos);
+
         menuVariables.add(jMenu1);
 
         jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
@@ -1384,6 +1498,15 @@ public class FlujoCajaView extends FrameView {
         costosManual.setText(resourceMap.getString("costosManual.text")); // NOI18N
         costosManual.setName("costosManual"); // NOI18N
         jMenu4.add(costosManual);
+
+        ingresoCostosHistoricosManualemente.setText(resourceMap.getString("ingresoCostosHistoricosManualemente.text")); // NOI18N
+        ingresoCostosHistoricosManualemente.setName("ingresoCostosHistoricosManualemente"); // NOI18N
+        ingresoCostosHistoricosManualemente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresoCostosHistoricosManualementeActionPerformed(evt);
+            }
+        });
+        jMenu4.add(ingresoCostosHistoricosManualemente);
 
         menuVariables.add(jMenu4);
 
@@ -1599,11 +1722,11 @@ public class FlujoCajaView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 694, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 687, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -2236,6 +2359,38 @@ public class FlujoCajaView extends FrameView {
         sa.analisisSimulacion(escenarioNormal);
     }//GEN-LAST:event_sensibilidadAlternoActionPerformed
 
+    private void ingresoCostosHistoricosManualementeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoCostosHistoricosManualementeActionPerformed
+        // TODO add your handling code here:
+        IngresoDatosHistoricos idh = new IngresoDatosHistoricos(null, true);
+        double datos [] = idh.ingresarDatosHistoricos();
+        if ((datos!=null)&&(this.escenarioNormal!=null)){
+            if (this.escenarioNormal.costosCalculados()){
+                this.escenarioNormal.getModeloCostos().setCostosHistoricos(datos);
+            }
+        }
+    }//GEN-LAST:event_ingresoCostosHistoricosManualementeActionPerformed
+
+    private void refrescar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescar2ActionPerformed
+        // TODO add your handling code here:
+        this.mostrarEscudosFiscales();
+    }//GEN-LAST:event_refrescar2ActionPerformed
+
+    private void refrescar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescar1ActionPerformed
+        // TODO add your handling code here:
+        this.mostrarDatosHistoricos();
+    }//GEN-LAST:event_refrescar1ActionPerformed
+
+    private void ingresosHistoricosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosHistoricosActionPerformed
+        // TODO add your handling code here:
+        IngresoDatosHistoricos idh = new IngresoDatosHistoricos(null, true);
+        double datos [] = idh.ingresarDatosHistoricos();
+        if ((datos!=null)&&(this.escenarioNormal!=null)){
+            if (this.escenarioNormal.ingresosCalculados()){
+                this.escenarioNormal.getModeloIngresos().setIngresosHistoricos(datos);
+            }
+        }
+    }//GEN-LAST:event_ingresosHistoricosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Pronosticos;
     private javax.swing.JTextField activosAnteriores;
@@ -2280,6 +2435,8 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JMenuItem gastosManual;
     private javax.swing.JMenuItem gastosModeloPronosticacion;
     private javax.swing.JMenuItem gastosSegunVariable;
+    private javax.swing.JMenuItem ingresoCostosHistoricosManualemente;
+    private javax.swing.JMenuItem ingresosHistoricos;
     private javax.swing.JMenuItem ingresosManual;
     private javax.swing.JMenuItem insertarGastoPorcentual;
     private javax.swing.JMenuItem insertarIngresos;
@@ -2310,6 +2467,8 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem menuAbrir;
@@ -2349,6 +2508,8 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JPanel panelCaracteristicas;
     private javax.swing.JPanel panelDetalles;
     private javax.swing.JPanel panelEmpresaNueva;
+    private javax.swing.JPanel panelEscudosFiscales;
+    private javax.swing.JPanel panelHistoricos;
     private javax.swing.JPanel panelISO;
     private javax.swing.JPanel panelPatente;
     private javax.swing.JTabbedPane panelPrincipal;
@@ -2356,10 +2517,14 @@ public class FlujoCajaView extends FrameView {
     private javax.swing.JTabbedPane panelTabs;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem pronosticarModelo;
+    private javax.swing.JButton refrescar1;
+    private javax.swing.JButton refrescar2;
     private javax.swing.JMenuItem sensibilidadAlterno;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JTable tablaDatosHistoricos;
+    private javax.swing.JTable tablaEscudosFiscales;
     private javax.swing.JTable tablaPrincipal;
     private javax.swing.JTable tablaResultados;
     private javax.swing.JTable tablaTmar;
@@ -2386,6 +2551,7 @@ public class FlujoCajaView extends FrameView {
         this.insertarFilaTablaPrincipal("TMAR", this.escenarioNormal.getTMARFormateada());
         this.insertarFilaTablaPrincipal("VAN", this.escenarioNormal.calcularVAN());
         this.llenarDetalles();
+        this.mostrarEscudosFiscales();
     }
     
     private void llenarDetalles(){
@@ -2801,18 +2967,20 @@ public class FlujoCajaView extends FrameView {
             modeloTabla.addColumn("Inversionista");
             modeloTabla.addColumn("% Riesgo");
             modeloTabla.addColumn("% Participación");
+            modeloTabla.addColumn("% Inflación");
             modeloTabla.addColumn("TMAR (%)");
             modeloTabla.addColumn("TMAR ponderada (%)");
             ArrayList<Inversionista> lstInversionistas = this.escenarioNormal.getTmar().getListaInversionistas();
 
             for (Inversionista i: lstInversionistas){
-                Object []fila = new Object[5];
+                Object []fila = new Object[6];
 
                 fila[0]=i.getNombre();                
-                fila[1]=ModeloPorcentual.redondearCifra(i.getRiesgo()*100);
-                fila[2]=ModeloPorcentual.redondearCifra(i.getParticipacion()*100);
-                fila[3]=ModeloPorcentual.redondearCifra(i.getTmar()*100);
-                fila[4]=ModeloPorcentual.redondearCifra(i.getTmarPonderada()*100);
+                fila[1]=ModeloPorcentual.redondearCifra(i.getRiesgo()*100)+"%";
+                fila[2]=ModeloPorcentual.redondearCifra(i.getParticipacion()*100)+"%";
+                fila[3]=ModeloPorcentual.redondearCifra(i.getTasaInflacion()*100)+"%";
+                fila[4]=ModeloPorcentual.redondearCifra(i.getTmar()*100)+"%";
+                fila[5]=ModeloPorcentual.redondearCifra(i.getTmarPonderada()*100)+"%";
 
                 modeloTabla.addRow(fila);
 
@@ -2862,6 +3030,93 @@ public class FlujoCajaView extends FrameView {
                 this.opcionManual.setSelected(true);
     }
 
+    private void mostrarEscudosFiscales(){
+        DefaultTableModel model = new DefaultTableModel();
+        double [] total;
+        if (this.escenarioNormal!=null){
+            if (this.escenarioNormal.getListaGastos()!=null){
+                total = new double[this.escenarioNormal.getNumeroPeriodos()];
+                model.addColumn("Gasto");
+                model.addColumn("Factura");
+                model.addColumn("EF");
+                for (int i=0; i<this.escenarioNormal.getNumeroPeriodos(); i++){
+                    model.addColumn(this.escenarioNormal.getListaAnios()[i]);
+                }
+                
+                for(Gasto i:this.escenarioNormal.getListaGastos()){
+                    Object [] fila = new Object[this.escenarioNormal.getNumeroPeriodos()+3];
+                    if (i.getEscudoFiscal()){
+                        fila[0] = i.getNombreGasto();
+                        fila[1] = i.getFactura();
+                        fila[2] = i.getEscudoFiscal();
+                        for (int j=0; j<i.getListaGastos().length; j++){
+                            fila[j+3] = i.getListaGastos()[j];
+                            total[j]+=i.getListaGastos()[j];
+                        }
+                        model.addRow(fila);
+                    }
+                }
+                
+                Object [] fila = new Object[this.escenarioNormal.getNumeroPeriodos()+3];
+                fila[0] = "Total EF";
+                for (int i=0; i<total.length; i++){
+                    fila[i+3] = total[i];
+                }
+                model.addRow(fila);
+                this.tablaEscudosFiscales.setModel(model);
+            }
+            else
+                JOptionPane.showMessageDialog(null, "No hay gastos que mostrar", "No se puede mostrar EF", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "No hay un escenario definido", "No se puede mostrar EF", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void mostrarDatosHistoricos(){
+        double [] costosHistoricos=null;
+        double [] ingresosHistoricos=null;
+        DefaultTableModel model;
+        if (this.escenarioNormal!=null){
+            model = new DefaultTableModel();
+            model.addColumn("Variable");
+            if ((this.escenarioNormal.getModeloIngresos()!=null)){                
+                ingresosHistoricos = this.escenarioNormal.getModeloIngresos().getIngresosHistoricos();                
+            }
+            if (this.escenarioNormal.getModeloCostos()!=null){
+                costosHistoricos = this.escenarioNormal.getModeloCostos().getCostosHistoricos();                
+            }
+            
+            if ((ingresosHistoricos!=null)&&(costosHistoricos!=null)){
+                int size = (ingresosHistoricos.length>=costosHistoricos.length)?ingresosHistoricos.length:costosHistoricos.length;
+                Object [] fila = new Object[size+1];
+                fila[0] = "Ingresos";
+                Object [] fila2 = new Object[size+1];
+                fila2[0] = "Costos";
+                
+                int index = ingresosHistoricos.length-1;
+                for (int i=fila.length-1; i>0; i--){
+                    model.addColumn("Periodo "+Integer.toString(size-(i-1)));
+                    
+                    if (index>=0)
+                        fila[i] = ingresosHistoricos[index];
+                    index--;
+                }
+                
+                index = costosHistoricos.length-1;
+                for (int i=fila2.length-1; i>0; i--){
+                    if (index>=0)
+                        fila2[i]=costosHistoricos[index];
+                    index--;
+                }
+                
+                model.addRow(fila);
+                model.addRow(fila2);
+                this.tablaDatosHistoricos.setModel(model);
+            }
+        }
+        else
+            JOptionPane.showMessageDialog(null, "No hay un escenario definido", "No se pueden mostrar datos históricos", JOptionPane.WARNING_MESSAGE);
+    }
     
 
     
