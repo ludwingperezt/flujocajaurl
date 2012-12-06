@@ -31,6 +31,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import modificaciones.ModificarModeloCostos;
 import modificaciones.ModificarModeloGastos;
@@ -2262,6 +2263,8 @@ public class FlujoCajaView extends FrameView {
     private void menuAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAbrirActionPerformed
         // TODO add your handling code here:
         JFileChooser selector = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML", "xml");
+        selector.setFileFilter(filter);
         int resultado = selector.showOpenDialog(null);
         if (resultado==JFileChooser.APPROVE_OPTION){
             this.escenarioNormal = Escenario.deserializarDeXML(selector.getSelectedFile().getAbsolutePath());
@@ -2315,6 +2318,8 @@ public class FlujoCajaView extends FrameView {
     private void menuGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarActionPerformed
         // TODO add your handling code here:
         JFileChooser selector = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML", "xml");
+        selector.setFileFilter(filter);
         int resultado = selector.showSaveDialog(null);
         if (resultado==JFileChooser.APPROVE_OPTION){
             this.escenarioNormal.serializarAXML(selector.getSelectedFile().getAbsolutePath());
@@ -3116,8 +3121,17 @@ public class FlujoCajaView extends FrameView {
         }
         else
             JOptionPane.showMessageDialog(null, "No hay un escenario definido", "No se pueden mostrar datos históricos", JOptionPane.WARNING_MESSAGE);
-    }
-    
-
-    
+    }    
 }
+/*
+ * Escudos fiscales:
+	- Amortizaciones
+	- Depreciaciones
+	- Indemnizaciones
+	- Cuotas incobrables
+
+FEN = utilidad neta + escudos fiscales (en unidades monetarias -Q,$-)
+VAN y suma(VAN) (en unidades monetarias -Q,$-)
+TIR (en porcentaje a dos decimales, se calcula sobre los valores individuales de VAN)
+Payback (en años)
+ */
