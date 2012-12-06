@@ -20,6 +20,9 @@ public class Escenario {
     public static int INVERSION_INICIAL_SOLO_ACTIVOS = 2;
     public static int INVERSION_INICIAL_SOLO_PRESTAMOS = 3;
     
+    //protected String nombre;
+    //protected String anotaciones;
+    
     protected int [] listaAnios;
     
     protected Inversionistas tmar;
@@ -115,6 +118,22 @@ public class Escenario {
         this.inversionInicial = base.inversionInicial;
         //buscar los gastos proporcionales a gastos e intereses y setearle esas propiedades
     }
+    
+    /*public String getAnotaciones() {
+        return anotaciones;
+    }
+
+    public void setAnotaciones(String anotaciones) {
+        this.anotaciones = anotaciones;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }*/
     
     public ArrayList<Inversionista> getListaInversionistas() {
         return listaInversionistas;
