@@ -150,7 +150,7 @@ public class IVA {
                         IVAPorCobrar[i] = 0;
                     }
                     else{ //si la suma del iva por pagar y el iva por cobrar (iva a favor) es negativa o es cero
-                        IVAPorCobrar[i] = IVAPorCobrar[i-1]+temporal; //se suma al IVA por cobrar anterior, el nuevo IVA por cobrar y ese es el acumulado; el iva por pagar se establece a cero.
+                        IVAPorCobrar[i] = temporal;//IVAPorCobrar[i-1]+temporal; //se suma al IVA por cobrar anterior, el nuevo IVA por cobrar y ese es el acumulado; el iva por pagar se establece a cero.
                         IVAPorPagar[i] = 0;
                     }
                 }
